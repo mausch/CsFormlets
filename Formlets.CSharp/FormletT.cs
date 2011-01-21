@@ -88,7 +88,7 @@ namespace Formlets.CSharp {
             var r = ff.Invoke(list);
             var xdoc = XmlWriter.wrap(r.Item1);
             var value = r.Item2;
-            return new FormletResult<T>(xdoc.ToString(), value);
+            return new FormletResult<T>(xdoc, value);
         }
 
         /// <summary>

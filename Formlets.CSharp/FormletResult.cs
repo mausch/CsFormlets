@@ -1,4 +1,5 @@
 using Microsoft.FSharp.Core;
+using System.Xml.Linq;
 
 namespace Formlets.CSharp {
     /// <summary>
@@ -6,10 +7,10 @@ namespace Formlets.CSharp {
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class FormletResult<T> {
-        private readonly string errorForm;
+        private readonly XNode errorForm;
         private readonly FSharpOption<T> value;
 
-        public FormletResult(string errorForm, FSharpOption<T> value) {
+        public FormletResult(XNode errorForm, FSharpOption<T> value) {
             this.errorForm = errorForm;
             this.value = value;
         }
@@ -17,7 +18,7 @@ namespace Formlets.CSharp {
         /// <summary>
         /// Error form
         /// </summary>
-        public string ErrorForm {
+        public XNode ErrorForm {
             get { return errorForm; }
         }
 
