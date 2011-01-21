@@ -8,17 +8,19 @@ using System.Xml.Linq;
 namespace Formlets.CSharp {
     public class Formlet<T> {
         // real formlet, wrapped
-        private readonly FSharpFunc<int, Tuple<Tuple<FSharpList<xml_item>, FSharpFunc<FSharpList<Tuple<string, InputValue>>, Tuple<FSharpList<xml_item>, FSharpOption<T>>>>, int>> f;
+        private readonly FSharpFunc<int, Tuple<Tuple<FSharpList<XNode>, FSharpFunc<FSharpList<Tuple<string, InputValue>>, Tuple<FSharpList<XNode>, FSharpOption<T>>>>, int>> f;
 
         /// <summary>
         /// Creates a <see cref="Formlet{T}"/> by wrapping an F# formlet
         /// </summary>
         /// <param name="f">F# formlet</param>
-        public Formlet(FSharpFunc<int, Tuple<Tuple<FSharpList<xml_item>, FSharpFunc<FSharpList<Tuple<string, InputValue>>, Tuple<FSharpList<xml_item>, FSharpOption<T>>>>, int>> f) {
+        public Formlet(FSharpFunc<int, Tuple<Tuple<FSharpList<XNode>, FSharpFunc<FSharpList<Tuple<string, InputValue>>, Tuple<FSharpList<XNode>, FSharpOption<T>>>>, int>> f)
+        {
             this.f = f;
         }
 
-        public static implicit operator FSharpFunc<int, Tuple<Tuple<FSharpList<xml_item>, FSharpFunc<FSharpList<Tuple<string, InputValue>>, Tuple<FSharpList<xml_item>, FSharpOption<T>>>>, int>>(Formlet<T> f) {
+        public static implicit operator FSharpFunc<int, Tuple<Tuple<FSharpList<XNode>, FSharpFunc<FSharpList<Tuple<string, InputValue>>, Tuple<FSharpList<XNode>, FSharpOption<T>>>>, int>>(Formlet<T> f)
+        {
             return f.f;
         }
 
@@ -76,7 +78,7 @@ namespace Formlets.CSharp {
         private FormletResult<T> Run(FSharpList<Tuple<string,InputValue>> list) {
             var ff = FormletModule.run(f);
             var r = ff.Invoke(list);
-            var xdoc = XmlWriter.render(r.Item1);
+            var xdoc = XmlWriter.wrap(r.Item1);
             var value = r.Item2;
             return new FormletResult<T>(xdoc.ToString(), value);
         }
