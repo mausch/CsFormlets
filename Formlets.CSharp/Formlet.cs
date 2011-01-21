@@ -82,8 +82,8 @@ namespace Formlets.CSharp {
         /// <param name="a"></param>
         /// <param name="b"></param>
         /// <returns></returns>
-        public static Formlet<B> Apply<A, B>(Formlet<Func<A, B>> a, Formlet<A> b) {
-            return b.Apply(a);
+        public static Formlet<B> Ap<A, B>(Formlet<Func<A, B>> a, Formlet<A> b) {
+            return b.Ap(a);
         }
 
         /// <summary>

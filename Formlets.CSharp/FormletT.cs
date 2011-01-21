@@ -28,7 +28,7 @@ namespace Formlets.CSharp {
         /// <typeparam name="B"></typeparam>
         /// <param name="a"></param>
         /// <returns></returns>
-        public Formlet<B> Apply<B>(Formlet<Func<T, B>> a) {
+        public Formlet<B> Ap<B>(Formlet<Func<T, B>> a) {
             var ff = Formlet.FormletFSharpFunc(a);
             var r = FormletModule.ap(ff.f, f);
             return new Formlet<B>(r);
@@ -40,7 +40,7 @@ namespace Formlets.CSharp {
         /// <typeparam name="C"></typeparam>
         /// <param name="a"></param>
         /// <returns></returns>
-        public Formlet<T> ApplyIgnore<C>(Formlet<C> a) {
+        public Formlet<T> ApIgnore<C>(Formlet<C> a) {
             var r = FormletModule.apl(f, a.f);
             return new Formlet<T>(r);
         }

@@ -37,9 +37,9 @@ namespace Formlets.CSharp.Tests {
             var input = Formlet.Input("a value", new Dictionary<string, string> {{"size", "10"}});
             var inputInt = Formlet.Input().Lift(int.Parse);
             var formlet = Formlet.Yield(L.F((string a) => L.F((int b) => Tuple.Create(a,b))))
-                .Apply(input)
-                .ApplyIgnore(Formlet.Text("Hello world!"))
-                .Apply(inputInt);
+                .Ap(input)
+                .ApIgnore(Formlet.Text("Hello world!"))
+                .Ap(inputInt);
             var html = formlet.Render();
             Assert.Contains("<input name=\"input_0\" value=\"a value\" size=\"10\" />", html);
             Assert.Contains("Hello world!", html);

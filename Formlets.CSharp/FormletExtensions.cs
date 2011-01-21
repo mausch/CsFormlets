@@ -11,12 +11,12 @@ namespace Formlets.CSharp {
         /// <param name="a"></param>
         /// <param name="b"></param>
         /// <returns></returns>
-        public static Formlet<B> Apply<A,B>(this Formlet<Func<A,B>> a, Formlet<A> b) {
-            return b.Apply(a);
+        public static Formlet<B> Ap<A,B>(this Formlet<Func<A,B>> a, Formlet<A> b) {
+            return b.Ap(a);
         }
 
-        public static Formlet<Func<A,B>> Apply<A,B>(this Formlet<Func<A,B>> a, XElement elem) {
-            return a.ApplyIgnore(Formlet.Xml(elem));
+        public static Formlet<Func<A,B>> Ap<A,B>(this Formlet<Func<A,B>> a, XElement elem) {
+            return a.ApIgnore(Formlet.Xml(elem));
         }
     }
 }

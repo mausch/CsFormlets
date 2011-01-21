@@ -11,9 +11,9 @@ Public Class XmlIntegrationTests
         Dim f = _
             Formlet.Yield(L.F(Function(a As String) _
                           L.F(Function(b As Integer) Tuple.Create(a, b)))) _
-                .Apply(input) _
-                .Apply(<br/>) _
-                .Apply(inputInt)
+                .Ap(input) _
+                .Ap(<br/>) _
+                .Ap(inputInt)
         Console.WriteLine(extXml)
     End Sub
 End Class
