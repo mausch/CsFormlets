@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.FSharp.Collections;
 using Microsoft.FSharp.Core;
+using System.Xml.Linq;
 
 namespace Formlets.CSharp {
     public class Formlet<T> {
@@ -96,6 +97,14 @@ namespace Formlets.CSharp {
         /// <returns></returns>
         public string Render() {
             return FormletModule.render(f);
+        }
+
+        /// <summary>
+        /// Renders a formlet to <see cref="XNode"/>
+        /// </summary>
+        /// <returns></returns>
+        public XNode RenderToXml() {
+            return FormletModule.renderToXml(f);
         }
     }
 }
