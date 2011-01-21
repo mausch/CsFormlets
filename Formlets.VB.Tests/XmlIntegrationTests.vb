@@ -11,7 +11,8 @@ Public Class XmlIntegrationTests
                           L.F(Function(b As Integer) Tuple.Create(a, b)))) _
                 .Ap(input) _
                 .Ap(<br/>) _
-                .Ap(inputInt.WrapWith(<span class="something"/>))
+                .Ap(inputInt.WrapWith(<span class="something"/>)) _
+                .Ap(<input type="submit" value="Send!"/>)
         Console.WriteLine(f.Render())
     End Sub
 End Class
