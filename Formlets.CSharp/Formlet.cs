@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.FSharp.Collections;
 using Microsoft.FSharp.Core;
+using System.Xml.Linq;
 
 namespace Formlets.CSharp {
     public static class Formlet {
@@ -61,6 +62,10 @@ namespace Formlets.CSharp {
         /// <returns></returns>
         public static Formlet<Unit> Text(string text) {
             return new Formlet<Unit>(FormletModule.text(text));
+        }
+
+        public static Formlet<Unit> Xml(XNode xml) {
+            return new Formlet<Unit>(FormletModule.xnode(xml));
         }
 
         public static Formlet<FSharpFunc<A, B>> FormletFSharpFunc<A, B>(Formlet<Func<A, B>> f) {
