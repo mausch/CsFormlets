@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
+using System.Text.RegularExpressions;
+using System.Xml.Linq;
 
 namespace Formlets.CSharp.Tests {
     public class Usage {
@@ -50,6 +52,24 @@ namespace Formlets.CSharp.Tests {
             });
             Assert.Equal("bla", result.Value.Value.Item1);
             Assert.Equal(20, result.Value.Value.Item2);
+        }
+
+        [Fact]
+        public void Validation() {
+            var inputInt = Formlet.Input()
+                .Satisfies(s => Regex.IsMatch(s, "[0-9]+"), (s, n) => {
+                    var msg = string.Format("'{0}'is not a valid number", s);
+                    var e = n.ToList();
+                    e.Add(new XText(msg));
+                    return e.ToArray();
+                })
+                .Lift(int.Parse);
+            var result = inputInt.Run(new Dictionary<string, string> {
+                {"input_0", "bla"}
+            });
+            Console.WriteLine(result.ErrorForm);
+            Assert.Contains("<input name=\"input_0\" value=\"bla\" />'bla'is not a valid number", result.ErrorForm.ToString());
+            Assert.True(result.Value.IsNone());
         }
     }
 }
