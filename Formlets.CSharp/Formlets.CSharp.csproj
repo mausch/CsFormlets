@@ -46,6 +46,7 @@
     <Compile Include="FormletResult.cs" />
     <Compile Include="FormletT.cs" />
     <Compile Include="FSharpOptionExtensions.cs" />
+    <Compile Include="FsList.cs" />
     <Compile Include="FuncFSharpFunc.cs" />
     <Compile Include="FuncInference.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -46,7 +46,7 @@ namespace Formlets.CSharp {
         }
 
         public Formlet<T> WrapWith(XElement xml) {
-            var l = FSharpList<XNode>.Cons(xml, FSharpList<XNode>.Empty);
+            var l = FsList.New(xml);
             var r = FormletModule.tag(xml.Name.LocalName, XmlHelpers.getAttr(xml), f);
             return new Formlet<T>(r);
         }
