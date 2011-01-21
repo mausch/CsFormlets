@@ -69,7 +69,7 @@ namespace Formlets.CSharp {
         }
 
         public static Formlet<FSharpFunc<A, B>> FormletFSharpFunc<A, B>(Formlet<Func<A, B>> f) {
-            FSharpFunc<Func<A, B>, FSharpFunc<A, B>> toff = new FuncFSharpFunc<Func<A, B>, FSharpFunc<A, B>>(a => new FuncFSharpFunc<A, B>(a));
+            FSharpFunc<Func<A, B>, FSharpFunc<A, B>> toff = new FFunc<Func<A, B>, FSharpFunc<A, B>>(a => new FFunc<A, B>(a));
             var ff = FormletModule.lift(toff, f);
             return new Formlet<FSharpFunc<A, B>>(ff);
         }
@@ -95,7 +95,7 @@ namespace Formlets.CSharp {
         /// <param name="a"></param>
         /// <returns></returns>
         public static Formlet<B> Lift<A,B>(Func<A,B> f, Formlet<A> a) {
-            return new Formlet<B>(FormletModule.lift(FuncFSharpFunc.FromFunc(f), a));
+            return new Formlet<B>(FormletModule.lift(FFunc.FromFunc(f), a));
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace Formlets.CSharp {
         /// <param name="b"></param>
         /// <returns></returns>
         public static Formlet<C> Lift2<A,B,C>(Func<A,B,C> f, Formlet<A> a, Formlet<B> b) {
-            var ff = FuncFSharpFunc.FromFunc(f);
+            var ff = FFunc.FromFunc(f);
             var r = FormletModule.lift2(ff, a, b);
             return new Formlet<C>(r);
         }

@@ -66,7 +66,7 @@ namespace Formlets.CSharp {
         /// <param name="a"></param>
         /// <returns></returns>
         public Formlet<B> Lift<B>(Func<T, B> a) {
-            var ff = FuncFSharpFunc.FromFunc(a);
+            var ff = FFunc.FromFunc(a);
             var r = FormletModule.lift(ff, f);
             return new Formlet<B>(r);
         }
@@ -122,10 +122,10 @@ namespace Formlets.CSharp {
         }
 
         public Formlet<T> Satisfies(Func<T,bool> pred, Func<T, XNode[], XNode[]> error) {
-            var f1 = FuncFSharpFunc.FromFunc1((T x) => 
-                        FuncFSharpFunc.FromFunc1((FSharpList<XNode> y) => 
+            var f1 = FFunc.FromFunc1((T x) => 
+                        FFunc.FromFunc1((FSharpList<XNode> y) => 
                             ArrayModule.ToList(error(x, y.ToArray()))));
-            var fpred = FuncFSharpFunc.FromFunc(pred);
+            var fpred = FFunc.FromFunc(pred);
             var r = FormletModule.satisfies(fpred, f1, f);
             return new Formlet<T>(r);
         }

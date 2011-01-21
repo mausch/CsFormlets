@@ -7,14 +7,14 @@ namespace Formlets.CSharp {
     /// </summary>
     /// <typeparam name="A"></typeparam>
     /// <typeparam name="B"></typeparam>
-    public class FuncFSharpFunc<A, B> : FSharpFunc<A, B> {
+    public class FFunc<A, B> : FSharpFunc<A, B> {
         private readonly Func<A, B> f;
 
         /// <summary>
         /// Wraps a <see cref="Func&lt;A,B&gt;"/> as an F# function
         /// </summary>
         /// <param name="f"></param>
-        public FuncFSharpFunc(Func<A, B> f) {
+        public FFunc(Func<A, B> f) {
             this.f = f;
         }
 
@@ -26,7 +26,7 @@ namespace Formlets.CSharp {
     /// <summary>
     /// Wraps System.Funcs as F# functions
     /// </summary>
-    public static class FuncFSharpFunc {
+    public static class FFunc {
         /// <summary>
         /// Wraps a <see cref="Func&lt;A,B&gt;"/> as an F# function
         /// </summary>
@@ -35,7 +35,7 @@ namespace Formlets.CSharp {
         /// <param name="f"></param>
         /// <returns></returns>
         public static FSharpFunc<A, B> FromFunc<A,B>(Func<A, B> f) {
-            return new FuncFSharpFunc<A, B>(f);
+            return new FFunc<A, B>(f);
         }
 
         public static FSharpFunc<A,B> FromFunc1<A,B>(Func<A,B> f) {
