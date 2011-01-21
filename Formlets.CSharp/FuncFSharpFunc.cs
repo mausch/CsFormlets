@@ -38,6 +38,10 @@ namespace Formlets.CSharp {
             return new FuncFSharpFunc<A, B>(f);
         }
 
+        public static FSharpFunc<A,B> FromFunc1<A,B>(Func<A,B> f) {
+            return FromFunc(f);
+        }
+
         /// <summary>
         /// Wraps a <see cref="Func&lt;A,B,C&gt;"/> as a curried F# function
         /// </summary>

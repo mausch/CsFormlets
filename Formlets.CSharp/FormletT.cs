@@ -120,5 +120,14 @@ namespace Formlets.CSharp {
         public XNode RenderToXml() {
             return FormletModule.renderToXml(f);
         }
+
+        public Formlet<T> Satisfies(Func<T,bool> pred, Func<T, XNode[], XNode[]> error) {
+            var f1 = FuncFSharpFunc.FromFunc1((T x) => 
+                        FuncFSharpFunc.FromFunc1((FSharpList<XNode> y) => 
+                            ArrayModule.ToList(error(x, y.ToArray()))));
+            var fpred = FuncFSharpFunc.FromFunc(pred);
+            var r = FormletModule.satisfies(fpred, f1, f);
+            return new Formlet<T>(r);
+        }
     }
 }
