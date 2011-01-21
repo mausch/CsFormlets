@@ -45,8 +45,12 @@ namespace Formlets.CSharp {
             return new Formlet<T>(r);
         }
 
-        public Formlet<T> Ap(XElement xml) {
-            return ApIgnore(Formlet.Xml(xml));
+        public Formlet<T> Ap(params XElement[] xml) {
+            var a = this;
+            foreach (var i in xml) {
+                a = a.ApIgnore(Formlet.Xml(i));
+            }
+            return a;
         }
 
         public Formlet<T> WrapWith(XElement xml) {

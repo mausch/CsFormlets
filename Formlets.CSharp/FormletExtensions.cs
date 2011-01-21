@@ -15,8 +15,12 @@ namespace Formlets.CSharp {
             return b.Ap(a);
         }
 
-        public static Formlet<Func<A,B>> Ap<A,B>(this Formlet<Func<A,B>> a, XElement elem) {
-            return a.ApIgnore(Formlet.Xml(elem));
+        public static Formlet<Func<A,B>> Ap<A,B>(this Formlet<Func<A,B>> a, params XElement[] elem) {
+            var b = a;
+            foreach (var i in elem) {
+                b = b.ApIgnore(Formlet.Xml(i));
+            }
+            return b;
         }
 
         public static Formlet<Func<A,B>> Ap<A,B>(this Formlet<Func<A,B>> a, string text) {

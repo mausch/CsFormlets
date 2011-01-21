@@ -10,9 +10,9 @@ Public Class XmlIntegrationTests
             Formlet.Yield(L.F(Function(a As String) _
                           L.F(Function(b As Integer) Tuple.Create(a, b)))) _
                 .Ap(input) _
-                .Ap(<br/>) _
+                .Ap(<br/>, <br/>) _
                 .Ap(inputInt.WrapWith(<span class="something"/>)) _
-                .Ap(<input type="submit" value="Send!"/>)
+                .Ap(<input type="submit" value="Send!"/>, <br/>)
         Console.WriteLine(f.Render())
     End Sub
 End Class
