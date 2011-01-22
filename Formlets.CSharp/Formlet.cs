@@ -91,6 +91,23 @@ namespace Formlets.CSharp {
             return f.Lift(l => (ICollection<T>)l.ToList());
         }
 
+        public static Formlet<string> TextArea() {
+            return TextArea("", new Dictionary<string, string>());
+        }
+
+        public static Formlet<string> TextArea(string defaultValue) {
+            return TextArea(defaultValue, new Dictionary<string, string>());
+        }
+
+        public static Formlet<string> TextArea(IEnumerable<KeyValuePair<string,string>> attributes) {
+            return TextArea("", attributes);
+        }
+
+        public static Formlet<string> TextArea(string defaultValue, IEnumerable<KeyValuePair<string,string>> attributes) {
+            var r = FormletModule.textarea(defaultValue).Invoke(attributes.ToTuples().ToFsList());
+            return new Formlet<string>(r);
+        }
+
         /// <summary>
         /// Lifts text into formlet
         /// </summary>
