@@ -14,5 +14,10 @@ namespace Formlets.CSharp {
             var elems = text.Select(t => new XText(t)).ToArray();
             return l.Append(elems);
         }
+
+        public static List<XNode> WrapWith(this List<XNode> l, XElement elem) {
+            elem.Add(l);
+            return new List<XNode> { elem };
+        }
     }
 }

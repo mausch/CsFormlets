@@ -8,7 +8,9 @@ Public Class XmlIntegrationTests
         Dim input = Formlet.Input()
         Dim inputInt = Formlet.Input().
                         Satisfies(Function(s) Regex.IsMatch(s, "[0-9]+"),
-                                   Function(s, x) x.Append(<span class="error">'<%= s %>' is not a valid number</span>)).
+                                   Function(s, x) x.
+                                       Append(<span class="errorMsg">'<%= s %>' is not a valid number</span>).
+                                       WrapWith(<span class="error"/>)).
                         Lift(Function(a) Integer.Parse(a))
         Dim f =
             Formlet.Yield(L.F(Function(a As String) _
