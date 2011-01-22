@@ -85,5 +85,25 @@ namespace Formlets.CSharp.Tests {
             Assert.True(result.Value.IsNone());            
         }
 
+        [Fact]
+        public void Radio() {
+            var radio1 = Formlet.Radio("a", new Dictionary<string, string> {
+                {"a","First" },
+                {"b","Second" },
+            });
+            var radio2 = Formlet.Radio(1, new Dictionary<int, string> {
+                {1, "First"},
+                {2, "Second"},
+            });
+            var formlet = Formlet.Yield(L.F((string a) => L.F((int b) => Tuple.Create(a,b))))
+                .Ap(radio1)
+                .Ap(radio2);
+            var result = formlet.Run(new Dictionary<string, string> {
+                { "input_0","b" },
+                { "input_1","2" },
+            });
+            Assert.Equal("b", result.Value.Value.Item1);
+            Assert.Equal(2, result.Value.Value.Item2);
+        }
     }
 }
