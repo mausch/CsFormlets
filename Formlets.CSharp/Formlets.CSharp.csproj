@@ -49,6 +49,7 @@
     <Compile Include="FsList.cs" />
     <Compile Include="FFunc.cs" />
     <Compile Include="FuncInference.cs" />
+    <Compile Include="ListExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
