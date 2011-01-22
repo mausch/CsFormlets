@@ -29,7 +29,7 @@ namespace Formlets.CSharp {
         /// <param name="a"></param>
         /// <returns></returns>
         public Formlet<B> Ap<B>(Formlet<Func<T, B>> a) {
-            var ff = Formlet.FormletFSharpFunc(a);
+            var ff = a.Lift(FFunc.FromFunc);
             var r = FormletModule.ap(ff.f, f);
             return new Formlet<B>(r);
         }

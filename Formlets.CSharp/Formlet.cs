@@ -104,12 +104,6 @@ namespace Formlets.CSharp {
             return new Formlet<Unit>(FormletModule.xnode(xml));
         }
 
-        public static Formlet<FSharpFunc<A, B>> FormletFSharpFunc<A, B>(Formlet<Func<A, B>> f) {
-            FSharpFunc<Func<A, B>, FSharpFunc<A, B>> toff = new FFunc<Func<A, B>, FSharpFunc<A, B>>(a => new FFunc<A, B>(a));
-            var ff = FormletModule.lift(toff, f);
-            return new Formlet<FSharpFunc<A, B>>(ff);
-        }
-
         /// <summary>
         /// Applicative application (i.e. &lt;*&gt;)
         /// </summary>
