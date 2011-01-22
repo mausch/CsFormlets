@@ -55,6 +55,22 @@ namespace Formlets.CSharp {
             return new Formlet<string>(FormletModule.input(defaultValue, DictToTupleList(attributes)));
         }
 
+        public static Formlet<string> Password() {
+            return new Formlet<string>(FormletModule.password);
+        }
+
+        public static Formlet<string> Hidden() {
+            return new Formlet<string>(FormletModule.hidden(""));
+        }
+
+        public static Formlet<string> Hidden(string defaultValue) {
+            return new Formlet<string>(FormletModule.hidden(defaultValue));
+        }
+
+        public static Formlet<bool> CheckBox(bool defaultValue) {
+            return new Formlet<bool>(FormletModule.checkbox(defaultValue));
+        }
+
         /// <summary>
         /// Lifts text into formlet
         /// </summary>
