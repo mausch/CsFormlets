@@ -8,18 +8,6 @@ using System.Xml.Linq;
 namespace Formlets.CSharp {
     public static class Formlet {
         /// <summary>
-        /// A helper conversion function
-        /// </summary>
-        /// <typeparam name="K"></typeparam>
-        /// <typeparam name="V"></typeparam>
-        /// <param name="dict"></param>
-        /// <returns></returns>
-        public static FSharpList<Tuple<K, V>> DictToTupleList<K, V>(IEnumerable<KeyValuePair<K, V>> dict) {
-            var tuples = dict.Select(kv => Tuple.Create(kv.Key, kv.Value));
-            return SeqModule.ToList(tuples);
-        }
-
-        /// <summary>
         /// A text input formlet
         /// </summary>
         /// <returns></returns>
@@ -52,7 +40,7 @@ namespace Formlets.CSharp {
         /// <param name="attributes"></param>
         /// <returns></returns>
         public static Formlet<string> Input(string defaultValue, IEnumerable<KeyValuePair<string, string>> attributes) {
-            return new Formlet<string>(FormletModule.input(defaultValue, DictToTupleList(attributes)));
+            return new Formlet<string>(FormletModule.input(defaultValue, attributes.ToTuples().ToFsList()));
         }
 
         public static Formlet<string> Password() {
@@ -72,39 +60,33 @@ namespace Formlets.CSharp {
         }
 
         public static Formlet<string> Radio(string selected, IEnumerable<KeyValuePair<string,string>> values) {
-            var tuples = values.Select(kv => Tuple.Create(kv.Key, kv.Value));
-            var r = FormletModule.radio(selected, tuples);
+            var r = FormletModule.radio(selected, values.ToTuples());
             return new Formlet<string>(r);
         }
 
         public static Formlet<T> Radio<T>(T selected, IEnumerable<KeyValuePair<T,string>> values) {
-            var tuples = values.Select(kv => Tuple.Create(kv.Key, kv.Value));
-            var r = FormletModule.radioA(selected, tuples);
+            var r = FormletModule.radioA(selected, values.ToTuples());
             return new Formlet<T>(r);
         }
 
         public static Formlet<string> Select(string selected, IEnumerable<KeyValuePair<string,string>> values) {
-            var tuples = values.Select(kv => Tuple.Create(kv.Key, kv.Value));
-            var r = FormletModule.select(selected, tuples);
+            var r = FormletModule.select(selected, values.ToTuples());
             return new Formlet<string>(r);
         }
 
         public static Formlet<T> Select<T>(T selected, IEnumerable<KeyValuePair<T, string>> values) {
-            var tuples = values.Select(kv => Tuple.Create(kv.Key, kv.Value));
-            var r = FormletModule.selectA(selected, tuples);
+            var r = FormletModule.selectA(selected, values.ToTuples());
             return new Formlet<T>(r);
         }
 
         public static Formlet<ICollection<string>> Select(IEnumerable<string> selected, IEnumerable<KeyValuePair<string,string>> values) {
-            var tuples = values.Select(kv => Tuple.Create(kv.Key, kv.Value));
-            var r = FormletModule.selectMulti(selected, tuples);
+            var r = FormletModule.selectMulti(selected, values.ToTuples());
             var f = new Formlet<FSharpList<string>>(r);
             return f.Lift(l => (ICollection<string>)l.ToList());
         }
 
         public static Formlet<ICollection<T>> Select<T>(IEnumerable<T> selected, IEnumerable<KeyValuePair<T, string>> values) {
-            var tuples = values.Select(kv => Tuple.Create(kv.Key, kv.Value));
-            var r = FormletModule.selectMultiA(selected, tuples);
+            var r = FormletModule.selectMultiA(selected, values.ToTuples());
             var f = new Formlet<FSharpList<T>>(r);
             return f.Lift(l => (ICollection<T>)l.ToList());
         }
@@ -187,7 +169,7 @@ namespace Formlets.CSharp {
         /// <param name="value"></param>
         /// <returns></returns>
         public static Formlet<T> Yield<T>(T value) {
-            var r =  FormletModule.puree(value);
+            var r = FormletModule.puree(value);
             return new Formlet<T>(r);
         }
 
@@ -199,7 +181,7 @@ namespace Formlets.CSharp {
             return f.Satisfies(pred, (v, n) => {
                 var attr = new Dictionary<string, string> { { "class", "error" } };
                 var content = FsList.New(new XText(errorMessage(v)) as XNode);
-                var span = XmlWriter.xelem("span", Formlet.DictToTupleList(attr), content);
+                var span = XmlWriter.xelem("span", attr.ToTuples().ToFsList(), content);
                 n.Add(span);
                 return n;
             });
