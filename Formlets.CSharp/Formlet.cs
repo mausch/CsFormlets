@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.FSharp.Collections;
 using Microsoft.FSharp.Core;
 using System.Xml.Linq;
+using System.Web;
 
 namespace Formlets.CSharp {
     public static class Formlet {
@@ -106,6 +107,10 @@ namespace Formlets.CSharp {
         public static Formlet<string> TextArea(string defaultValue, IEnumerable<KeyValuePair<string,string>> attributes) {
             var r = FormletModule.textarea(defaultValue).Invoke(attributes.ToTuples().ToFsList());
             return new Formlet<string>(r);
+        }
+
+        public static Formlet<FSharpOption<HttpPostedFileBase>> File() {
+            return new Formlet<FSharpOption<HttpPostedFileBase>>(FormletModule.file);
         }
 
         /// <summary>

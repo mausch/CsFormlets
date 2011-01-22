@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using Xunit;
 using System.Text.RegularExpressions;
-using System.Xml.Linq;
+using System.Web;
+using Xunit;
 
 namespace Formlets.CSharp.Tests {
     public class Usage {
@@ -38,7 +37,7 @@ namespace Formlets.CSharp.Tests {
         public void PureApply() {
             var input = Formlet.Input("a value", new Dictionary<string, string> {{"size", "10"}});
             var inputInt = Formlet.Input().Lift(int.Parse);
-            var formlet = Formlet.Yield(L.F((string a) => L.F((int b) => Tuple.Create(a,b))))
+            var formlet = Formlet.Yield(L.F((string a) => L.F((int b) => Tuple.Create(a, b))))
                 .Ap(input)
                 .Ap("Hello world!")
                 .Ap(inputInt);
@@ -73,7 +72,7 @@ namespace Formlets.CSharp.Tests {
         [Fact]
         public void Validation2() {
             var inputInt = Formlet.Input()
-                .Satisfies(s => Regex.IsMatch(s, "[0-9]+"), 
+                .Satisfies(s => Regex.IsMatch(s, "[0-9]+"),
                            s => string.Format("'{0}' is not a valid number", s))
                 .Lift(int.Parse);
             var result = inputInt.Run(new Dictionary<string, string> {
@@ -82,28 +81,46 @@ namespace Formlets.CSharp.Tests {
             Console.WriteLine(result.ErrorForm);
             Assert.Contains("<input name=\"input_0\" value=\"bla\" />", result.ErrorForm.ToString());
             Assert.Contains("<span class=\"error\">'bla' is not a valid number</span>", result.ErrorForm.ToString());
-            Assert.True(result.Value.IsNone());            
+            Assert.True(result.Value.IsNone());
         }
 
         [Fact]
         public void Radio() {
             var radio1 = Formlet.Radio("a", new Dictionary<string, string> {
-                {"a","First" },
-                {"b","Second" },
+                {"a", "First"},
+                {"b", "Second"},
             });
             var radio2 = Formlet.Radio(1, new Dictionary<int, string> {
                 {1, "First"},
                 {2, "Second"},
             });
-            var formlet = Formlet.Yield(L.F((string a) => L.F((int b) => Tuple.Create(a,b))))
+            var formlet = Formlet.Yield(L.F((string a) => L.F((int b) => Tuple.Create(a, b))))
                 .Ap(radio1)
                 .Ap(radio2);
             var result = formlet.Run(new Dictionary<string, string> {
-                { "input_0","b" },
-                { "input_1","2" },
+                {"input_0", "b"},
+                {"input_1", "2"},
             });
             Assert.Equal("b", result.Value.Value.Item1);
             Assert.Equal(2, result.Value.Value.Item2);
+        }
+
+        [Fact]
+        public void File() {
+            var file = Formlet.File();
+            Console.WriteLine(file.Render());
+            var result = file.Run(new Dictionary<string, InputValue> {
+                {"input_0", InputValue.NewFile(new MockHttpPostedFileBase {MFileName = "test"})}
+            });
+            Assert.Equal("test", result.Value.Value.Value.FileName);
+        }
+
+        public class MockHttpPostedFileBase : HttpPostedFileBase {
+            public override string FileName {
+                get { return MFileName; }
+            }
+
+            public string MFileName { get; set; }
         }
     }
 }

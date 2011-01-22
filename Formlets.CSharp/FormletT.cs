@@ -74,6 +74,10 @@ namespace Formlets.CSharp {
             return Run(list);
         }
 
+        public FormletResult<T> Run(IEnumerable<KeyValuePair<string, InputValue>> env) {
+            return Run(env.ToTuples().ToFsList());
+        }
+
         /// <summary>
         /// Runs a formlet against an environment
         /// </summary>
