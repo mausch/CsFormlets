@@ -71,6 +71,18 @@ namespace Formlets.CSharp {
             return new Formlet<bool>(FormletModule.checkbox(defaultValue));
         }
 
+        public static Formlet<string> Radio(string selected, IEnumerable<KeyValuePair<string,string>> values) {
+            var tuples = values.Select(kv => Tuple.Create(kv.Key, kv.Value));
+            var r = FormletModule.radio(selected, tuples);
+            return new Formlet<string>(r);
+        }
+
+        public static Formlet<string> Select(string selected, IEnumerable<KeyValuePair<string,string>> values) {
+            var tuples = values.Select(kv => Tuple.Create(kv.Key, kv.Value));
+            var r = FormletModule.select(selected, tuples);
+            return new Formlet<string>(r);
+        }
+
         /// <summary>
         /// Lifts text into formlet
         /// </summary>
