@@ -109,8 +109,12 @@ namespace Formlets.CSharp {
             return new Formlet<string>(r);
         }
 
+        public static Formlet<FSharpOption<HttpPostedFileBase>> File(IEnumerable<KeyValuePair<string, string>> attributes) {
+            return new Formlet<FSharpOption<HttpPostedFileBase>>(FormletModule.file(attributes.ToTuples().ToFsList()));
+        }
+
         public static Formlet<FSharpOption<HttpPostedFileBase>> File() {
-            return new Formlet<FSharpOption<HttpPostedFileBase>>(FormletModule.file);
+            return File(new Dictionary<string, string>());
         }
 
         /// <summary>
