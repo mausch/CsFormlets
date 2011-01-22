@@ -113,20 +113,6 @@ namespace Formlets.CSharp {
             return FormletModule.renderToXml(f);
         }
 
-        public Formlet<T> Satisfies(Func<T, bool> pred, string errorMessage) {
-            return Satisfies(pred, _ => errorMessage);
-        }
-
-        public Formlet<T> Satisfies(Func<T, bool> pred, Func<T, string> errorMessage) {
-            return Satisfies(pred, (v, n) => {
-                var attr = new Dictionary<string, string> { { "class", "error" } };
-                var content = FsList.New(new XText(errorMessage(v)) as XNode);
-                var span = XmlWriter.xelem("span", Formlet.DictToTupleList(attr), content);
-                n.Add(span);
-                return n;
-            });
-        }
-
         public Formlet<T> Satisfies(Func<T,bool> pred, Func<T, List<XNode>, IEnumerable<XNode>> error) {
             var f1 = FFunc.FromFunc1((T x) => 
                         FFunc.FromFunc1((FSharpList<XNode> y) => 

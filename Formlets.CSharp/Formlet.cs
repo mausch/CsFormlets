@@ -136,5 +136,19 @@ namespace Formlets.CSharp {
             var r =  FormletModule.puree(value);
             return new Formlet<T>(r);
         }
+
+        public static Formlet<T> Satisfies<T>(this Formlet<T> f, Func<T, bool> pred, string errorMessage) {
+            return f.Satisfies(pred, _ => errorMessage);
+        }
+
+        public static Formlet<T> Satisfies<T>(this Formlet<T> f, Func<T, bool> pred, Func<T, string> errorMessage) {
+            return f.Satisfies(pred, (v, n) => {
+                var attr = new Dictionary<string, string> { { "class", "error" } };
+                var content = FsList.New(new XText(errorMessage(v)) as XNode);
+                var span = XmlWriter.xelem("span", Formlet.DictToTupleList(attr), content);
+                n.Add(span);
+                return n;
+            });
+        }
     }
 }
