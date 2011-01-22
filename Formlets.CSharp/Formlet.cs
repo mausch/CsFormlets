@@ -107,7 +107,7 @@ namespace Formlets.CSharp {
         /// <param name="a"></param>
         /// <returns></returns>
         public static Formlet<B> Lift<A,B>(Func<A,B> f, Formlet<A> a) {
-            return new Formlet<B>(FormletModule.lift(FFunc.FromFunc(f), a));
+            return a.Lift(f);
         }
 
         /// <summary>
