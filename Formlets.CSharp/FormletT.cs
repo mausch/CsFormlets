@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.FSharp.Collections;
 using Microsoft.FSharp.Core;
 using System.Xml.Linq;
+using System.Collections.Specialized;
 
 namespace Formlets.CSharp {
     public class Formlet<T> {
@@ -96,7 +97,7 @@ namespace Formlets.CSharp {
         /// </summary>
         /// <param name="nv"></param>
         /// <returns></returns>
-        public FormletResult<T> Run(System.Collections.Specialized.NameValueCollection nv) {
+        public FormletResult<T> Run(NameValueCollection nv) {
             var list = EnvDictModule.fromNV(nv);
             return Run(list);
         }
