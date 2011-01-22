@@ -58,7 +58,7 @@ namespace Formlets.CSharp.Tests {
         public void Validation() {
             var inputInt = Formlet.Input()
                 .Satisfies(s => Regex.IsMatch(s, "[0-9]+"), (s, n) => {
-                    var msg = string.Format("'{0}'is not a valid number", s);
+                    var msg = string.Format("'{0}' is not a valid number", s);
                     n.Add(new XText(msg));
                     return n;
                 })
@@ -67,7 +67,7 @@ namespace Formlets.CSharp.Tests {
                 {"input_0", "bla"}
             });
             Console.WriteLine(result.ErrorForm);
-            Assert.Contains("<input name=\"input_0\" value=\"bla\" />'bla'is not a valid number", result.ErrorForm.ToString());
+            Assert.Contains("<input name=\"input_0\" value=\"bla\" />'bla' is not a valid number", result.ErrorForm.ToString());
             Assert.True(result.Value.IsNone());
         }
 
@@ -75,14 +75,14 @@ namespace Formlets.CSharp.Tests {
         public void Validation2() {
             var inputInt = Formlet.Input()
                 .Satisfies(s => Regex.IsMatch(s, "[0-9]+"), 
-                           s => string.Format("'{0}'is not a valid number", s))
+                           s => string.Format("'{0}' is not a valid number", s))
                 .Lift(int.Parse);
             var result = inputInt.Run(new Dictionary<string, string> {
                 {"input_0", "bla"}
             });
             Console.WriteLine(result.ErrorForm);
             Assert.Contains("<input name=\"input_0\" value=\"bla\" />", result.ErrorForm.ToString());
-            Assert.Contains("<span class=\"error\">'bla'is not a valid number</span>", result.ErrorForm.ToString());
+            Assert.Contains("<span class=\"error\">'bla' is not a valid number</span>", result.ErrorForm.ToString());
             Assert.True(result.Value.IsNone());            
         }
 
