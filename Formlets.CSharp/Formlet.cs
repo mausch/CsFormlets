@@ -89,6 +89,26 @@ namespace Formlets.CSharp {
             return new Formlet<string>(r);
         }
 
+        public static Formlet<T> Select<T>(T selected, IEnumerable<KeyValuePair<T, string>> values) {
+            var tuples = values.Select(kv => Tuple.Create(kv.Key, kv.Value));
+            var r = FormletModule.selectA(selected, tuples);
+            return new Formlet<T>(r);
+        }
+
+        public static Formlet<ICollection<string>> Select(IEnumerable<string> selected, IEnumerable<KeyValuePair<string,string>> values) {
+            var tuples = values.Select(kv => Tuple.Create(kv.Key, kv.Value));
+            var r = FormletModule.selectMulti(selected, tuples);
+            var f = new Formlet<FSharpList<string>>(r);
+            return f.Lift(l => (ICollection<string>)l.ToList());
+        }
+
+        public static Formlet<ICollection<T>> Select<T>(IEnumerable<T> selected, IEnumerable<KeyValuePair<T, string>> values) {
+            var tuples = values.Select(kv => Tuple.Create(kv.Key, kv.Value));
+            var r = FormletModule.selectMultiA(selected, tuples);
+            var f = new Formlet<FSharpList<T>>(r);
+            return f.Lift(l => (ICollection<T>)l.ToList());
+        }
+
         /// <summary>
         /// Lifts text into formlet
         /// </summary>
