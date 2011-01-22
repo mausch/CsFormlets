@@ -121,10 +121,10 @@ namespace Formlets.CSharp {
             return FormletModule.renderToXml(f);
         }
 
-        public Formlet<T> Satisfies(Func<T,bool> pred, Func<T, XNode[], XNode[]> error) {
+        public Formlet<T> Satisfies(Func<T,bool> pred, Func<T, List<XNode>, IEnumerable<XNode>> error) {
             var f1 = FFunc.FromFunc1((T x) => 
                         FFunc.FromFunc1((FSharpList<XNode> y) => 
-                            ArrayModule.ToList(error(x, y.ToArray()))));
+                            SeqModule.ToList(error(x, y.ToList()))));
             var fpred = FFunc.FromFunc(pred);
             var r = FormletModule.satisfies(fpred, f1, f);
             return new Formlet<T>(r);
