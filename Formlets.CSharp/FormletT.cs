@@ -5,6 +5,7 @@ using Microsoft.FSharp.Collections;
 using Microsoft.FSharp.Core;
 using System.Xml.Linq;
 using System.Collections.Specialized;
+using System.Web;
 
 namespace Formlets.CSharp {
     public class Formlet<T> {
@@ -99,6 +100,13 @@ namespace Formlets.CSharp {
         /// <returns></returns>
         public FormletResult<T> Run(NameValueCollection nv) {
             var list = EnvDictModule.fromNV(nv);
+            return Run(list);
+        }
+
+        public FormletResult<T> RunPost(HttpRequestBase request) {
+            var list = EnvDictModule.fromNV(request.Form);
+            var files = request.Files.AllKeys.Select(k => Tuple.Create(k, request.Files[k]));
+            list = EnvDictModule.addFromFileSeq(files).Invoke(list);
             return Run(list);
         }
 
