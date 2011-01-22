@@ -18,5 +18,14 @@ Public Class XmlIntegrationTests
                 .Ap(inputInt.WrapWith(<span class="something"/>)) _
                 .Ap(<input type="submit" value="Send!"/>, <br/>)
         Console.WriteLine(f.Render())
+        Dim result = f.Run(New Dictionary(Of String, String) From
+                           {
+                               {"input_0", "something"},
+                               {"input_1", "else"}
+                           })
+        Assert.True(FSharpOptionExtensions.IsNone(result.Value))
+        Console.WriteLine()
+        Console.WriteLine("Error form:")
+        Console.WriteLine(result.ErrorForm)
     End Sub
 End Class
