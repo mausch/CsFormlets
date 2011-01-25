@@ -31,7 +31,7 @@ namespace Formlets.CSharp {
         /// <param name="a"></param>
         /// <returns></returns>
         public Formlet<B> Ap<B>(Formlet<Func<T, B>> a) {
-            var ff = a.Lift(FFunc.FromFunc);
+            var ff = a.Select(FFunc.FromFunc);
             var r = FormletModule.ap(ff.f, f);
             return new Formlet<B>(r);
         }
@@ -59,7 +59,7 @@ namespace Formlets.CSharp {
         /// <typeparam name="B"></typeparam>
         /// <param name="a"></param>
         /// <returns></returns>
-        public Formlet<B> Lift<B>(Func<T, B> a) {
+        public Formlet<B> Select<B>(Func<T, B> a) {
             var ff = FFunc.FromFunc(a);
             var r = FormletModule.lift(ff, f);
             return new Formlet<B>(r);

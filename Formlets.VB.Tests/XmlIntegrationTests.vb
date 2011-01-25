@@ -11,7 +11,7 @@ Public Class XmlIntegrationTests
             Function(attr As IDictionary(Of String, String)) _
                 Formlet.Input(attr).Validate(Function(s) Regex.IsMatch(s, "[0-9]+"),
                                       Function(s) String.Format("{0} is not a valid number")).
-                            Lift(Function(a) Integer.Parse(a))
+                            [Select](Function(a) Integer.Parse(a))
         Dim inputRange =
             Function(min As Integer, max As Integer) _
                 inputInt(Nothing).Validate(Function(n) n <= max AndAlso n >= min,
@@ -39,7 +39,7 @@ Public Class XmlIntegrationTests
                     Ap(inputInt(New Dictionary(Of String, String) From {{"id", idn(2)}}))
                 Return values.Validate(Function(t) isDate(t.Item1, t.Item2, t.Item3),
                                                           Function(s) "Invalid date").
-                            Lift(Function(t) New DateTime(t.Item3, t.Item1, t.Item2))
+                            Select(Function(t) New DateTime(t.Item3, t.Item1, t.Item2))
             End Function
 
         Dim f =

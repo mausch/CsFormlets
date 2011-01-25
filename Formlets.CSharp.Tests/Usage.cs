@@ -27,7 +27,7 @@ namespace Formlets.CSharp.Tests {
         [Fact]
         public void Lift() {
             var input = Formlet.Input();
-            var inputInt = input.Lift(int.Parse);
+            var inputInt = input.Select(int.Parse);
             var result = inputInt.Run(new Dictionary<string, string> {{"input_0", "15"}});
             Assert.True(result.Value.IsSome());
             Assert.Equal(15, result.Value.Value);
@@ -36,7 +36,7 @@ namespace Formlets.CSharp.Tests {
         [Fact]
         public void PureApply() {
             var input = Formlet.Input("a value", new Dictionary<string, string> {{"size", "10"}});
-            var inputInt = Formlet.Input().Lift(int.Parse);
+            var inputInt = Formlet.Input().Select(int.Parse);
             var formlet = Formlet.Yield(L.F((string a) => L.F((int b) => Tuple.Create(a, b))))
                 .Ap(input)
                 .Ap("Hello world!")
@@ -62,7 +62,7 @@ namespace Formlets.CSharp.Tests {
                     var msg = string.Format("'{0}' is not a valid number", s);
                     return n.Append(msg);
                 })
-                .Lift(int.Parse);
+                .Select(int.Parse);
             var result = inputInt.Run(new Dictionary<string, string> {
                 {"input_0", "bla"}
             });
@@ -76,7 +76,7 @@ namespace Formlets.CSharp.Tests {
             var inputInt = Formlet.Input()
                 .Satisfies(s => Regex.IsMatch(s, "[0-9]+"),
                            s => string.Format("'{0}' is not a valid number", s))
-                .Lift(int.Parse);
+                .Select(int.Parse);
             var result = inputInt.Run(new Dictionary<string, string> {
                 {"input_0", "bla"}
             });

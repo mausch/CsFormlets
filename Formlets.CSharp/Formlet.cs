@@ -85,13 +85,13 @@ namespace Formlets.CSharp {
         public static Formlet<ICollection<string>> Select(IEnumerable<string> selected, IEnumerable<KeyValuePair<string,string>> values) {
             var r = FormletModule.selectMulti(selected, values.ToTuples());
             var f = new Formlet<FSharpList<string>>(r);
-            return f.Lift(l => (ICollection<string>)l.ToList());
+            return f.Select(l => (ICollection<string>)l.ToList());
         }
 
         public static Formlet<ICollection<T>> Select<T>(IEnumerable<T> selected, IEnumerable<KeyValuePair<T, string>> values) {
             var r = FormletModule.selectMultiA(selected, values.ToTuples());
             var f = new Formlet<FSharpList<T>>(r);
-            return f.Lift(l => (ICollection<T>)l.ToList());
+            return f.Select(l => (ICollection<T>)l.ToList());
         }
 
         public static Formlet<string> TextArea() {
@@ -171,7 +171,7 @@ namespace Formlets.CSharp {
         /// <param name="a"></param>
         /// <returns></returns>
         public static Formlet<B> Lift<A,B>(Func<A,B> f, Formlet<A> a) {
-            return a.Lift(f);
+            return a.Select(f);
         }
 
         /// <summary>
