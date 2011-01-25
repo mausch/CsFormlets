@@ -19,7 +19,7 @@ namespace Formlets.CSharp.Tests {
         [Fact]
         public void Render() {
             var input = Formlet.Input("a value", new Dictionary<string, string> {{"size", "10"}});
-            var html = input.Render();
+            var html = input.ToString();
             Console.WriteLine(html);
             Assert.Equal("<input name=\"input_0\" value=\"a value\" size=\"10\" />", html);
         }
@@ -42,7 +42,7 @@ namespace Formlets.CSharp.Tests {
                 .Ap("Hello world!")
                 .Ap(X.E("span", X.A("class","bla"), "a message"))
                 .Ap(inputInt);
-            var html = formlet.Render();
+            var html = formlet.ToString();
             Console.WriteLine(html);
             Assert.Contains("<input name=\"input_0\" value=\"a value\" size=\"10\" />", html);
             Assert.Contains("Hello world!", html);
@@ -110,7 +110,7 @@ namespace Formlets.CSharp.Tests {
         [Fact]
         public void File() {
             var file = Formlet.File();
-            Console.WriteLine(file.Render());
+            Console.WriteLine(file.ToString());
             var result = file.Run(new Dictionary<string, InputValue> {
                 {"input_0", InputValue.NewFile(new MockHttpPostedFileBase {MFileName = "test"})}
             });

@@ -119,6 +119,12 @@ namespace Formlets.CSharp {
             return File(new Dictionary<string, string>());
         }
 
+        public static Func<string, Formlet<Unit>> ReCaptcha(string publicKey, string privateKey, bool? mockedValue = null) {
+            var value = mockedValue == null ? FSharpOption<bool>.None : FSharpOption<bool>.Some(mockedValue.Value);
+            var settings = new Formlets.FormletModule.ReCaptchaSettings(publicKey, privateKey, value);
+            return ip => new Formlet<Unit>(FormletModule.reCaptcha(settings, ip));
+        }
+
         /// <summary>
         /// Lifts text into formlet
         /// </summary>

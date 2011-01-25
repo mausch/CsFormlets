@@ -113,7 +113,7 @@ namespace Formlets.CSharp {
         /// Renders a formlet
         /// </summary>
         /// <returns></returns>
-        public string Render() {
+        public override string ToString() {
             return FormletModule.render(f);
         }
 

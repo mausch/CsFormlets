@@ -49,7 +49,7 @@ Public Class XmlIntegrationTests
                 Ap(<br/>, <br/>).
                 Ap(inputInt(Nothing).WrapWith(<span class="something"/>)).
                 Ap(<input type="submit" value="Send!"/>, <br/>)
-        Console.WriteLine(f.Render())
+        Console.WriteLine(f.ToString())
         Dim result = f.Run(New Dictionary(Of String, String) From
                            {
                                {"input_0", "something"},
