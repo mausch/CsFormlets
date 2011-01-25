@@ -41,6 +41,8 @@ namespace Formlets.CSharp {
         /// <param name="attributes"></param>
         /// <returns></returns>
         public static Formlet<string> Input(string defaultValue, IEnumerable<KeyValuePair<string, string>> attributes) {
+            defaultValue = defaultValue ?? "";
+            attributes = attributes ?? new Dictionary<string, string>();
             return new Formlet<string>(FormletModule.input(defaultValue, attributes.ToTuples().ToFsList()));
         }
 
