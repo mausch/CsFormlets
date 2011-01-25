@@ -40,8 +40,10 @@ namespace Formlets.CSharp.Tests {
             var formlet = Formlet.Yield(L.F((string a) => L.F((int b) => Tuple.Create(a, b))))
                 .Ap(input)
                 .Ap("Hello world!")
+                .Ap(X.E("span", X.A("class","bla"), "a message"))
                 .Ap(inputInt);
             var html = formlet.Render();
+            Console.WriteLine(html);
             Assert.Contains("<input name=\"input_0\" value=\"a value\" size=\"10\" />", html);
             Assert.Contains("Hello world!", html);
             Assert.Contains("<input name=\"input_1\" value=\"\" />", html);

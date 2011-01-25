@@ -50,6 +50,7 @@
     <Compile Include="FuncInference.cs" />
     <Compile Include="ListExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="X.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FsFormlets\Formlets\Formlets.fsproj">
