@@ -8,10 +8,10 @@ Public Class XmlIntegrationTests
     Public Sub Test()
         Dim input = Formlet.Input()
         Dim inputInt =
-            Function(attr As IDictionary(Of String, String)) _
+            Function(attr As IEnumerable(Of KeyValuePair(Of String, String))) _
                 Formlet.Input(attr).Validate(Function(s) Regex.IsMatch(s, "[0-9]+"),
                                       Function(s) String.Format("{0} is not a valid number")).
-                            [Select](Function(a) Integer.Parse(a))
+                            Select(Function(a) Integer.Parse(a))
         Dim inputRange =
             Function(min As Integer, max As Integer) _
                 inputInt(Nothing).Validate(Function(n) n <= max AndAlso n >= min,
@@ -27,16 +27,17 @@ Public Class XmlIntegrationTests
                                  End Try
                              End Function
                 Dim id = Guid.NewGuid.ToString()
+                Dim a = Function(k As String, v As String) New KeyValuePair(Of String, String)(k, v)
                 Dim idn = Function(n As Integer) String.Format("d{0}{1}", id, n)
                 Dim values = Formlet.Yield(L.F(Function(month As Integer) _
                               L.F(Function(day As Integer) _
                               L.F(Function(year As Integer) tuple.Create(month, day, year))))).
                     Ap(<label for=<%= idn(0) %>>Month: </label>).
-                    Ap(inputInt(New Dictionary(Of String, String) From {{"id", idn(0)}})).
+                    Ap(inputInt({a("id", idn(0))})).
                     Ap(<br/>, <label for=<%= idn(1) %>>Day: </label>).
-                    Ap(inputInt(New Dictionary(Of String, String) From {{"id", idn(1)}})).
+                    Ap(inputInt({a("id", idn(1))})).
                     Ap(<br/>, <label for=<%= idn(2) %>>Year: </label>).
-                    Ap(inputInt(New Dictionary(Of String, String) From {{"id", idn(2)}}))
+                    Ap(inputInt({a("id", idn(2))}))
 
                 'Return values.Validate(Function(t) isDate(t.Item1, t.Item2, t.Item3),
                 '                                          Function(s) "Invalid date").
