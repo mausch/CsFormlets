@@ -15,7 +15,7 @@ Public Class XmlIntegrationTests
                     Select(Function(a) Integer.Parse(a))
         Dim inputRange =
             Function(min As Integer, max As Integer) _
-                inputInt(Nothing).
+                inputInt({}).
                     Validate(Function(n) n <= max AndAlso n >= min,
                              Function(s) String.Format("Value must be between {0} and {1}", min, max))
         Dim inputDate =
@@ -55,7 +55,7 @@ Public Class XmlIntegrationTests
                           L.F(Function(b As Integer) Tuple.Create(a, b)))).
                 Ap(input).
                 Ap(<br/>, <br/>).
-                Ap(inputInt(Nothing).WrapWith(<span class="something"/>)).
+                Ap(inputInt({}).WrapWith(<span class="something"/>)).
                 Ap(<input type="submit" value="Send!"/>, <br/>)
         Console.WriteLine(f.ToString())
         Dim result = f.Run(New Dictionary(Of String, String) From
