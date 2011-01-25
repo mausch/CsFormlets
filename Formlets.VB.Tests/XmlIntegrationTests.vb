@@ -9,13 +9,15 @@ Public Class XmlIntegrationTests
         Dim input = Formlet.Input()
         Dim inputInt =
             Function(attr As IEnumerable(Of KeyValuePair(Of String, String))) _
-                Formlet.Input(attr).Validate(Function(s) Regex.IsMatch(s, "[0-9]+"),
-                                      Function(s) String.Format("{0} is not a valid number")).
-                            Select(Function(a) Integer.Parse(a))
+                Formlet.Input(attr).
+                    Validate(Function(s) Regex.IsMatch(s, "[0-9]+"),
+                             Function(s) String.Format("{0} is not a valid number")).
+                    Select(Function(a) Integer.Parse(a))
         Dim inputRange =
             Function(min As Integer, max As Integer) _
-                inputInt(Nothing).Validate(Function(n) n <= max AndAlso n >= min,
-                                      Function(s) String.Format("Value must be between {0} and {1}", min, max))
+                inputInt(Nothing).
+                    Validate(Function(n) n <= max AndAlso n >= min,
+                             Function(s) String.Format("Value must be between {0} and {1}", min, max))
         Dim inputDate =
             Function()
                 Dim isDate = Function(m As Integer, d As Integer, y As Integer)
@@ -29,9 +31,10 @@ Public Class XmlIntegrationTests
                 Dim id = Guid.NewGuid.ToString()
                 Dim a = Function(k As String, v As String) New KeyValuePair(Of String, String)(k, v)
                 Dim idn = Function(n As Integer) String.Format("d{0}{1}", id, n)
-                Dim values = Formlet.Yield(L.F(Function(month As Integer) _
-                              L.F(Function(day As Integer) _
-                              L.F(Function(year As Integer) tuple.Create(month, day, year))))).
+                Dim values =
+                    Formlet.Yield(L.F(Function(month As Integer) _
+                                  L.F(Function(day As Integer) _
+                                  L.F(Function(year As Integer) tuple.Create(month, day, year))))).
                     Ap(<label for=<%= idn(0) %>>Month: </label>).
                     Ap(inputInt({a("id", idn(0))})).
                     Ap(<br/>, <label for=<%= idn(1) %>>Day: </label>).
