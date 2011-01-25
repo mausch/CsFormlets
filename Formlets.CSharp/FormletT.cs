@@ -72,8 +72,7 @@ namespace Formlets.CSharp {
         /// <returns></returns>
         public FormletResult<T> Run(IEnumerable<KeyValuePair<string, string>> env) {
             var tuples = env.Select(kv => Tuple.Create(kv.Key, InputValue.NewValue(kv.Value)));
-            var list = SeqModule.ToList(tuples);
-            return Run(list);
+            return Run(tuples.ToFsList());
         }
 
         public FormletResult<T> Run(IEnumerable<KeyValuePair<string, InputValue>> env) {
@@ -129,7 +128,7 @@ namespace Formlets.CSharp {
         public Formlet<T> Satisfies(Func<T,bool> pred, Func<T, List<XNode>, IEnumerable<XNode>> error) {
             var f1 = FFunc.FromFunc1((T x) => 
                         FFunc.FromFunc1((FSharpList<XNode> y) => 
-                            SeqModule.ToList(error(x, y.ToList()))));
+                            error(x, y.ToList()).ToFsList()));
             var fpred = FFunc.FromFunc(pred);
             var r = FormletModule.satisfies(fpred, f1, f);
             return new Formlet<T>(r);
