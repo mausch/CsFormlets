@@ -125,6 +125,10 @@ namespace Formlets.CSharp {
             return FormletModule.renderToXml(f);
         }
 
+        public Formlet<T> Where(Func<T,bool> pred) {
+            return Satisfies(pred, (v, n) => n.Append("Invalid value"));
+        }
+
         public Formlet<T> Satisfies(Func<T,bool> pred, Func<T, List<XNode>, IEnumerable<XNode>> error) {
             var f1 = FFunc.FromFunc1((T x) => 
                         FFunc.FromFunc1((FSharpList<XNode> y) => 

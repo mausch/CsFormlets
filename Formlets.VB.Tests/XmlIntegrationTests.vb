@@ -37,9 +37,13 @@ Public Class XmlIntegrationTests
                     Ap(inputInt(New Dictionary(Of String, String) From {{"id", idn(1)}})).
                     Ap(<br/>, <label for=<%= idn(2) %>>Year: </label>).
                     Ap(inputInt(New Dictionary(Of String, String) From {{"id", idn(2)}}))
-                Return values.Validate(Function(t) isDate(t.Item1, t.Item2, t.Item3),
-                                                          Function(s) "Invalid date").
-                            Select(Function(t) New DateTime(t.Item3, t.Item1, t.Item2))
+
+                'Return values.Validate(Function(t) isDate(t.Item1, t.Item2, t.Item3),
+                '                                          Function(s) "Invalid date").
+                '            Select(Function(t) New DateTime(t.Item3, t.Item1, t.Item2))
+                Return From v In values
+                        Where isDate(v.Item1, v.Item2, v.Item3)
+                        Select New DateTime(v.Item3, v.Item1, v.Item2)
             End Function
 
         Dim f =
