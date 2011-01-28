@@ -61,7 +61,7 @@ namespace Formlets.CSharp {
         /// <returns></returns>
         public Formlet<B> Select<B>(Func<T, B> a) {
             var ff = FFunc.FromFunc(a);
-            var r = FormletModule.lift(ff, f);
+            var r = FormletModule.map(ff, f);
             return new Formlet<B>(r);
         }
 

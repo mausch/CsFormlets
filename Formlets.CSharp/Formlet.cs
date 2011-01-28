@@ -112,7 +112,8 @@ namespace Formlets.CSharp {
         }
 
         public static Formlet<FSharpOption<HttpPostedFileBase>> File(IEnumerable<KeyValuePair<string, string>> attributes) {
-            return new Formlet<FSharpOption<HttpPostedFileBase>>(FormletModule.file(attributes.ToTuples().ToFsList()));
+            var f = FormletModule.file(attributes.ToTuples().ToFsList());
+            return new Formlet<FSharpOption<HttpPostedFileBase>>(f);
         }
 
         public static Formlet<FSharpOption<HttpPostedFileBase>> File() {
@@ -186,7 +187,7 @@ namespace Formlets.CSharp {
         /// <returns></returns>
         public static Formlet<C> Lift2<A,B,C>(Func<A,B,C> f, Formlet<A> a, Formlet<B> b) {
             var ff = FFunc.FromFunc(f);
-            var r = FormletModule.lift2(ff, a, b);
+            var r = FormletModule.map2(ff, a, b);
             return new Formlet<C>(r);
         }
 
