@@ -7,7 +7,7 @@ Module FormletExtensions
         Return formlet.
            Satisfies(isValid,
                      Function(s, x) x.
-                       Append(<span class="errorMsg">'<%= msg(s) %>' is not a valid number</span>).
+                       Append(<span class="errorMsg">'<%= msg(s) %>'</span>).
                        WrapWith(<span class="error"/>))
     End Function
 
