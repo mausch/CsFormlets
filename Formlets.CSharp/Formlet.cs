@@ -8,6 +8,10 @@ using System.Web;
 
 namespace Formlets.CSharp {
     public static class Formlet {
+        public static Formlet<T> Tag<T>(XElement elem, Formlet<T> formlet) {
+            return formlet.WrapWith(elem);
+        }
+
         /// <summary>
         /// A text input formlet
         /// </summary>
