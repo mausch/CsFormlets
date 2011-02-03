@@ -128,7 +128,7 @@ namespace Formlets.CSharp {
             return Satisfies(pred, (v, n) => n.Append("Invalid value"), v => new[] {"Invalid value"});
         }
 
-        public Formlet<T> Satisfies(Func<T,bool> pred, Func<T, List<XNode>, IEnumerable<XNode>> error, Func<T, ICollection<string>> errorMsg) {
+        public Formlet<T> Satisfies(Func<T,bool> pred, Func<T, List<XNode>, IEnumerable<XNode>> error, Func<T, IEnumerable<string>> errorMsg) {
             var f1 = FFunc.FromFunc1((T x) => 
                         FFunc.FromFunc1((FSharpList<XNode> y) => 
                             error(x, y.ToList()).ToFsList()));
@@ -136,6 +136,10 @@ namespace Formlets.CSharp {
             var fmsg = FFunc.FromFunc<T, FSharpList<string>>(x => errorMsg(x).ToFsList());
             var r = FormletModule.satisfies(fpred, f1, fmsg, this.f);
             return new Formlet<T>(r);
+        }
+
+        public Formlet<T> Satisfies(IValidator<T> v) {
+            return Satisfies(v.IsValid, v.BuildErrorForm, v.ErrorMessages);
         }
     }
 }
