@@ -10,17 +10,17 @@ using System.Web;
 namespace Formlets.CSharp {
     public class Formlet<T> {
         // real formlet, wrapped
-        private readonly FSharpFunc<int, Tuple<Tuple<FSharpList<XNode>, FSharpFunc<FSharpList<Tuple<string, InputValue>>, Tuple<FSharpList<XNode>, FSharpOption<T>>>>, int>> f;
+        private readonly FSharpFunc<int, Tuple<Tuple<FSharpList<XNode>, FSharpFunc<FSharpList<Tuple<string, InputValue>>, Tuple<FSharpList<XNode>, Tuple<FSharpList<string>, FSharpOption<T>>>>>, int>> f;
 
         /// <summary>
         /// Creates a <see cref="Formlet{T}"/> by wrapping an F# formlet
         /// </summary>
         /// <param name="f">F# formlet</param>
-        public Formlet(FSharpFunc<int, Tuple<Tuple<FSharpList<XNode>, FSharpFunc<FSharpList<Tuple<string, InputValue>>, Tuple<FSharpList<XNode>, FSharpOption<T>>>>, int>> f) {
+        public Formlet(FSharpFunc<int, Tuple<Tuple<FSharpList<XNode>, FSharpFunc<FSharpList<Tuple<string, InputValue>>, Tuple<FSharpList<XNode>, Tuple<FSharpList<string>, FSharpOption<T>>>>>, int>> f) {
             this.f = f;
         }
 
-        public static implicit operator FSharpFunc<int, Tuple<Tuple<FSharpList<XNode>, FSharpFunc<FSharpList<Tuple<string, InputValue>>, Tuple<FSharpList<XNode>, FSharpOption<T>>>>, int>>(Formlet<T> f) {
+        public static implicit operator FSharpFunc<int, Tuple<Tuple<FSharpList<XNode>, FSharpFunc<FSharpList<Tuple<string, InputValue>>, Tuple<FSharpList<XNode>, Tuple<FSharpList<string>, FSharpOption<T>>>>>, int>>(Formlet<T> f) {
             return f.f;
         }
 
@@ -88,8 +88,7 @@ namespace Formlets.CSharp {
             var ff = FormletModule.run(f);
             var r = ff.Invoke(list);
             var xdoc = XmlWriter.wrap(r.Item1);
-            var value = r.Item2;
-            return new FormletResult<T>(xdoc, value);
+            return new FormletResult<T>(xdoc, r.Item2.ToList(), r.Item3);
         }
 
         /// <summary>
@@ -126,15 +125,16 @@ namespace Formlets.CSharp {
         }
 
         public Formlet<T> Where(Func<T,bool> pred) {
-            return Satisfies(pred, (v, n) => n.Append("Invalid value"));
+            return Satisfies(pred, (v, n) => n.Append("Invalid value"), v => new[] {"Invalid value"});
         }
 
-        public Formlet<T> Satisfies(Func<T,bool> pred, Func<T, List<XNode>, IEnumerable<XNode>> error) {
+        public Formlet<T> Satisfies(Func<T,bool> pred, Func<T, List<XNode>, IEnumerable<XNode>> error, Func<T, ICollection<string>> errorMsg) {
             var f1 = FFunc.FromFunc1((T x) => 
                         FFunc.FromFunc1((FSharpList<XNode> y) => 
                             error(x, y.ToList()).ToFsList()));
             var fpred = FFunc.FromFunc(pred);
-            var r = FormletModule.satisfies(fpred, f1, f);
+            var fmsg = FFunc.FromFunc<T, FSharpList<string>>(x => errorMsg(x).ToFsList());
+            var r = FormletModule.satisfies(fpred, f1, fmsg, this.f);
             return new Formlet<T>(r);
         }
     }

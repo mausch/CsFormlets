@@ -61,7 +61,7 @@ namespace Formlets.CSharp.Tests {
                 .Satisfies(s => Regex.IsMatch(s, "[0-9]+"), (s, n) => {
                     var msg = string.Format("'{0}' is not a valid number", s);
                     return n.Append(msg);
-                })
+                }, v => new string[0])
                 .Select(int.Parse);
             var result = inputInt.Run(new Dictionary<string, string> {
                 {"input_0", "bla"}

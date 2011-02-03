@@ -8,7 +8,8 @@ Module FormletExtensions
            Satisfies(isValid,
                      Function(s, x) x.
                        Append(<span class="errorMsg">'<%= msg(s) %>'</span>).
-                       WrapWith(<span class="error"/>))
+                       WrapWith(<span class="error"/>),
+                       Function(v) New String() {msg(v)})
     End Function
 
 End Module

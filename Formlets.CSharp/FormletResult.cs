@@ -1,5 +1,6 @@
 using Microsoft.FSharp.Core;
 using System.Xml.Linq;
+using System.Collections.Generic;
 
 namespace Formlets.CSharp {
     /// <summary>
@@ -9,9 +10,11 @@ namespace Formlets.CSharp {
     public class FormletResult<T> {
         private readonly XNode errorForm;
         private readonly FSharpOption<T> value;
+        private readonly ICollection<string> errors;
 
-        public FormletResult(XNode errorForm, FSharpOption<T> value) {
+        public FormletResult(XNode errorForm, ICollection<string> errors, FSharpOption<T> value) {
             this.errorForm = errorForm;
+            this.errors = errors;
             this.value = value;
         }
 
@@ -20,6 +23,13 @@ namespace Formlets.CSharp {
         /// </summary>
         public XNode ErrorForm {
             get { return errorForm; }
+        }
+
+        /// <summary>
+        /// List of errors
+        /// </summary>
+        public ICollection<string> Errors {
+            get { return errors; }
         }
 
         /// <summary>

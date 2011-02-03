@@ -217,7 +217,7 @@ namespace Formlets.CSharp {
                 var span = XmlWriter.xelem("span", attr.ToTuples().ToFsList(), content);
                 n.Add(span);
                 return n;
-            });
+            }, v => new[] {errorMessage(v)});
         }
     }
 }
