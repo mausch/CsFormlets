@@ -60,8 +60,8 @@ Public Class XmlIntegrationTests
         Console.WriteLine(f.ToString())
         Dim result = f.Run(New Dictionary(Of String, String) From
                            {
-                               {"input_0", "something"},
-                               {"input_1", "else"}
+                               {"f0", "something"},
+                               {"f1", "else"}
                            })
         Assert.True(FSharpOptionExtensions.IsNone(result.Value))
         Console.WriteLine()

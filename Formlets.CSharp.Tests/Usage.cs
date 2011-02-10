@@ -9,11 +9,11 @@ namespace Formlets.CSharp.Tests {
         [Fact]
         public void Run() {
             var input = Formlet.Input();
-            var result = input.Run(new Dictionary<string, string> {{"input_0", "something"}});
+            var result = input.Run(new Dictionary<string, string> {{"f0", "something"}});
             Assert.True(result.Value.IsSome());
             Assert.Equal("something", result.Value.Value);
             Console.WriteLine(result.ErrorForm);
-            Assert.Equal("<input name=\"input_0\" value=\"something\" />", result.ErrorForm.ToString());
+            Assert.Equal("<input name=\"f0\" value=\"something\" />", result.ErrorForm.ToString());
         }
 
         [Fact]
@@ -21,14 +21,14 @@ namespace Formlets.CSharp.Tests {
             var input = Formlet.Input("a value", new Dictionary<string, string> {{"size", "10"}});
             var html = input.ToString();
             Console.WriteLine(html);
-            Assert.Equal("<input name=\"input_0\" value=\"a value\" size=\"10\" />", html);
+            Assert.Equal("<input name=\"f0\" value=\"a value\" size=\"10\" />", html);
         }
 
         [Fact]
         public void Lift() {
             var input = Formlet.Input();
             var inputInt = input.Select(int.Parse);
-            var result = inputInt.Run(new Dictionary<string, string> {{"input_0", "15"}});
+            var result = inputInt.Run(new Dictionary<string, string> {{"f0", "15"}});
             Assert.True(result.Value.IsSome());
             Assert.Equal(15, result.Value.Value);
         }
@@ -44,12 +44,12 @@ namespace Formlets.CSharp.Tests {
                 .Ap(inputInt);
             var html = formlet.ToString();
             Console.WriteLine(html);
-            Assert.Contains("<input name=\"input_0\" value=\"a value\" size=\"10\" />", html);
+            Assert.Contains("<input name=\"f0\" value=\"a value\" size=\"10\" />", html);
             Assert.Contains("Hello world!", html);
-            Assert.Contains("<input name=\"input_1\" value=\"\" />", html);
+            Assert.Contains("<input name=\"f1\" value=\"\" />", html);
             var result = formlet.Run(new Dictionary<string, string> {
-                {"input_0", "bla"},
-                {"input_1", "20"},
+                {"f0", "bla"},
+                {"f1", "20"},
             });
             Assert.Equal("bla", result.Value.Value.Item1);
             Assert.Equal(20, result.Value.Value.Item2);
@@ -64,10 +64,10 @@ namespace Formlets.CSharp.Tests {
                 }, v => new string[0])
                 .Select(int.Parse);
             var result = inputInt.Run(new Dictionary<string, string> {
-                {"input_0", "bla"}
+                {"f0", "bla"}
             });
             Console.WriteLine(result.ErrorForm);
-            Assert.Contains("<input name=\"input_0\" value=\"bla\" />'bla' is not a valid number", result.ErrorForm.ToString());
+            Assert.Contains("<input name=\"f0\" value=\"bla\" />'bla' is not a valid number", result.ErrorForm.ToString());
             Assert.True(result.Value.IsNone());
         }
 
@@ -78,10 +78,10 @@ namespace Formlets.CSharp.Tests {
                            s => string.Format("'{0}' is not a valid number", s))
                 .Select(int.Parse);
             var result = inputInt.Run(new Dictionary<string, string> {
-                {"input_0", "bla"}
+                {"f0", "bla"}
             });
             Console.WriteLine(result.ErrorForm);
-            Assert.Contains("<input name=\"input_0\" value=\"bla\" />", result.ErrorForm.ToString());
+            Assert.Contains("<input name=\"f0\" value=\"bla\" />", result.ErrorForm.ToString());
             Assert.Contains("<span class=\"error\">'bla' is not a valid number</span>", result.ErrorForm.ToString());
             Assert.True(result.Value.IsNone());
         }
@@ -100,8 +100,8 @@ namespace Formlets.CSharp.Tests {
                 .Ap(radio1)
                 .Ap(radio2);
             var result = formlet.Run(new Dictionary<string, string> {
-                {"input_0", "b"},
-                {"input_1", "2"},
+                {"f0", "b"},
+                {"f1", "2"},
             });
             Assert.Equal("b", result.Value.Value.Item1);
             Assert.Equal(2, result.Value.Value.Item2);
@@ -112,7 +112,7 @@ namespace Formlets.CSharp.Tests {
             var file = Formlet.File();
             Console.WriteLine(file.ToString());
             var result = file.Run(new Dictionary<string, InputValue> {
-                {"input_0", InputValue.NewFile(new MockHttpPostedFileBase {MFileName = "test"})}
+                {"f0", InputValue.NewFile(new MockHttpPostedFileBase {MFileName = "test"})}
             });
             Assert.Equal("test", result.Value.Value.Value.FileName);
         }
