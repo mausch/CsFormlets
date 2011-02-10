@@ -143,6 +143,10 @@ namespace Formlets.CSharp {
             return new Formlet<Unit>(FormletModule.xnode(xml));
         }
 
+        public static Formlet<Unit> RawXml(string xml) {
+            return new Formlet<Unit>(FormletModule.rawXml(xml));
+        }
+
         /// <summary>
         /// Applicative application (i.e. &lt;*&gt;)
         /// </summary>
