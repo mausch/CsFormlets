@@ -120,8 +120,8 @@ namespace Formlets.CSharp {
         /// Renders a formlet to <see cref="XNode"/>
         /// </summary>
         /// <returns></returns>
-        public XNode RenderToXml() {
-            return FormletModule.renderToXml(f);
+        public XNode[] RenderToXml() {
+            return FormletModule.renderToXml(f).ToArray();
         }
 
         public Formlet<T> Where(Func<T,bool> pred) {
