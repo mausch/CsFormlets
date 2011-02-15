@@ -62,8 +62,8 @@ namespace Formlets.CSharp {
             return new Formlet<string>(FormletModule.hidden(defaultValue));
         }
 
-        public static Formlet<bool> CheckBox(bool defaultValue) {
-            return new Formlet<bool>(FormletModule.checkbox(defaultValue));
+        public static Formlet<bool> CheckBox(bool defaultValue, IEnumerable<KeyValuePair<string, string>> attributes) {
+            return new Formlet<bool>(FormletModule.checkbox(defaultValue, attributes.ToTuples().ToFsList()));
         }
 
         public static Formlet<string> Radio(string selected, IEnumerable<KeyValuePair<string,string>> values) {
