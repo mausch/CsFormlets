@@ -87,8 +87,7 @@ namespace Formlets.CSharp {
         private FormletResult<T> Run(FSharpList<Tuple<string,InputValue>> list) {
             var ff = FormletModule.run(f);
             var r = ff.Invoke(list);
-            var xdoc = XmlWriter.wrap(r.Item1);
-            return new FormletResult<T>(xdoc, r.Item2.ToList(), r.Item3);
+            return new FormletResult<T>(r.Item1, r.Item2.ToList(), r.Item3);
         }
 
         /// <summary>
@@ -129,12 +128,9 @@ namespace Formlets.CSharp {
         }
 
         public Formlet<T> Satisfies(Func<T,bool> pred, Func<T, List<XNode>, IEnumerable<XNode>> error, Func<T, IEnumerable<string>> errorMsg) {
-            var f1 = FFunc.FromFunc1((T x) => 
-                        FFunc.FromFunc1((FSharpList<XNode> y) => 
-                            error(x, y.ToList()).ToFsList()));
-            var fpred = FFunc.FromFunc(pred);
-            var fmsg = FFunc.FromFunc<T, FSharpList<string>>(x => errorMsg(x).ToFsList());
-            var r = FormletModule.satisfies(fpred, f1, fmsg, this.f);
+            var validator = new Validator<T>(pred, error, errorMsg);
+            var fsValidator = validator.ToFsValidator();
+            var r = FormletModule.satisfies(fsValidator, this.f);
             return new Formlet<T>(r);
         }
 

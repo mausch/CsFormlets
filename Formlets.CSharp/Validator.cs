@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Xml.Linq;
+using Microsoft.FSharp.Collections;
 
 namespace Formlets.CSharp {
     public class Validator<T> : IValidator<T> {
@@ -24,6 +26,15 @@ namespace Formlets.CSharp {
 
         public IEnumerable<string> ErrorMessages(T value) {
             return errorMsg(value);
+        }
+
+        public Formlets.Validator<T> ToFsValidator() {
+            var f1 = FFunc.FromFunc1((T x) =>
+                        FFunc.FromFunc1((FSharpList<XNode> y) =>
+                            errorXml(x, y.ToList()).ToFsList()));
+            var fpred = FFunc.FromFunc(isValid);
+            var fmsg = FFunc.FromFunc<T, FSharpList<string>>(x => errorMsg(x).ToFsList());
+            return new Formlets.Validator<T>(fpred,f1,fmsg);
         }
     }
 }

@@ -8,11 +8,11 @@ namespace Formlets.CSharp {
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class FormletResult<T> {
-        private readonly XNode errorForm;
+        private readonly IEnumerable<XNode> errorForm;
         private readonly FSharpOption<T> value;
         private readonly ICollection<string> errors;
 
-        public FormletResult(XNode errorForm, ICollection<string> errors, FSharpOption<T> value) {
+        public FormletResult(IEnumerable<XNode> errorForm, ICollection<string> errors, FSharpOption<T> value) {
             this.errorForm = errorForm;
             this.errors = errors;
             this.value = value;
@@ -21,7 +21,7 @@ namespace Formlets.CSharp {
         /// <summary>
         /// Error form
         /// </summary>
-        public XNode ErrorForm {
+        public IEnumerable<XNode> ErrorForm {
             get { return errorForm; }
         }
 
