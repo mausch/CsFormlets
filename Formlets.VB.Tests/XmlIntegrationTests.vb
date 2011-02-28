@@ -9,7 +9,7 @@ Public Class XmlIntegrationTests
         Dim input = Formlet.Input()
         Dim inputInt =
             Function(attr As IEnumerable(Of KeyValuePair(Of String, String))) _
-                Formlet.Input(attr).
+                Formlet.Input(attributes:=attr).
                     Validate(Function(s) Regex.IsMatch(s, "[0-9]+"),
                              Function(s) String.Format("{0} is not a valid number", s)).
                     Select(Function(a) Integer.Parse(a))

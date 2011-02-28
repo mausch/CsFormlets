@@ -13,38 +13,12 @@ namespace Formlets.CSharp {
         }
 
         /// <summary>
-        /// A text input formlet
-        /// </summary>
-        /// <returns></returns>
-        public static Formlet<string> Input() {
-            return Input("", new Dictionary<string, string>());
-        }
-
-        /// <summary>
-        /// A text input formlet with a default value
-        /// </summary>
-        /// <param name="defaultValue"></param>
-        /// <returns></returns>
-        public static Formlet<string> Input(string defaultValue) {
-            return Input(defaultValue, new Dictionary<string, string>());
-        }
-
-        /// <summary>
-        /// A text input formlet with attributes
-        /// </summary>
-        /// <param name="attributes"></param>
-        /// <returns></returns>
-        public static Formlet<string> Input(IEnumerable<KeyValuePair<string, string>> attributes) {
-            return Input("", attributes);
-        }
-
-        /// <summary>
         /// A text input formlet with default value and attributes
         /// </summary>
         /// <param name="defaultValue"></param>
         /// <param name="attributes"></param>
         /// <returns></returns>
-        public static Formlet<string> Input(string defaultValue, IEnumerable<KeyValuePair<string, string>> attributes) {
+        public static Formlet<string> Input(string defaultValue = "", IEnumerable<KeyValuePair<string, string>> attributes = null) {
             defaultValue = defaultValue ?? "";
             attributes = attributes ?? new Dictionary<string, string>();
             return new Formlet<string>(FormletModule.input(defaultValue, attributes.ToTuples().ToFsList()));
@@ -54,15 +28,12 @@ namespace Formlets.CSharp {
             return new Formlet<string>(FormletModule.password);
         }
 
-        public static Formlet<string> Hidden() {
-            return new Formlet<string>(FormletModule.hidden(""));
-        }
-
-        public static Formlet<string> Hidden(string defaultValue) {
+        public static Formlet<string> Hidden(string defaultValue = "") {
             return new Formlet<string>(FormletModule.hidden(defaultValue));
         }
 
-        public static Formlet<bool> CheckBox(bool defaultValue, IEnumerable<KeyValuePair<string, string>> attributes) {
+        public static Formlet<bool> CheckBox(bool defaultValue = false, IEnumerable<KeyValuePair<string, string>> attributes = null) {
+            attributes = attributes ?? new Dictionary<string, string>();
             return new Formlet<bool>(FormletModule.checkbox(defaultValue, attributes.ToTuples().ToFsList()));
         }
 
@@ -98,30 +69,16 @@ namespace Formlets.CSharp {
             return f.Select(l => (ICollection<T>)l.ToList());
         }
 
-        public static Formlet<string> TextArea() {
-            return TextArea("", new Dictionary<string, string>());
-        }
-
-        public static Formlet<string> TextArea(string defaultValue) {
-            return TextArea(defaultValue, new Dictionary<string, string>());
-        }
-
-        public static Formlet<string> TextArea(IEnumerable<KeyValuePair<string,string>> attributes) {
-            return TextArea("", attributes);
-        }
-
-        public static Formlet<string> TextArea(string defaultValue, IEnumerable<KeyValuePair<string,string>> attributes) {
+        public static Formlet<string> TextArea(string defaultValue = "", IEnumerable<KeyValuePair<string,string>> attributes = null) {
+            attributes = attributes ?? new Dictionary<string, string>();
             var r = FormletModule.textarea(defaultValue).Invoke(attributes.ToTuples().ToFsList());
             return new Formlet<string>(r);
         }
 
-        public static Formlet<FSharpOption<HttpPostedFileBase>> File(IEnumerable<KeyValuePair<string, string>> attributes) {
+        public static Formlet<FSharpOption<HttpPostedFileBase>> File(IEnumerable<KeyValuePair<string, string>> attributes = null) {
+            attributes = attributes ?? new Dictionary<string, string>();
             var f = FormletModule.file(attributes.ToTuples().ToFsList());
             return new Formlet<FSharpOption<HttpPostedFileBase>>(f);
-        }
-
-        public static Formlet<FSharpOption<HttpPostedFileBase>> File() {
-            return File(new Dictionary<string, string>());
         }
 
         public static Func<string, Formlet<Unit>> ReCaptcha(string publicKey, string privateKey, bool? mockedValue = null) {
