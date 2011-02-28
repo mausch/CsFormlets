@@ -13,7 +13,7 @@ namespace Formlets.CSharp.Tests {
             Assert.True(result.Value.IsSome());
             Assert.Equal("something", result.Value.Value);
             Console.WriteLine(result.ErrorForm);
-            Assert.Equal("<input name=\"f0\" value=\"something\" />", result.ErrorForm.ToString());
+            Assert.Equal("<input name=\"f0\" value=\"something\" />", result.ErrorForm.Render());
         }
 
         [Fact]
@@ -67,7 +67,7 @@ namespace Formlets.CSharp.Tests {
                 {"f0", "bla"}
             });
             Console.WriteLine(result.ErrorForm);
-            Assert.Contains("<input name=\"f0\" value=\"bla\" />'bla' is not a valid number", result.ErrorForm.ToString());
+            Assert.Contains("<input name=\"f0\" value=\"bla\" />'bla' is not a valid number", result.ErrorForm.Render());
             Assert.True(result.Value.IsNone());
         }
 
@@ -81,8 +81,8 @@ namespace Formlets.CSharp.Tests {
                 {"f0", "bla"}
             });
             Console.WriteLine(result.ErrorForm);
-            Assert.Contains("<input name=\"f0\" value=\"bla\" />", result.ErrorForm.ToString());
-            Assert.Contains("<span class=\"error\">'bla' is not a valid number</span>", result.ErrorForm.ToString());
+            Assert.Contains("<input name=\"f0\" value=\"bla\" />", result.ErrorForm.Render());
+            Assert.Contains("<span class=\"error\">'bla' is not a valid number</span>", result.ErrorForm.Render());
             Assert.True(result.Value.IsNone());
         }
 

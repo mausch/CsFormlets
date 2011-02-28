@@ -20,6 +20,10 @@ namespace Formlets.CSharp {
             return new List<XNode> { elem };
         }
 
+        public static string Render(this IEnumerable<XNode> l) {
+            return XmlWriter.render(l);
+        }
+
         public static IEnumerable<Tuple<K, V>> ToTuples<K, V>(this IEnumerable<KeyValuePair<K, V>> list) {
             return list.Select(kv => Tuple.Create(kv.Key, kv.Value));
         }

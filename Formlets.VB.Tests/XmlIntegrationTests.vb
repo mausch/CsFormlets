@@ -66,6 +66,6 @@ Public Class XmlIntegrationTests
         Assert.True(FSharpOptionExtensions.IsNone(result.Value))
         Console.WriteLine()
         Console.WriteLine("Error form:")
-        Console.WriteLine(result.ErrorForm)
+        Console.WriteLine(result.ErrorForm.Render())
     End Sub
 End Class
