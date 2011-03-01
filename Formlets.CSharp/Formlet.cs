@@ -180,5 +180,18 @@ namespace Formlets.CSharp {
                 return n;
             }, v => new[] {errorMessage(v)});
         }
+
+        public static Formlet<Func<A,Func<B,Tuple<A,B>>>> Tuple2<A,B>() {
+            return Yield(L.F((A a) => 
+                L.F((B b) => 
+                    Tuple.Create(a, b))));
+        }
+
+        public static Formlet<Func<A,Func<B,Func<C,Tuple<A,B,C>>>>> Tuple3<A,B,C>() {
+            return Yield(L.F((A a) =>
+                L.F((B b) =>
+                    L.F((C c) => 
+                        Tuple.Create(a, b, c)))));
+        }
     }
 }

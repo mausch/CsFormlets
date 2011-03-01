@@ -32,15 +32,13 @@ Public Class XmlIntegrationTests
                 Dim a = Function(k As String, v As String) New KeyValuePair(Of String, String)(k, v)
                 Dim idn = Function(n As Integer) String.Format("d{0}{1}", id, n)
                 Dim values =
-                    Formlet.Yield(L.F(Function(month As Integer) _
-                                  L.F(Function(day As Integer) _
-                                  L.F(Function(year As Integer) tuple.Create(month, day, year))))).
-                    Ap(<label for=<%= idn(0) %>>Month: </label>).
-                    Ap(inputInt({a("id", idn(0))})).
-                    Ap(<br/>, <label for=<%= idn(1) %>>Day: </label>).
-                    Ap(inputInt({a("id", idn(1))})).
-                    Ap(<br/>, <label for=<%= idn(2) %>>Year: </label>).
-                    Ap(inputInt({a("id", idn(2))}))
+                    Formlet.Tuple3(Of Integer, Integer, Integer)().
+                        Ap(<label for=<%= idn(0) %>>Month: </label>).
+                        Ap(inputInt({a("id", idn(0))})).
+                        Ap(<br/>, <label for=<%= idn(1) %>>Day: </label>).
+                        Ap(inputInt({a("id", idn(1))})).
+                        Ap(<br/>, <label for=<%= idn(2) %>>Year: </label>).
+                        Ap(inputInt({a("id", idn(2))}))
 
                 'Return values.Validate(Function(t) isDate(t.Item1, t.Item2, t.Item3),
                 '                                          Function(s) "Invalid date").
@@ -51,8 +49,7 @@ Public Class XmlIntegrationTests
             End Function
 
         Dim f =
-            Formlet.Yield(L.F(Function(a As String) _
-                          L.F(Function(b As Integer) Tuple.Create(a, b)))).
+            Formlet.Tuple2(Of String, Integer)().
                 Ap(input).
                 Ap(<br/>, <br/>).
                 Ap(inputInt({}).WrapWith(<span class="something"/>)).
