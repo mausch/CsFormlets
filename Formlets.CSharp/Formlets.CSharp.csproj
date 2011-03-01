@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormElements.cs" />
     <Compile Include="Formlet.cs" />
     <Compile Include="FormletResult.cs" />
     <Compile Include="FormletT.cs" />

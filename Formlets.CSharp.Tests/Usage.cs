@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 using Xunit;
@@ -123,6 +124,18 @@ namespace Formlets.CSharp.Tests {
             }
 
             public string MFileName { get; set; }
+        }
+
+        [Fact]
+        public void FormElements() {
+            var e = new FormElements();
+            var f = e.Int(required: true);
+            Assert.Equal("<input required=\"required\" name=\"f0\" value=\"\" />", f.ToString());
+            var result = f.Run(new Dictionary<string, string> {
+                {"f0", ""},
+            });
+            var errorForm = result.ErrorForm.Render();
+            Assert.Contains("errorinput", errorForm);
         }
     }
 }
