@@ -25,6 +25,8 @@ namespace Formlets.CSharp {
         }
 
         public static IEnumerable<Tuple<K, V>> ToTuples<K, V>(this IEnumerable<KeyValuePair<K, V>> list) {
+            if (list == null)
+                return Enumerable.Empty<Tuple<K, V>>();
             return list.Select(kv => Tuple.Create(kv.Key, kv.Value));
         }
     }

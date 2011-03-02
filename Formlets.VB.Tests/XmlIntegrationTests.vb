@@ -6,18 +6,7 @@ Public Class XmlIntegrationTests
 
     <Fact()> _
     Public Sub Test()
-        Dim input = Formlet.Input()
-        Dim inputInt =
-            Function(attr As IEnumerable(Of KeyValuePair(Of String, String))) _
-                Formlet.Input(attributes:=attr).
-                    Validate(Function(s) Regex.IsMatch(s, "[0-9]+"),
-                             Function(s) String.Format("{0} is not a valid number", s)).
-                    Select(Function(a) Integer.Parse(a))
-        Dim inputRange =
-            Function(min As Integer, max As Integer) _
-                inputInt({}).
-                    Validate(Function(n) n <= max AndAlso n >= min,
-                             Function(s) String.Format("Value must be between {0} and {1}", min, max))
+        Dim e = New FormElements()
         Dim inputDate =
             Function()
                 Dim isDate = Function(m As Integer, d As Integer, y As Integer)
@@ -33,12 +22,9 @@ Public Class XmlIntegrationTests
                 Dim idn = Function(n As Integer) String.Format("d{0}{1}", id, n)
                 Dim values =
                     Formlet.Tuple3(Of Integer, Integer, Integer)().
-                        Ap(<label for=<%= idn(0) %>>Month: </label>).
-                        Ap(inputInt({a("id", idn(0))})).
-                        Ap(<br/>, <label for=<%= idn(1) %>>Day: </label>).
-                        Ap(inputInt({a("id", idn(1))})).
-                        Ap(<br/>, <label for=<%= idn(2) %>>Year: </label>).
-                        Ap(inputInt({a("id", idn(2))}))
+                        Ap(e.Int().WithLabel("Month: ")).
+                        Ap(e.Int().WithLabel("Day: ")).
+                        Ap(e.Int().WithLabel("Year: "))
 
                 'Return values.Validate(Function(t) isDate(t.Item1, t.Item2, t.Item3),
                 '                                          Function(s) "Invalid date").
@@ -48,11 +34,13 @@ Public Class XmlIntegrationTests
                         Select New DateTime(v.Item3, v.Item1, v.Item2)
             End Function
 
+        Console.WriteLine(inputDate().ToString())
+
         Dim f =
             Formlet.Tuple2(Of String, Integer)().
-                Ap(input).
+                Ap(e.Text()).
                 Ap(<br/>, <br/>).
-                Ap(inputInt({}).WrapWith(<span class="something"/>)).
+                Ap(e.Int().WrapWith(<span class="something"/>)).
                 Ap(<input type="submit" value="Send!"/>, <br/>)
         Console.WriteLine(f.ToString())
         Dim result = f.Run(New Dictionary(Of String, String) From

@@ -137,5 +137,11 @@ namespace Formlets.CSharp {
         public Formlet<T> Satisfies(IValidator<T> v) {
             return Satisfies(v.IsValid, v.BuildErrorForm, v.ErrorMessages);
         }
+
+        public Formlet<T> WithLabel(string text) {
+            var e = new Formlets.FormElements(Validate.Default);
+            var r = e.WithLabel(text, this.f);
+            return new Formlet<T>(r);
+        }
     }
 }
