@@ -14,11 +14,15 @@ namespace Formlets.CSharp {
         private readonly Formlets.FormElements e;
 
         public FormElements() {
-            e = new Formlets.FormElements(Validate.Default);
+            e = new Formlets.FormElements(Formlets.Validate.Default);
         }
 
         public FormElements(IValidate v) {
             e = new Formlets.FormElements(v);
+        }
+
+        public IValidate Validate {
+            get { return e.Validate; }
         }
 
         private FSharpOption<FSharpList<Tuple<string,string>>> ToAttr(KV attr) {

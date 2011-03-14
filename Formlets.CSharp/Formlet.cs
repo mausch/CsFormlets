@@ -193,5 +193,23 @@ namespace Formlets.CSharp {
                     L.F((C c) => 
                         Tuple.Create(a, b, c)))));
         }
-    }
+
+        public static Formlet<Func<A,Func<B,Func<C,Func<D,Tuple<A,B,C,D>>>>>> Tuple4<A,B,C,D>() {
+            return Yield(L.F((A a) =>
+                L.F((B b) =>
+                    L.F((C c) => 
+                        L.F((D d) =>
+                            Tuple.Create(a, b, c, d))))));
+        }
+
+        public static Formlet<Func<A, Func<B, Func<C, Func<D, Func<E, Tuple<A, B, C, D, E>>>>>>> Tuple5<A, B, C, D, E>() {
+            return Yield(L.F((A a) =>
+                L.F((B b) =>
+                    L.F((C c) =>
+                        L.F((D d) =>
+                            L.F((E e) => 
+                                Tuple.Create(a, b, c, d, e)))))));
+        }
+
+     }
 }

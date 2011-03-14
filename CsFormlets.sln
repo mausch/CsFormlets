@@ -15,6 +15,8 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "WingBeats.Formlets", "FsFor
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "WingBeats.Formlets.Tests", "FsFormlets\WingBeats.Formlets.Tests\WingBeats.Formlets.Tests.fsproj", "{7134FE07-DEDF-4077-9CC4-E75DDAF71100}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleWebApp", "SampleWebApp\SampleWebApp.csproj", "{0C5AF4F3-2D51-4771-98FC-7471A3D574BE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,10 @@ Global
 		{7134FE07-DEDF-4077-9CC4-E75DDAF71100}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7134FE07-DEDF-4077-9CC4-E75DDAF71100}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7134FE07-DEDF-4077-9CC4-E75DDAF71100}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C5AF4F3-2D51-4771-98FC-7471A3D574BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C5AF4F3-2D51-4771-98FC-7471A3D574BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C5AF4F3-2D51-4771-98FC-7471A3D574BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C5AF4F3-2D51-4771-98FC-7471A3D574BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

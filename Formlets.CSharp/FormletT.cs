@@ -20,6 +20,10 @@ namespace Formlets.CSharp {
             this.f = f;
         }
 
+        public static Formlet<T> FromFsFormlet(FSharpFunc<int, Tuple<Tuple<FSharpList<XNode>, FSharpFunc<FSharpList<Tuple<string, InputValue>>, Tuple<FSharpList<XNode>, Tuple<FSharpList<string>, FSharpOption<T>>>>>, int>> f) {
+            return new Formlet<T>(f);
+        }
+
         public static implicit operator FSharpFunc<int, Tuple<Tuple<FSharpList<XNode>, FSharpFunc<FSharpList<Tuple<string, InputValue>>, Tuple<FSharpList<XNode>, Tuple<FSharpList<string>, FSharpOption<T>>>>>, int>>(Formlet<T> f) {
             return f.f;
         }
@@ -142,6 +146,15 @@ namespace Formlets.CSharp {
             var e = new Formlets.FormElements(Validate.Default);
             var r = e.WithLabel(text, this.f);
             return new Formlet<T>(r);
+        }
+
+        public Formlet<U> Transform<U>(Func<Formlet<T>,Formlet<U>> func) {
+            return func(this);
+        }
+
+        public Formlet<U> Transform<U>(Func<FSharpFunc<int, Tuple<Tuple<FSharpList<XNode>, FSharpFunc<FSharpList<Tuple<string, InputValue>>, Tuple<FSharpList<XNode>, Tuple<FSharpList<string>, FSharpOption<T>>>>>, int>>, FSharpFunc<int, Tuple<Tuple<FSharpList<XNode>, FSharpFunc<FSharpList<Tuple<string, InputValue>>, Tuple<FSharpList<XNode>, Tuple<FSharpList<string>, FSharpOption<U>>>>>, int>>> func) {
+            var ff = func(this.f);
+            return new Formlet<U>(ff);
         }
     }
 }

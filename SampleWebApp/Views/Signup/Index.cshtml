@@ -1,0 +1,9 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+@using (Html.BeginForm("Register", "Signup")) {
+    @Html.Raw(Model)
+    <input type="submit" value="Register" />
+}
