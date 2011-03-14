@@ -18,17 +18,12 @@ Public Class XmlIntegrationTests
                                  End Try
                              End Function
                 Dim id = Guid.NewGuid.ToString()
-                Dim a = Function(k As String, v As String) New KeyValuePair(Of String, String)(k, v)
-                Dim idn = Function(n As Integer) String.Format("d{0}{1}", id, n)
                 Dim values =
                     Formlet.Tuple3(Of Integer, Integer, Integer)().
                         Ap(e.Int().WithLabel("Month: ")).
                         Ap(e.Int().WithLabel("Day: ")).
                         Ap(e.Int().WithLabel("Year: "))
 
-                'Return values.Validate(Function(t) isDate(t.Item1, t.Item2, t.Item3),
-                '                                          Function(s) "Invalid date").
-                '            Select(Function(t) New DateTime(t.Item3, t.Item1, t.Item2))
                 Return From v In values
                         Where isDate(v.Item1, v.Item2, v.Item3)
                         Select New DateTime(v.Item3, v.Item1, v.Item2)
