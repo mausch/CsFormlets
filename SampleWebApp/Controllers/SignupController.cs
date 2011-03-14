@@ -10,8 +10,8 @@ namespace SampleWebApp.Controllers {
 
         private static readonly Formlet<string> password =
             Formlet.Tuple2<string, string>()
-                .Ap(e.Password(required: true).WithLabel("Password"))
-                .Ap(e.Password(required: true).WithLabel("Confirm password"))
+                .Ap(e.Password(required: true).WithLabelRaw("Password <em>(you'll use this to sign in)</em>"))
+                .Ap(e.Password(required: true).WithLabelRaw("Confirm password <em>(for confirmation)</em>"))
                 .Satisfies(t => t.Item1 == t.Item2, "Passwords don't match")
                 .Select(t => t.Item1);
 
@@ -61,7 +61,7 @@ namespace SampleWebApp.Controllers {
 
         [HttpPost]
         [FormletPost("registration")]
-        public ActionResult Index(RegistrationInfo registration) {            
+        public ActionResult Index(RegistrationInfo registration) {
             return RedirectToAction("ThankYou", new {name = registration.User.FirstName + " " + registration.User.LastName});
         }
 

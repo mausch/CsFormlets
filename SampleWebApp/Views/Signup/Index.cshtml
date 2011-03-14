@@ -2,8 +2,24 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<style>
+    form label 
+    {
+    	display: block;
+    }
+    fieldset
+    {
+    	background-color: #E8F4F6;
+    	padding: 15px;
+    	border-radius: 15px;
+    	-moz-border-radius: 15px;
+    }
+</style>
+
+<h2>Enter your details</h2>
+<fieldset>
 @using (Html.BeginForm()) {
     @Html.Raw(Model)
     <input type="submit" value="Register" />
 }
+</fieldset>

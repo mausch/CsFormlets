@@ -148,6 +148,12 @@ namespace Formlets.CSharp {
             return new Formlet<T>(r);
         }
 
+        public Formlet<T> WithLabelRaw(string xml) {
+            var e = new Formlets.FormElements(Validate.Default);
+            var r = e.WithLabelRaw(xml, this.f);
+            return new Formlet<T>(r);
+        }
+
         public Formlet<U> Transform<U>(Func<Formlet<T>,Formlet<U>> func) {
             return func(this);
         }
