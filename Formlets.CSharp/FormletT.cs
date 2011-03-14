@@ -40,6 +40,10 @@ namespace Formlets.CSharp {
             return new Formlet<B>(r);
         }
 
+        public Formlet<T> Ap(string text) {
+            return this.ApIgnore(Formlet.Text(text));
+        }
+
         /// <summary>
         /// Applicative left application (i.e. &lt;*)
         /// </summary>

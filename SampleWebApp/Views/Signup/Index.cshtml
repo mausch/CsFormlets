@@ -7,6 +7,10 @@
     {
     	display: block;
     }
+    form label em
+    {
+    	font-size: 75%;
+    }
     fieldset
     {
     	background-color: #E8F4F6;
@@ -17,9 +21,7 @@
 </style>
 
 <h2>Enter your details</h2>
-<fieldset>
 @using (Html.BeginForm()) {
     @Html.Raw(Model)
     <input type="submit" value="Register" />
 }
-</fieldset>

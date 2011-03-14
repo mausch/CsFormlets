@@ -10,22 +10,28 @@ namespace SampleWebApp.Controllers {
 
         private static readonly Formlet<string> password =
             Formlet.Tuple2<string, string>()
-                .Ap(e.Password(required: true).WithLabelRaw("Password <em>(you'll use this to sign in)</em>"))
-                .Ap(e.Password(required: true).WithLabelRaw("Confirm password <em>(for confirmation)</em>"))
+                .Ap(e.Password(required: true).WithLabelRaw("Password <em>(6 characters or longer)</em>"))
+                .Ap(e.Password(required: true).WithLabelRaw("Enter password again <em>(for confirmation)</em>"))
                 .Satisfies(t => t.Item1 == t.Item2, "Passwords don't match")
                 .Select(t => t.Item1);
 
         private static readonly Formlet<string> account = 
-            e.Text(required: true)
-            .Satisfies(a => a.Length >= 2, "Two characters minimum")
-            .Satisfies(a => string.Format("http://{0}.example.com", a).IsUrl(), "Invalid account");
+            Formlet.Single<string>()
+                .Ap("http://")
+                .Ap(e.Text(required: true))
+                .Ap(".example.com")
+                .Ap(X.E("div", "Example: http://", X.E("b", "company"), ".example.com"))
+                .Satisfies(a => a.Length >= 2, "Two characters minimum")
+                .Satisfies(a => string.Format("http://{0}.example.com", a).IsUrl(), "Invalid account")
+                .WrapWith(X.E("fieldset"));
 
         private static readonly Formlet<User> user =
             Formlet.Tuple5<string, string, string, string, string>()
                 .Ap(e.Text(required: true).WithLabel("First name"))
                 .Ap(e.Text(required: true).WithLabel("Last name"))
-                .Ap(e.Email(required: true).WithLabel("Email address:"))
+                .Ap(e.Email(required: true).WithLabelRaw("Email address <em>(you'll use this to sign in)</em>"))
                 .Ap(password)
+                .WrapWith(X.E("fieldset"))
                 .Ap(account)
                 .Select(t => new User(t.Item1, t.Item2, t.Item3, t.Item4, t.Item5));
 
@@ -43,9 +49,10 @@ namespace SampleWebApp.Controllers {
             return Formlet.Tuple4<string, DateTime, string, string>()
                 .Ap(e.Text(required: true).Transform(e.Validate.CreditCard).WithLabel("Credit card number"))
                 .Ap(cardExpiration())
-                .Ap(e.Text())
-                .Ap(e.Text())
-                .Select(t => new BillingInfo(t.Item1, t.Item2, t.Item3, t.Item4));
+                .Ap(e.Text().WithLabel("Security code"))
+                .Ap(e.Text().WithLabelRaw("Billing ZIP <em>(postal code if outside the USA)</em>"))
+                .Select(t => new BillingInfo(t.Item1, t.Item2, t.Item3, t.Item4))
+                .WrapWith(X.E("fieldset"));
         }
 
         private static Formlet<RegistrationInfo> registration() {

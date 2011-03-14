@@ -181,6 +181,10 @@ namespace Formlets.CSharp {
             }, v => new[] {errorMessage(v)});
         }
 
+        public static Formlet<Func<T,T>> Single<T>() {
+            return Yield(L.F((T t) => t));
+        }
+
         public static Formlet<Func<A,Func<B,Tuple<A,B>>>> Tuple2<A,B>() {
             return Yield(L.F((A a) => 
                 L.F((B b) => 
