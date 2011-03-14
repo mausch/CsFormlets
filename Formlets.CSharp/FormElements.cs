@@ -4,6 +4,7 @@ using KV = System.Collections.Generic.IEnumerable<System.Collections.Generic.Key
 using Microsoft.FSharp.Core;
 using Microsoft.FSharp.Collections;
 using System.Web;
+using System.Linq;
 
 namespace Formlets.CSharp {
     /// <summary>
@@ -83,6 +84,10 @@ namespace Formlets.CSharp {
         public Formlet<T> Select<T>(T value, IEnumerable<KeyValuePair<T, string>> choices) {
             var f = e.Select(value, choices.ToTuples());
             return new Formlet<T>(f);
+        }
+
+        public Formlet<T> Select<T>(T value, IEnumerable<T> choices) {
+            return Select(value, choices.Select(m => new KeyValuePair<T, string>(m, m.ToString())));
         }
 
         public Formlet<IEnumerable<string>> SelectMulti(IEnumerable<string> value, KV choices) {

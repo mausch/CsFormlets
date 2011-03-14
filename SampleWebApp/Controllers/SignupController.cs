@@ -33,8 +33,8 @@ namespace SampleWebApp.Controllers {
             var now = DateTime.Now;
             var year = now.Year;
             return Formlet.Tuple2<int,int>()
-                .Ap(e.Select(now.Month, Enumerable.Range(1, 12).Select(m => KV.Create(m, m.ToString()))))
-                .Ap(e.Select(year, Enumerable.Range(year, 10).Select(y => KV.Create(y, y.ToString()))))
+                .Ap(e.Select(now.Month, Enumerable.Range(1, 12)))
+                .Ap(e.Select(year, Enumerable.Range(year, 10)))
                 .Select(t => new DateTime(t.Item2, t.Item1, 1).AddMonths(1));
         } 
 
