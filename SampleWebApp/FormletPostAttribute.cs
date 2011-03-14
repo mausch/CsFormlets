@@ -6,6 +6,7 @@ using System.Xml.Linq;
 using Formlets.CSharp;
 
 namespace SampleWebApp {
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
     public class FormletPostAttribute : ActionFilterAttribute {
         private readonly string formletMethodName;
 
