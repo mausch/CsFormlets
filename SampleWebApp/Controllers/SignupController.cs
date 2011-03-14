@@ -35,8 +35,9 @@ namespace SampleWebApp.Controllers {
             return Formlet.Tuple2<int,int>()
                 .Ap(e.Select(now.Month, Enumerable.Range(1, 12)))
                 .Ap(e.Select(year, Enumerable.Range(year, 10)))
-                .Select(t => new DateTime(t.Item2, t.Item1, 1).AddMonths(1));
-        } 
+                .Select(t => new DateTime(t.Item2, t.Item1, 1).AddMonths(1))
+                .WrapWithLabel("Expiration date<br/>");
+        }
 
         private static Formlet<BillingInfo> billing() {
             return Formlet.Tuple4<string, DateTime, string, string>()

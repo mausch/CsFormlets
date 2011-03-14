@@ -116,7 +116,7 @@ namespace Formlets.CSharp {
             return b.Ap(a);
         }
 
-        public static Formlet<T> Ap<T>(this Formlet<T> a, params XElement[] elem) {
+        public static Formlet<T> Ap<T>(this Formlet<T> a, params XNode[] elem) {
             var b = a;
             foreach (var i in elem) {
                 b = b.ApIgnore(Formlet.Xml(i));

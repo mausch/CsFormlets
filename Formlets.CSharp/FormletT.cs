@@ -148,6 +148,13 @@ namespace Formlets.CSharp {
             return new Formlet<T>(r);
         }
 
+        public Formlet<T> WrapWithLabel(string xml) {
+            var f = Formlet.Yield(L.F((T x) => x))
+                        .Ap(XmlWriter.parseRawXml(xml).ToArray())
+                        .Ap(this);
+            return Formlet.Tag(X.E("label"), f);
+        }
+
         public Formlet<T> WithLabelRaw(string xml) {
             var e = new Formlets.FormElements(Validate.Default);
             var r = e.WithLabelRaw(xml, this.f);
