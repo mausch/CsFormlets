@@ -47,17 +47,22 @@ namespace SampleWebApp.Controllers {
                 .Select(t => new BillingInfo(t.Item1, t.Item2, t.Item3, t.Item4));
         }
 
-        private static Formlet<Tuple<User, BillingInfo>> registration() {
+        private static Formlet<RegistrationInfo> registration() {
             return Formlet.Tuple2<User, BillingInfo>()
                 .Ap(user)
-                .Ap(billing());
+                .Ap(billing())
+                .Select(t => new RegistrationInfo(t.Item1, t.Item2));
         }
            
         [HttpGet]
         public ActionResult Index() {
-
             return View(model: registration().ToString());
+        }
 
+        [HttpPost]
+        [FormletPost("registration")]
+        public ActionResult Index(RegistrationInfo registration) {
+            return Redirect("ThankYou");
         }
 
         [HttpPost]

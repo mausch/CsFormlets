@@ -38,6 +38,7 @@
     <Reference Include="log4net">
       <HintPath>..\..\mausch\ARATMSample\lib\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -59,12 +60,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\SignupController.cs" />
-    <Compile Include="FormletAttribute.cs" />
+    <Compile Include="FormletPostAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="KV.cs" />
     <Compile Include="Models\BillingInfo.cs" />
+    <Compile Include="Models\RegistrationInfo.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringExtensions.cs" />
