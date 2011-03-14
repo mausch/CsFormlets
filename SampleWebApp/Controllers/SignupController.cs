@@ -61,8 +61,8 @@ namespace SampleWebApp.Controllers {
 
         [HttpPost]
         [FormletPost("registration")]
-        public ActionResult Index(RegistrationInfo registration) {
-            return Redirect("ThankYou");
+        public ActionResult Index(RegistrationInfo registration) {            
+            return RedirectToAction("ThankYou", new {name = registration.User.FirstName + " " + registration.User.LastName});
         }
 
         [HttpPost]
@@ -70,11 +70,12 @@ namespace SampleWebApp.Controllers {
             var result = registration().RunPost(Request);
             if (result.Value.IsNone())
                 return View("Index", model: result.ErrorForm.Render());
-            return Redirect("ThankYou");
+            var value = result.Value.Value;
+            return RedirectToAction("ThankYou", new { name = value.User.FirstName + " " + value.User.LastName });
         }
 
-        public ActionResult ThankYou() {
-            return View();
+        public ActionResult ThankYou(string name) {
+            return View(model: name);
         }
     }
 }
