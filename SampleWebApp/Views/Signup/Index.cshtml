@@ -13,6 +13,7 @@
     }
     fieldset
     {
+    	width: 25em;
     	background-color: #E8F4F6;
     	padding: 15px;
     	border-radius: 15px;
@@ -20,7 +21,6 @@
     }
 </style>
 
-<h2>Enter your details</h2>
 @using (Html.BeginForm()) {
     @Html.Raw(Model)
     <input type="submit" value="Register" />

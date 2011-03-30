@@ -32,6 +32,7 @@ namespace SampleWebApp.Controllers {
                 .Ap(e.Email(required: true).WithLabelRaw("Email address <em>(you'll use this to sign in)</em>"))
                 .Ap(password)
                 .WrapWith(X.E("fieldset"))
+                .Ap(X.E("h3", "Profile URL"))
                 .Ap(account)
                 .Select(t => new User(t.Item1, t.Item2, t.Item3, t.Item4, t.Item5));
 
@@ -57,7 +58,9 @@ namespace SampleWebApp.Controllers {
 
         private static Formlet<RegistrationInfo> registration() {
             return Formlet.Tuple2<User, BillingInfo>()
+                .Ap(X.E("h3", "Enter your details"))
                 .Ap(user)
+                .Ap(X.E("h3", "Billing information"))
                 .Ap(billing())
                 .Select(t => new RegistrationInfo(t.Item1, t.Item2));
         }
