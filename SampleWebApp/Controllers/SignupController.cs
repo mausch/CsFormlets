@@ -13,7 +13,8 @@ namespace SampleWebApp.Controllers {
                 .Ap(e.Password(required: true).WithLabelRaw("Password <em>(6 characters or longer)</em>"))
                 .Ap(e.Password(required: true).WithLabelRaw("Enter password again <em>(for confirmation)</em>"))
                 .Satisfies(t => t.Item1 == t.Item2, "Passwords don't match")
-                .Select(t => t.Item1);
+                .Select(t => t.Item1)
+                .Satisfies(t => t.Length >= 6, "Password must be 6 characters or longer");
 
         private static readonly Formlet<string> account = 
             Formlet.Single<string>()
