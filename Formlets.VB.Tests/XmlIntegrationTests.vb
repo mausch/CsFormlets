@@ -17,7 +17,6 @@ Public Class XmlIntegrationTests
                                      Return False
                                  End Try
                              End Function
-                Dim id = Guid.NewGuid.ToString()
                 Dim values =
                     Formlet.Tuple3(Of Integer, Integer, Integer)().
                         Ap(e.Int().WithLabel("Month: ")).
