@@ -5,6 +5,7 @@ using Microsoft.FSharp.Core;
 using Microsoft.FSharp.Collections;
 using System.Web;
 using System.Linq;
+using System.Drawing;
 
 namespace Formlets.CSharp {
     /// <summary>
@@ -53,6 +54,16 @@ namespace Formlets.CSharp {
 
         public Formlet<int> Int(int? value = null, bool required = false, int? maxlength = null, int? min = null, int? max = null, KV attributes = null) {
             var f = e.Int(value.ToOption(), ToAttr(attributes), required.ToOption(), maxlength.ToOption(), min.ToOption(), max.ToOption());
+            return new Formlet<int>(f);
+        }
+
+        public Formlet<double> DoubleRange(double min, double max, double? value = null, bool required = false, KV attributes = null) {
+            var f = e.FloatRange(min, max, value.ToOption(), ToAttr(attributes), required.ToOption());
+            return new Formlet<double>(f);
+        }
+
+        public Formlet<int> IntRange(int min, int max, int? value = null, bool required = false, KV attributes = null) {
+            var f = e.IntRange(min, max, value.ToOption(), ToAttr(attributes), required.ToOption());
             return new Formlet<int>(f);
         }
 
@@ -117,5 +128,53 @@ namespace Formlets.CSharp {
             var f = e.Password(required.ToOption());
             return new Formlet<string>(f);
         }
+
+        public Formlet<string> Search(string value = null, bool required = false, int? maxlength = null, string pattern = null, KV attributes = null) {
+            var f = e.Search(value.ToOption(), ToAttr(attributes), required.ToOption(), maxlength.ToOption(), pattern.ToOption());
+            return new Formlet<string>(f);
+        }
+
+        public Formlet<string> Tel(string value = null, bool required = false, int? maxlength = null, string pattern = null, KV attributes = null) {
+            var f = e.Tel(value.ToOption(), ToAttr(attributes), required.ToOption(), maxlength.ToOption(), pattern.ToOption());
+            return new Formlet<string>(f);
+        }
+
+        public Formlet<DateTime> DateTime(DateTime? value = null, bool required = false, DateTime? min = null, DateTime? max = null, KV attributes = null) {
+            var f = e.DateTime(value.ToOption(), ToAttr(attributes), required.ToOption(), min.ToOption(), max.ToOption());
+            return new Formlet<DateTime>(f);
+        }
+
+        public Formlet<DateTime> Date(DateTime? value = null, bool required = false, DateTime? min = null, DateTime? max = null, KV attributes = null) {
+            var f = e.Date(value.ToOption(), ToAttr(attributes), required.ToOption(), min.ToOption(), max.ToOption());
+            return new Formlet<DateTime>(f);
+        }
+
+        public Formlet<DateTime> Month(DateTime? value = null, bool required = false, DateTime? min = null, DateTime? max = null, KV attributes = null) {
+            var f = e.Month(value.ToOption(), ToAttr(attributes), required.ToOption(), min.ToOption(), max.ToOption());
+            return new Formlet<DateTime>(f);
+        }
+
+        public Formlet<DateTime> Week(DateTime? value = null, bool required = false, DateTime? min = null, DateTime? max = null, KV attributes = null) {
+            var f = e.Week(value.ToOption(), ToAttr(attributes), required.ToOption(), min.ToOption(), max.ToOption());
+            return new Formlet<DateTime>(f);
+        }
+
+        public Formlet<DateTime> Time(DateTime? value = null, bool required = false, DateTime? min = null, DateTime? max = null, KV attributes = null) {
+            var f = e.Time(value.ToOption(), ToAttr(attributes), required.ToOption(), min.ToOption(), max.ToOption());
+            return new Formlet<DateTime>(f);
+        }
+
+        public Formlet<string> Submit(string value = null, KV attributes = null) {
+            var f = e.Submit(value.ToOption(), ToAttr(attributes));
+            var of = new Formlet<FSharpOption<string>>(f);
+            return of.Select(s => s.IsNone() ? null : s.Value);
+        }
+
+        public Formlet<Point?> Image(string src, string alt, KV attributes = null) {
+            var f = e.Image(src, alt, ToAttr(attributes));
+            var of = new Formlet<FSharpOption<Point>>(f);
+            return of.Select(p => p.ToNullable());
+        }
+
     }
 }

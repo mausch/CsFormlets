@@ -25,5 +25,11 @@ namespace Formlets.CSharp {
                 return FSharpOption<T>.None;
             return FSharpOption<T>.Some(value);
         }
+
+        public static Nullable<T> ToNullable<T>(this FSharpOption<T> value) where T : struct {
+            if (value.IsNone())
+                return null;
+            return new Nullable<T>(value.Value);
+        }
     }
 }
