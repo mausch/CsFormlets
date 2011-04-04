@@ -144,6 +144,11 @@ namespace Formlets.CSharp {
             return new Formlet<DateTimeOffset>(f);
         }
 
+        public Formlet<DateTime> DateTimeLocal(DateTime? value = null, bool required = false, DateTime? min = null, DateTime? max = null, KV attributes = null) {
+            var f = e.DateTimeLocal(value.ToOption(), ToAttr(attributes), required.ToOption(), min.ToOption(), max.ToOption());
+            return new Formlet<DateTime>(f);
+        }
+
         public Formlet<DateTime> Date(DateTime? value = null, bool required = false, DateTime? min = null, DateTime? max = null, KV attributes = null) {
             var f = e.Date(value.ToOption(), ToAttr(attributes), required.ToOption(), min.ToOption(), max.ToOption());
             return new Formlet<DateTime>(f);
