@@ -139,9 +139,9 @@ namespace Formlets.CSharp {
             return new Formlet<string>(f);
         }
 
-        public Formlet<DateTime> DateTime(DateTime? value = null, bool required = false, DateTime? min = null, DateTime? max = null, KV attributes = null) {
+        public Formlet<DateTimeOffset> DateTime(DateTimeOffset? value = null, bool required = false, DateTimeOffset? min = null, DateTimeOffset? max = null, KV attributes = null) {
             var f = e.DateTime(value.ToOption(), ToAttr(attributes), required.ToOption(), min.ToOption(), max.ToOption());
-            return new Formlet<DateTime>(f);
+            return new Formlet<DateTimeOffset>(f);
         }
 
         public Formlet<DateTime> Date(DateTime? value = null, bool required = false, DateTime? min = null, DateTime? max = null, KV attributes = null) {
