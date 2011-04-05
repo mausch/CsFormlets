@@ -19,6 +19,10 @@ namespace SampleWebApp.Controllers {
             return RedirectToAction("ThankYou", new {name = registration.User.FirstName + " " + registration.User.LastName});
         }
 
+        /// <summary>
+        /// Alternative to action above. Explicitly calls formlet and handles its result.
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Register() {
             var result = SignupFormlet.IndexFormlet().RunPost(Request);
