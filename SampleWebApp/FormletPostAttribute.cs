@@ -65,7 +65,7 @@ namespace SampleWebApp {
                 object option = result.Value;
                 var valueType = option.GetType().GetGenericArguments()[0];
                 var actionParams = filterContext.ActionDescriptor.GetParameters();
-                var boundParam = actionParams.FirstOrDefault(d => d.IsDefined(typeof(FormletBindAttribute), true));
+                var boundParam = actionParams.FirstOrDefault(d => d.IsDefined(typeof(FormletParameterAttribute), true));
                 if (boundParam == null)
                     boundParam = actionParams.FirstOrDefault(d => d.ParameterType == valueType);
                 if (boundParam == null)
