@@ -1,4 +1,6 @@
-﻿using System.Xml.Linq;
+﻿using System.Linq;
+using System.Xml.Linq;
+
 namespace Formlets.CSharp {
     public static class X {
         /// <summary>
@@ -19,6 +21,10 @@ namespace Formlets.CSharp {
         /// <returns></returns>
         public static XElement E(string name, params object[] content) {
             return new XElement(XName.Get(name), content);
+        }
+
+        public static XNode[] Raw(string xml) {
+            return XmlWriter.parseRawXml(xml).ToArray();
         }
     }
 }

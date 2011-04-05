@@ -34,7 +34,7 @@ namespace SampleWebApp.Formlets
                 .Ap("http://")
                 .Ap(e.Text(attributes: new[] {KV.Create("required","required")}))
                 .Ap(".example.com")
-                .Ap(X.E("div", "Example: http://", X.E("b", "company"), ".example.com"))
+                .Ap(X.E("div", X.Raw("Example: http://<b>company</b>.example.com")))
                 .Satisfies(a => !string.IsNullOrWhiteSpace(a), "Required field")
                 .Satisfies(a => a.Length >= 2, "Two characters minimum")
                 .Satisfies(a => string.Format("http://{0}.example.com", a).IsUrl(), "Invalid account")
