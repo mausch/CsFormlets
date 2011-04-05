@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\SignupController.cs" />
+    <Compile Include="FormletBindAttribute.cs" />
     <Compile Include="FormletPostAttribute.cs" />
     <Compile Include="Formlets\SignupFormlet.cs" />
     <Compile Include="Global.asax.cs">
