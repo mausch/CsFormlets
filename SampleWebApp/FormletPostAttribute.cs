@@ -42,6 +42,8 @@ namespace SampleWebApp {
         /// </summary>
         public FormletPostAttribute() {}
 
+        public string ViewName { get; set; }
+
         public override void OnActionExecuting(ActionExecutingContext filterContext) {
             var type = formletType ?? filterContext.Controller.GetType();
             var methodName = formletMethodName ?? (filterContext.ActionDescriptor.ActionName + "Formlet");
@@ -54,6 +56,7 @@ namespace SampleWebApp {
                 IEnumerable<XNode> errorNodes = result.ErrorForm;
                 string errorForm = errorNodes.Render();
                 filterContext.Result = new ViewResult {
+                    ViewName = ViewName,
                     ViewData = new ViewDataDictionary(errorForm)
                 };
             } else {
