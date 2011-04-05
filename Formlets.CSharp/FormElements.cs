@@ -181,5 +181,10 @@ namespace Formlets.CSharp {
             return of.Select(p => p.ToNullable());
         }
 
+        public Formlet<Color> Color(Color? value = null, KV attributes = null) {
+            var f = e.Color(value.ToOption(), ToAttr(attributes));
+            return new Formlet<Color>(f);
+        }
+
     }
 }
