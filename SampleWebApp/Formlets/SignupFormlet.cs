@@ -56,8 +56,8 @@ namespace SampleWebApp.Formlets
             return Formlet.Tuple4<string, DateTime, string, string>()
                 .Ap(e.Text(required: true).Transform(e.Validate.CreditCard).WithLabel("Credit card number"))
                 .Ap(cardExpiration())
-                .Ap(e.Text().WithLabel("Security code"))
-                .Ap(e.Text().WithLabelRaw("Billing ZIP <em>(postal code if outside the USA)</em>"))
+                .Ap(e.Text(required: true).WithLabel("Security code"))
+                .Ap(e.Text(required: true).WithLabelRaw("Billing ZIP <em>(postal code if outside the USA)</em>"))
                 .Select(t => new BillingInfo(t.Item1, t.Item2, t.Item3, t.Item4))
                 .WrapWith(X.E("fieldset"));
         }
