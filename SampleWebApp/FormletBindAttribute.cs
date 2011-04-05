@@ -8,7 +8,7 @@ using Formlets.CSharp;
 
 namespace SampleWebApp {
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
-    public class FormletPostAttribute : ActionFilterAttribute {
+    public class FormletBindAttribute : ActionFilterAttribute {
         private readonly string formletMethodName;
         private readonly Type formletType;
 
@@ -17,7 +17,7 @@ namespace SampleWebApp {
         /// </summary>
         /// <param name="formletType"></param>
         /// <param name="formletMethodName"></param>
-        public FormletPostAttribute(Type formletType, string formletMethodName) {
+        public FormletBindAttribute(Type formletType, string formletMethodName) {
             this.formletType = formletType;
             this.formletMethodName = formletMethodName;
         }
@@ -26,7 +26,7 @@ namespace SampleWebApp {
         /// Uses method [action]Formlet of type <paramref name="formletType"/> to get the formlet to be used
         /// </summary>
         /// <param name="formletType"></param>
-        public FormletPostAttribute(Type formletType) {
+        public FormletBindAttribute(Type formletType) {
             this.formletType = formletType;
         }
 
@@ -34,14 +34,14 @@ namespace SampleWebApp {
         /// Uses method <paramref name="formletMethodName"/> of current controller to get the formlet to be used
         /// </summary>
         /// <param name="formletMethodName"></param>
-        public FormletPostAttribute(string formletMethodName) {
+        public FormletBindAttribute(string formletMethodName) {
             this.formletMethodName = formletMethodName;
         }
 
         /// <summary>
         /// Uses method [action]Formlet of current controller to get the formlet to be used
         /// </summary>
-        public FormletPostAttribute() {}
+        public FormletBindAttribute() {}
 
         public string ViewName { get; set; }
 

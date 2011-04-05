@@ -14,7 +14,7 @@ namespace SampleWebApp.Controllers {
         }
 
         [HttpPost]
-        [FormletPost(typeof(SignupFormlet))]
+        [FormletBind(typeof(SignupFormlet))]
         public ActionResult Index(RegistrationInfo registration) {
             return RedirectToAction("ThankYou", new {name = registration.User.FirstName + " " + registration.User.LastName});
         }
