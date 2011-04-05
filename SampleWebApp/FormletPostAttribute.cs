@@ -16,6 +16,8 @@ namespace SampleWebApp {
 
         public override void OnActionExecuting(ActionExecutingContext filterContext) {
             var method = filterContext.Controller.GetType().GetMethod(formletMethodName, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance);
+            if (method == null)
+                throw new Exception(string.Format("Formlet method '{0}' not found in controller '{1}'", formletMethodName, filterContext.Controller));
             dynamic formlet = method.Invoke(filterContext.Controller, null);
             dynamic result = formlet.RunPost(filterContext.HttpContext.Request);
             if (result.Value == null) {
