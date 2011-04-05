@@ -7,6 +7,16 @@ using SampleWebApp.Models;
 
 namespace SampleWebApp.Formlets
 {
+    static class FormletExtensions
+    {
+        public static Formlet<T> SatisfiesBr<T>(this Formlet<T> f, Func<T, bool> pred, string error)
+        {
+            return f.Satisfies(pred, 
+                (_, x) => x.Append(X.E("br")).Append(X.E("span", X.A("class","error"), error)),
+                _ => new[] { error });
+        }
+    }
+
     public class SignupFormlet
     {
         private static readonly FormElements e = new FormElements();
@@ -15,16 +25,17 @@ namespace SampleWebApp.Formlets
             Formlet.Tuple2<string, string>()
                 .Ap(e.Password(required: true).WithLabelRaw("Password <em>(6 characters or longer)</em>"))
                 .Ap(e.Password(required: true).WithLabelRaw("Enter password again <em>(for confirmation)</em>"))
-                .Satisfies(t => t.Item1 == t.Item2, "Passwords don't match")
+                .SatisfiesBr(t => t.Item1 == t.Item2, "Passwords don't match")
                 .Select(t => t.Item1)
-                .Satisfies(t => t.Length >= 6, "Password must be 6 characters or longer");
+                .SatisfiesBr(t => t.Length >= 6, "Password must be 6 characters or longer");
 
         private static readonly Formlet<string> account =
             Formlet.Single<string>()
                 .Ap("http://")
-                .Ap(e.Text(required: true))
+                .Ap(e.Text(attributes: new[] {KV.Create("required","required")}))
                 .Ap(".example.com")
                 .Ap(X.E("div", "Example: http://", X.E("b", "company"), ".example.com"))
+                .Satisfies(a => !string.IsNullOrWhiteSpace(a), "Required field")
                 .Satisfies(a => a.Length >= 2, "Two characters minimum")
                 .Satisfies(a => string.Format("http://{0}.example.com", a).IsUrl(), "Invalid account")
                 .WrapWith(X.E("fieldset"));
