@@ -10,18 +10,18 @@ namespace SampleWebApp.Controllers {
            
         [HttpGet]
         public ActionResult Index() {
-            return View(model: SignupFormlet.Registration().ToString());
+            return View(model: SignupFormlet.IndexFormlet().ToString());
         }
 
         [HttpPost]
-        [FormletPost(typeof(SignupFormlet), "Registration")]
+        [FormletPost(typeof(SignupFormlet))]
         public ActionResult Index(RegistrationInfo registration) {
             return RedirectToAction("ThankYou", new {name = registration.User.FirstName + " " + registration.User.LastName});
         }
 
         [HttpPost]
         public ActionResult Register() {
-            var result = SignupFormlet.Registration().RunPost(Request);
+            var result = SignupFormlet.IndexFormlet().RunPost(Request);
             if (result.Value.IsNone())
                 return View("Index", model: result.ErrorForm.Render());
             var value = result.Value.Value;

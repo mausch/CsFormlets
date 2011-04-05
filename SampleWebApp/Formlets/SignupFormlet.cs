@@ -62,7 +62,7 @@ namespace SampleWebApp.Formlets
                 .WrapWith(X.E("fieldset"));
         }
 
-        public static Formlet<RegistrationInfo> Registration()
+        public static Formlet<RegistrationInfo> IndexFormlet()
         {
             return Formlet.Tuple2<User, BillingInfo>()
                 .Ap(X.E("h3", "Enter your details"))

@@ -11,18 +11,41 @@ namespace SampleWebApp {
         private readonly string formletMethodName;
         private readonly Type formletType;
 
+        /// <summary>
+        /// Uses method <paramref name="formletMethodName"/> of type <paramref name="formletType"/> to get the formlet to be used
+        /// </summary>
+        /// <param name="formletType"></param>
+        /// <param name="formletMethodName"></param>
         public FormletPostAttribute(Type formletType, string formletMethodName) {
             this.formletType = formletType;
             this.formletMethodName = formletMethodName;
         }
 
+        /// <summary>
+        /// Uses method [action]Formlet of type <paramref name="formletType"/> to get the formlet to be used
+        /// </summary>
+        /// <param name="formletType"></param>
+        public FormletPostAttribute(Type formletType) {
+            this.formletType = formletType;
+        }
+
+        /// <summary>
+        /// Uses method <paramref name="formletMethodName"/> of current controller to get the formlet to be used
+        /// </summary>
+        /// <param name="formletMethodName"></param>
         public FormletPostAttribute(string formletMethodName) {
             this.formletMethodName = formletMethodName;
         }
 
+        /// <summary>
+        /// Uses method [action]Formlet of current controller to get the formlet to be used
+        /// </summary>
+        public FormletPostAttribute() {}
+
         public override void OnActionExecuting(ActionExecutingContext filterContext) {
             var type = formletType ?? filterContext.Controller.GetType();
-            var method = type.GetMethod(formletMethodName, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance);
+            var methodName = formletMethodName ?? (filterContext.ActionDescriptor.ActionName + "Formlet");
+            var method = type.GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance);
             if (method == null)
                 throw new Exception(string.Format("Formlet method '{0}' not found in '{1}'", formletMethodName, type));
             dynamic formlet = method.Invoke(filterContext.Controller, null);
