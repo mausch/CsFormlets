@@ -5,6 +5,8 @@ using System.Reflection;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using Formlets.CSharp;
+using System.Collections.Specialized;
+using System.Web;
 
 namespace SampleWebApp {
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
@@ -43,7 +45,25 @@ namespace SampleWebApp {
         /// </summary>
         public FormletBindAttribute() {}
 
+        /// <summary>
+        /// View to show in case there's a binding error. 
+        /// By default null, which means the default view for the current action.
+        /// </summary>
         public string ViewName { get; set; }
+
+        /// <summary>
+        /// HTTP request collection to use as source for formlet binding. 
+        /// By default Request.Params
+        /// </summary>
+        public Source Source { get; set; }
+
+        public NameValueCollection GetCollectionBySource(HttpRequestBase request) {
+            if (Source == Source.QueryString)
+                return request.QueryString;
+            if (Source == Source.Form)
+                return request.Form;
+            return request.Params;
+        }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext) {
             var type = formletType ?? filterContext.Controller.GetType();
@@ -52,7 +72,7 @@ namespace SampleWebApp {
             if (method == null)
                 throw new Exception(string.Format("Formlet method '{0}' not found in '{1}'", methodName, type));
             dynamic formlet = method.Invoke(filterContext.Controller, null);
-            dynamic result = formlet.RunPost(filterContext.HttpContext.Request);
+            dynamic result = formlet.Run(GetCollectionBySource(filterContext.HttpContext.Request));
             if (result.Value == null) {
                 IEnumerable<XNode> errorNodes = result.ErrorForm;
                 string errorForm = errorNodes.Render();
@@ -69,7 +89,7 @@ namespace SampleWebApp {
                 if (boundParam == null)
                     boundParam = actionParams.FirstOrDefault(d => d.ParameterType == valueType);
                 if (boundParam == null)
-                    throw new Exception(string.Format("Could not find any action parameter to bind formlet '{0}.{1}'. No action parameter of type '{2}' found and no action parameter was marked with [FormletBind]", type, methodName, valueType));
+                    throw new Exception(string.Format("Could not find any action parameter to bind formlet '{0}.{1}'. No action parameter of type '{2}' found and no action parameter was marked with [FormletParameter]", type, methodName, valueType));
 
                 filterContext.ActionParameters[boundParam.ParameterName] = value;
             }
