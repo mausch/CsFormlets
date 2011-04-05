@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="Controllers\SignupController.cs" />
     <Compile Include="FormletPostAttribute.cs" />
+    <Compile Include="Formlets\SignupFormlet.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
