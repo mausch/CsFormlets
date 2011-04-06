@@ -9,6 +9,7 @@ using FormElements = Formlets.CSharp.FormElements;
 using Microsoft.FSharp.Core;
 using System.Xml.Linq;
 using Microsoft.FSharp.Collections;
+using AttrDict = System.Collections.Generic.Dictionary<string, string>;
 
 namespace SampleWebApp.Formlets
 {
@@ -44,7 +45,7 @@ namespace SampleWebApp.Formlets
         private static readonly Formlet<string> account =
             Formlet.Single<string>()
                 .Ap("http://")
-                .Ap(e.Text(attributes: new[] {KV.Create("required","required")}))
+                .Ap(e.Text(attributes: new AttrDict {{"required","required"}}))
                 .Ap(".example.com")
                 .Ap(X.E("div", X.Raw("Example: http://<b>company</b>.example.com")))
                 .Satisfies(a => !string.IsNullOrWhiteSpace(a), "Required field")
