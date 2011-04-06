@@ -29,7 +29,7 @@ namespace SampleWebApp.Formlets
             new ValidatorBuilder((err, xml) => xml.Append(X.E("br")).Append(X.E("span", X.A("class", "error"), err)));
 
         private static readonly IValidationFunctions brValidationFunctions =
-            new global::Formlets.Validate(validatorBuilder);
+            new Validate(validatorBuilder);
 
         private static readonly FormElements e = new FormElements();
 
