@@ -19,11 +19,11 @@ namespace Formlets.CSharp {
             e = new Formlets.FormElements(Formlets.Validate.Default);
         }
 
-        public FormElements(IValidate v) {
+        public FormElements(IValidationFunctions v) {
             e = new Formlets.FormElements(v);
         }
 
-        public IValidate Validate {
+        public IValidationFunctions Validate {
             get { return e.Validate; }
         }
 

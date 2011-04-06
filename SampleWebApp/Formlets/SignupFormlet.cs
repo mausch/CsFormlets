@@ -4,6 +4,11 @@ using System.Linq;
 using System.Web;
 using Formlets.CSharp;
 using SampleWebApp.Models;
+using Formlets;
+using FormElements = Formlets.CSharp.FormElements;
+using Microsoft.FSharp.Core;
+using System.Xml.Linq;
+using Microsoft.FSharp.Collections;
 
 namespace SampleWebApp.Formlets
 {
@@ -19,6 +24,13 @@ namespace SampleWebApp.Formlets
 
     public class SignupFormlet
     {
+
+        private static readonly IValidatorBuilder validatorBuilder =
+            new ValidatorBuilder((err, xml) => xml.Append(X.E("br")).Append(X.E("span", X.A("class", "error"), err)));
+
+        private static readonly IValidationFunctions brValidationFunctions =
+            new global::Formlets.Validate(validatorBuilder);
+
         private static readonly FormElements e = new FormElements();
 
         private static readonly Formlet<string> password =
@@ -65,7 +77,7 @@ namespace SampleWebApp.Formlets
         private static Formlet<BillingInfo> billing()
         {
             return Formlet.Tuple4<string, DateTime, string, string>()
-                .Ap(e.Text(required: true).Transform(e.Validate.CreditCard).WithLabel("Credit card number"))
+                .Ap(e.Text(required: true).Transform(brValidationFunctions.CreditCard).WithLabel("Credit card number"))
                 .Ap(cardExpiration())
                 .Ap(e.Text(required: true).WithLabel("Security code"))
                 .Ap(e.Text(required: true).WithLabelRaw("Billing ZIP <em>(postal code if outside the USA)</em>"))
