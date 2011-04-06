@@ -69,7 +69,7 @@ namespace SampleWebApp.Formlets
                 .Ap(account)
                 .Select(t => new User(t.Item1, t.Item2, t.Item3, t.Item4, t.Item5));
 
-        private static Formlet<DateTime> cardExpiration()
+        public static Formlet<DateTime> CardExpiration()
         {
             var now = DateTime.Now;
             var year = now.Year;
@@ -77,14 +77,15 @@ namespace SampleWebApp.Formlets
                 .Ap(e.Select(now.Month, Enumerable.Range(1, 12)))
                 .Ap(e.Select(year, Enumerable.Range(year, 10)))
                 .Select(t => new DateTime(t.Item2, t.Item1, 1).AddMonths(1))
+                .Satisfies(t => t > now, t => string.Format("Card expired {0:#} days ago!", (now-t).TotalDays))
                 .WrapWithLabel("Expiration date<br/>");
         }
 
-        private static Formlet<BillingInfo> billing()
+        private static Formlet<BillingInfo> Billing()
         {
             return Formlet.Tuple4<string, DateTime, string, string>()
                 .Ap(e.Text(required: true).Transform(brValidationFunctions.CreditCard).WithLabel("Credit card number"))
-                .Ap(cardExpiration())
+                .Ap(CardExpiration())
                 .Ap(e.Text(required: true).WithLabel("Security code"))
                 .Ap(e.Text(required: true).WithLabelRaw("Billing ZIP <em>(postal code if outside the USA)</em>"))
                 .Select(t => new BillingInfo(t.Item1, t.Item2, t.Item3, t.Item4))
@@ -97,7 +98,7 @@ namespace SampleWebApp.Formlets
                 .Ap(X.E("h3", "Enter your details"))
                 .Ap(user)
                 .Ap(X.E("h3", "Billing information"))
-                .Ap(billing())
+                .Ap(Billing())
                 .Select(t => new RegistrationInfo(t.Item1, t.Item2));
         }
 
