@@ -15,10 +15,15 @@ namespace SampleWebApp.Formlets
 {
     static class FormletExtensions
     {
+        public static IEnumerable<XNode> BrError(string err, List<XNode> xml)
+        {
+            return xml.Append(X.E("br")).Append(X.E("span", X.A("class", "error"), err));
+        }
+
         public static Formlet<T> SatisfiesBr<T>(this Formlet<T> f, Func<T, bool> pred, string error)
         {
             return f.Satisfies(pred, 
-                (_, x) => x.Append(X.E("br")).Append(X.E("span", X.A("class","error"), error)),
+                (_, x) => BrError(error, x),
                 _ => new[] { error });
         }
     }
@@ -27,7 +32,7 @@ namespace SampleWebApp.Formlets
     {
 
         private static readonly IValidatorBuilder validatorBuilder =
-            new ValidatorBuilder((err, xml) => xml.Append(X.E("br")).Append(X.E("span", X.A("class", "error"), err)));
+            new ValidatorBuilder(FormletExtensions.BrError);
 
         private static readonly IValidationFunctions brValidationFunctions =
             new Validate(validatorBuilder);
