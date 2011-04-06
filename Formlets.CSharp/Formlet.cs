@@ -172,13 +172,9 @@ namespace Formlets.CSharp {
         }
 
         public static Formlet<T> Satisfies<T>(this Formlet<T> f, Func<T, bool> pred, Func<T, string> errorMessage) {
-            return f.Satisfies(pred, (v, n) => {
-                var attr = new Dictionary<string, string> { { "class", "error" } };
-                var content = FsList.New(new XText(errorMessage(v)) as XNode);
-                var span = XmlWriter.xelem("span", attr.ToTuples().ToFsList(), content);
-                n.Add(span);
-                return n;
-            }, v => new[] {errorMessage(v)});
+            return f.Satisfies(pred, 
+                (v, n) => n.Append(X.E("span", X.A("class", "error"), errorMessage(v))), 
+                v => new[] {errorMessage(v)});
         }
 
         public static Formlet<Func<T,T>> Single<T>() {
