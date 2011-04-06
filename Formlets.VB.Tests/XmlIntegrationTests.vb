@@ -42,7 +42,7 @@ Public Class XmlIntegrationTests
                                {"f0", "something"},
                                {"f1", "else"}
                            })
-        Assert.True(FSharpOptionExtensions.IsNone(result.Value))
+        Assert.False(FSharpOptionExtensions.HasValue(result.Value))
         Console.WriteLine()
         Console.WriteLine("Error form:")
         Console.WriteLine(result.ErrorForm.Render())

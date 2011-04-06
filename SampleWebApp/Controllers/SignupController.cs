@@ -26,7 +26,7 @@ namespace SampleWebApp.Controllers {
         [HttpPost]
         public ActionResult Register() {
             var result = SignupFormlet.IndexFormlet().RunPost(Request);
-            if (result.Value.IsNone())
+            if (!result.Value.HasValue())
                 return View("Index", model: result.ErrorForm.Render());
             var value = result.Value.Value;
             return RedirectToAction("ThankYou", new { name = value.User.FirstName + " " + value.User.LastName });

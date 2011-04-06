@@ -11,7 +11,7 @@ namespace Formlets.CSharp.Tests {
         public void Run() {
             var input = Formlet.Input();
             var result = input.Run(new Dictionary<string, string> {{"f0", "something"}});
-            Assert.True(result.Value.IsSome());
+            Assert.True(result.Value.HasValue());
             Assert.Equal("something", result.Value.Value);
             Console.WriteLine(result.ErrorForm);
             Assert.Equal("<input name=\"f0\" value=\"something\" />", result.ErrorForm.Render());
@@ -30,7 +30,7 @@ namespace Formlets.CSharp.Tests {
             var input = Formlet.Input();
             var inputInt = input.Select(int.Parse);
             var result = inputInt.Run(new Dictionary<string, string> {{"f0", "15"}});
-            Assert.True(result.Value.IsSome());
+            Assert.True(result.Value.HasValue());
             Assert.Equal(15, result.Value.Value);
         }
 
@@ -69,7 +69,7 @@ namespace Formlets.CSharp.Tests {
             });
             Console.WriteLine(result.ErrorForm);
             Assert.Contains("<input name=\"f0\" value=\"bla\" />'bla' is not a valid number", result.ErrorForm.Render());
-            Assert.True(result.Value.IsNone());
+            Assert.False(result.Value.HasValue());
         }
 
         [Fact]
@@ -84,7 +84,7 @@ namespace Formlets.CSharp.Tests {
             Console.WriteLine(result.ErrorForm);
             Assert.Contains("<input name=\"f0\" value=\"bla\" />", result.ErrorForm.Render());
             Assert.Contains("<span class=\"error\">'bla' is not a valid number</span>", result.ErrorForm.Render());
-            Assert.True(result.Value.IsNone());
+            Assert.False(result.Value.HasValue());
         }
 
         [Fact]

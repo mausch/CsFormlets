@@ -6,12 +6,8 @@ namespace Formlets.CSharp {
     /// Extensions to make F# options more usable in C#
     /// </summary>
     public static class FSharpOptionExtensions {
-        public static bool IsSome<T>(this FSharpOption<T> option) {
+        public static bool HasValue<T>(this FSharpOption<T> option) {
             return FSharpOption<T>.get_IsSome(option);
-        }
-
-        public static bool IsNone<T>(this FSharpOption<T> option) {
-            return FSharpOption<T>.get_IsNone(option);
         }
 
         public static FSharpOption<T> ToOption<T>(this Nullable<T> value) where T: struct {
@@ -27,7 +23,7 @@ namespace Formlets.CSharp {
         }
 
         public static Nullable<T> ToNullable<T>(this FSharpOption<T> value) where T : struct {
-            if (value.IsNone())
+            if (!value.HasValue())
                 return null;
             return new Nullable<T>(value.Value);
         }

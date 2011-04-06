@@ -18,7 +18,7 @@ namespace SampleWebApp.Tests
                 {"f0", twoMonthsAgo.Month.ToString()},
                 {"f1", twoMonthsAgo.Year.ToString()},
             });
-            Assert.True(result.Value.IsNone());
+            Assert.False(result.Value.HasValue());
             Assert.True(result.Errors.Any(e => e.Contains("Card expired")));
         }
 
@@ -31,7 +31,7 @@ namespace SampleWebApp.Tests
                 {"f0", twoMonthsFuture.Month.ToString()},
                 {"f1", twoMonthsFuture.Year.ToString()},
             });
-            Assert.True(result.Value.IsSome());
+            Assert.True(result.Value.HasValue());
             Assert.Equal(0, result.Errors.Count);
             var threeMonthsFuture = now.AddMonths(3);
             Assert.Equal(new DateTime(threeMonthsFuture.Year, threeMonthsFuture.Month, 1), result.Value.Value);

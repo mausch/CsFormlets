@@ -116,7 +116,7 @@ namespace Formlets.CSharp {
         public Formlet<HttpPostedFileBase> File(KV attributes = null) {
             var f = e.File(ToAttr(attributes));
             return new Formlet<FSharpOption<HttpPostedFileBase>>(f)
-                .Select(v => v.IsNone() ? null : v.Value);
+                .Select(v => v.HasValue() ? v.Value : null);
         }
 
         public Formlet<string> Hidden(string value = null) {
@@ -172,7 +172,7 @@ namespace Formlets.CSharp {
         public Formlet<string> Submit(string value = null, KV attributes = null) {
             var f = e.Submit(value.ToOption(), ToAttr(attributes));
             var of = new Formlet<FSharpOption<string>>(f);
-            return of.Select(s => s.IsNone() ? null : s.Value);
+            return of.Select(s => s.HasValue() ? s.Value : null);
         }
 
         public Formlet<Point?> Image(string src, string alt, KV attributes = null) {
