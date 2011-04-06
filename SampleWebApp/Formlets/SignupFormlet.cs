@@ -13,8 +13,9 @@ using AttrDict = System.Collections.Generic.Dictionary<string, string>;
 
 namespace SampleWebApp.Formlets
 {
-    static class FormletExtensions
+    public static class SignupFormlet
     {
+
         public static IEnumerable<XNode> BrError(string err, List<XNode> xml)
         {
             return xml.Append(X.E("br")).Append(X.E("span", X.A("class", "error"), err));
@@ -22,17 +23,13 @@ namespace SampleWebApp.Formlets
 
         public static Formlet<T> SatisfiesBr<T>(this Formlet<T> f, Func<T, bool> pred, string error)
         {
-            return f.Satisfies(pred, 
+            return f.Satisfies(pred,
                 (_, x) => BrError(error, x),
                 _ => new[] { error });
         }
-    }
-
-    public class SignupFormlet
-    {
 
         private static readonly IValidatorBuilder validatorBuilder =
-            new ValidatorBuilder(FormletExtensions.BrError);
+            new ValidatorBuilder(BrError);
 
         private static readonly IValidationFunctions brValidationFunctions =
             new Validate(validatorBuilder);
