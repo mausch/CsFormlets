@@ -23,6 +23,11 @@ namespace Formlets.CSharp {
             return new XElement(XName.Get(name), content);
         }
 
+        /// <summary>
+        /// Parses raw xml
+        /// </summary>
+        /// <param name="xml"></param>
+        /// <returns></returns>
         public static XNode[] Raw(string xml) {
             return XmlWriter.parseRawXml(xml).ToArray();
         }

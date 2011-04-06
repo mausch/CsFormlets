@@ -96,10 +96,20 @@ namespace Formlets.CSharp {
             return new Formlet<Unit>(FormletModule.text(text));
         }
 
+        /// <summary>
+        /// Lifts pure xml into formlet
+        /// </summary>
+        /// <param name="xml"></param>
+        /// <returns></returns>
         public static Formlet<Unit> Xml(XNode xml) {
             return new Formlet<Unit>(FormletModule.xnode(xml));
         }
 
+        /// <summary>
+        /// Parses raw xml and lifts into formlet
+        /// </summary>
+        /// <param name="xml"></param>
+        /// <returns></returns>
         public static Formlet<Unit> RawXml(string xml) {
             return new Formlet<Unit>(FormletModule.rawXml(xml));
         }
@@ -167,26 +177,60 @@ namespace Formlets.CSharp {
             return new Formlet<T>(r);
         }
 
+        /// <summary>
+        /// Applies validation to this formlet
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="f"></param>
+        /// <param name="pred"></param>
+        /// <param name="errorMessage"></param>
+        /// <returns></returns>
         public static Formlet<T> Satisfies<T>(this Formlet<T> f, Func<T, bool> pred, string errorMessage) {
             return f.Satisfies(pred, _ => errorMessage);
         }
 
+        /// <summary>
+        /// Applies validation to this formlet
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="f"></param>
+        /// <param name="pred"></param>
+        /// <param name="errorMessage"></param>
+        /// <returns></returns>
         public static Formlet<T> Satisfies<T>(this Formlet<T> f, Func<T, bool> pred, Func<T, string> errorMessage) {
             return f.Satisfies(pred, 
                 (v, n) => n.Append(X.E("span", X.A("class", "error"), errorMessage(v))), 
                 v => new[] {errorMessage(v)});
         }
 
+        /// <summary>
+        /// Creates a formlet to collect a single value
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public static Formlet<Func<T,T>> Single<T>() {
             return Yield(L.F((T t) => t));
         }
 
+        /// <summary>
+        /// Creates a formlet to collect a pair of values
+        /// </summary>
+        /// <typeparam name="A"></typeparam>
+        /// <typeparam name="B"></typeparam>
+        /// <returns></returns>
         public static Formlet<Func<A,Func<B,Tuple<A,B>>>> Tuple2<A,B>() {
             return Yield(L.F((A a) => 
                 L.F((B b) => 
                     Tuple.Create(a, b))));
         }
 
+        /// <summary>
+        /// Creates a formlet to collect three values in a tuple
+        /// </summary>
+        /// <typeparam name="A"></typeparam>
+        /// <typeparam name="B"></typeparam>
+        /// <typeparam name="C"></typeparam>
+        /// <returns></returns>
         public static Formlet<Func<A,Func<B,Func<C,Tuple<A,B,C>>>>> Tuple3<A,B,C>() {
             return Yield(L.F((A a) =>
                 L.F((B b) =>
@@ -194,6 +238,14 @@ namespace Formlets.CSharp {
                         Tuple.Create(a, b, c)))));
         }
 
+        /// <summary>
+        /// Creates a formlet to collect four values in a tuple
+        /// </summary>
+        /// <typeparam name="A"></typeparam>
+        /// <typeparam name="B"></typeparam>
+        /// <typeparam name="C"></typeparam>
+        /// <typeparam name="D"></typeparam>
+        /// <returns></returns>
         public static Formlet<Func<A,Func<B,Func<C,Func<D,Tuple<A,B,C,D>>>>>> Tuple4<A,B,C,D>() {
             return Yield(L.F((A a) =>
                 L.F((B b) =>
@@ -202,6 +254,15 @@ namespace Formlets.CSharp {
                             Tuple.Create(a, b, c, d))))));
         }
 
+        /// <summary>
+        /// Creates a formlet to collect five values in a tuple
+        /// </summary>
+        /// <typeparam name="A"></typeparam>
+        /// <typeparam name="B"></typeparam>
+        /// <typeparam name="C"></typeparam>
+        /// <typeparam name="D"></typeparam>
+        /// <typeparam name="E"></typeparam>
+        /// <returns></returns>
         public static Formlet<Func<A, Func<B, Func<C, Func<D, Func<E, Tuple<A, B, C, D, E>>>>>>> Tuple5<A, B, C, D, E>() {
             return Yield(L.F((A a) =>
                 L.F((B b) =>
