@@ -116,6 +116,24 @@ namespace Formlets.CSharp {
         }
 
         /// <summary>
+        /// Lifts text into formlet
+        /// </summary>
+        /// <param name="xml"></param>
+        /// <returns></returns>
+        public static Formlet<Unit> Raw(string text) {
+            return new Formlet<Unit>(FormletModule.text(text));
+        }
+
+        /// <summary>
+        /// Lifts pure xml into formlet
+        /// </summary>
+        /// <param name="xml"></param>
+        /// <returns></returns>
+        public static Formlet<Unit> Raw(XNode xml) {
+            return new Formlet<Unit>(FormletModule.xnode(xml));
+        }
+
+        /// <summary>
         /// Applicative application (i.e. &lt;*&gt;)
         /// </summary>
         /// <typeparam name="A"></typeparam>

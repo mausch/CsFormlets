@@ -157,6 +157,7 @@ namespace Formlets.CSharp.Tests {
         public void LINQ_formlet() {
             var e = new FormElements();
             var f = from name in e.Text()
+                    join _ in Formlet.Raw(X.E("br")) on 1 equals 1
                     join age in e.Int() on 1 equals 1
                     where age == 42
                     select new { name, age };
