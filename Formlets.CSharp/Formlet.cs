@@ -47,24 +47,28 @@ namespace Formlets.CSharp {
             return new Formlet<T>(r);
         }
 
-        public static Formlet<string> Select(string selected, IEnumerable<KeyValuePair<string,string>> values) {
-            var r = FormletModule.select(selected, values.ToTuples());
+        public static Formlet<string> Select(string selected, IEnumerable<KeyValuePair<string, string>> values, IEnumerable<KeyValuePair<string, string>> attributes = null) {
+            attributes = attributes ?? new Dictionary<string, string>();
+            var r = FormletModule.select(selected, values.ToTuples(), attributes.ToTuples().ToFsList());
             return new Formlet<string>(r);
         }
 
-        public static Formlet<T> Select<T>(T selected, IEnumerable<KeyValuePair<T, string>> values) {
-            var r = FormletModule.selectA(selected, values.ToTuples());
+        public static Formlet<T> Select<T>(T selected, IEnumerable<KeyValuePair<T, string>> values, IEnumerable<KeyValuePair<string, string>> attributes = null) {
+            attributes = attributes ?? new Dictionary<string, string>();
+            var r = FormletModule.selectA(selected, values.ToTuples(), attributes.ToTuples().ToFsList());
             return new Formlet<T>(r);
         }
 
-        public static Formlet<ICollection<string>> Select(IEnumerable<string> selected, IEnumerable<KeyValuePair<string,string>> values) {
-            var r = FormletModule.selectMulti(selected, values.ToTuples());
+        public static Formlet<ICollection<string>> Select(IEnumerable<string> selected, IEnumerable<KeyValuePair<string,string>> values, IEnumerable<KeyValuePair<string, string>> attributes = null) {
+            attributes = attributes ?? new Dictionary<string, string>();
+            var r = FormletModule.selectMulti(selected, values.ToTuples(), attributes.ToTuples().ToFsList());
             var f = new Formlet<FSharpList<string>>(r);
             return f.Select(l => (ICollection<string>)l.ToList());
         }
 
-        public static Formlet<ICollection<T>> Select<T>(IEnumerable<T> selected, IEnumerable<KeyValuePair<T, string>> values) {
-            var r = FormletModule.selectMultiA(selected, values.ToTuples());
+        public static Formlet<ICollection<T>> Select<T>(IEnumerable<T> selected, IEnumerable<KeyValuePair<T, string>> values, IEnumerable<KeyValuePair<string, string>> attributes = null) {
+            attributes = attributes ?? new Dictionary<string, string>();
+            var r = FormletModule.selectMultiA(selected, values.ToTuples(), attributes.ToTuples().ToFsList());
             var f = new Formlet<FSharpList<T>>(r);
             return f.Select(l => (ICollection<T>)l.ToList());
         }

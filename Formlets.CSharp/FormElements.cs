@@ -87,28 +87,28 @@ namespace Formlets.CSharp {
             return new Formlet<T>(f);
         }
 
-        public Formlet<string> Select(string value, KV choices) {
-            var f = e.Select(value, choices.ToTuples());
+        public Formlet<string> Select(string value, KV choices, KV attributes = null) {
+            var f = e.Select(value, choices.ToTuples(), ToAttr(attributes));
             return new Formlet<string>(f);
         }
 
-        public Formlet<T> Select<T>(T value, IEnumerable<KeyValuePair<T, string>> choices) {
-            var f = e.Select(value, choices.ToTuples());
+        public Formlet<T> Select<T>(T value, IEnumerable<KeyValuePair<T, string>> choices, KV attributes = null) {
+            var f = e.Select(value, choices.ToTuples(), ToAttr(attributes));
             return new Formlet<T>(f);
         }
 
-        public Formlet<T> Select<T>(T value, IEnumerable<T> choices) {
-            return Select(value, choices.Select(m => new KeyValuePair<T, string>(m, m.ToString())));
+        public Formlet<T> Select<T>(T value, IEnumerable<T> choices, KV attributes = null) {
+            return Select(value, choices.Select(m => new KeyValuePair<T, string>(m, m.ToString())), attributes);
         }
 
-        public Formlet<IEnumerable<string>> SelectMulti(IEnumerable<string> value, KV choices) {
-            var f = e.SelectMulti(value, choices.ToTuples());
+        public Formlet<IEnumerable<string>> SelectMulti(IEnumerable<string> value, KV choices, KV attributes = null) {
+            var f = e.SelectMulti(value, choices.ToTuples(), ToAttr(attributes));
             return new Formlet<FSharpList<string>>(f)
                 .Select(v => (IEnumerable<string>)v);
         }
 
-        public Formlet<IEnumerable<T>> SelectMulti<T>(IEnumerable<T> value, IEnumerable<KeyValuePair<T, string>> choices) {
-            var f = e.SelectMulti(value, choices.ToTuples());
+        public Formlet<IEnumerable<T>> SelectMulti<T>(IEnumerable<T> value, IEnumerable<KeyValuePair<T, string>> choices, KV attributes = null) {
+            var f = e.SelectMulti(value, choices.ToTuples(), ToAttr(attributes));
             return new Formlet<FSharpList<T>>(f)
                 .Select(v => (IEnumerable<T>)v);
         }
