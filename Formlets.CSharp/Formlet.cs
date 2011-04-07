@@ -12,6 +12,11 @@ namespace Formlets.CSharp {
             return formlet.WrapWith(elem);
         }
 
+        private static FSharpList<Tuple<string, string>> ToAttr(this IEnumerable<KeyValuePair<string, string>> attributes) {
+            attributes = attributes ?? new Dictionary<string, string>();
+            return attributes.ToTuples().ToFsList();
+        }
+
         /// <summary>
         /// A text input formlet with default value and attributes
         /// </summary>
@@ -20,8 +25,7 @@ namespace Formlets.CSharp {
         /// <returns></returns>
         public static Formlet<string> Input(string defaultValue = "", IEnumerable<KeyValuePair<string, string>> attributes = null) {
             defaultValue = defaultValue ?? "";
-            attributes = attributes ?? new Dictionary<string, string>();
-            return new Formlet<string>(FormletModule.input(defaultValue, attributes.ToTuples().ToFsList()));
+            return new Formlet<string>(FormletModule.input(defaultValue, attributes.ToAttr()));
         }
 
         public static Formlet<string> Password() {
@@ -33,8 +37,7 @@ namespace Formlets.CSharp {
         }
 
         public static Formlet<bool> CheckBox(bool defaultValue = false, IEnumerable<KeyValuePair<string, string>> attributes = null) {
-            attributes = attributes ?? new Dictionary<string, string>();
-            return new Formlet<bool>(FormletModule.checkbox(defaultValue, attributes.ToTuples().ToFsList()));
+            return new Formlet<bool>(FormletModule.checkbox(defaultValue, attributes.ToAttr()));
         }
 
         public static Formlet<string> Radio(string selected, IEnumerable<KeyValuePair<string,string>> values) {
@@ -48,40 +51,34 @@ namespace Formlets.CSharp {
         }
 
         public static Formlet<string> Select(string selected, IEnumerable<KeyValuePair<string, string>> values, IEnumerable<KeyValuePair<string, string>> attributes = null) {
-            attributes = attributes ?? new Dictionary<string, string>();
-            var r = FormletModule.select(selected, values.ToTuples(), attributes.ToTuples().ToFsList());
+            var r = FormletModule.select(selected, values.ToTuples(), attributes.ToAttr());
             return new Formlet<string>(r);
         }
 
         public static Formlet<T> Select<T>(T selected, IEnumerable<KeyValuePair<T, string>> values, IEnumerable<KeyValuePair<string, string>> attributes = null) {
-            attributes = attributes ?? new Dictionary<string, string>();
-            var r = FormletModule.selectA(selected, values.ToTuples(), attributes.ToTuples().ToFsList());
+            var r = FormletModule.selectA(selected, values.ToTuples(), attributes.ToAttr());
             return new Formlet<T>(r);
         }
 
         public static Formlet<IEnumerable<string>> SelectMulti(IEnumerable<string> selected, IEnumerable<KeyValuePair<string,string>> values, IEnumerable<KeyValuePair<string, string>> attributes = null) {
-            attributes = attributes ?? new Dictionary<string, string>();
-            var r = FormletModule.selectMulti(selected, values.ToTuples(), attributes.ToTuples().ToFsList());
+            var r = FormletModule.selectMulti(selected, values.ToTuples(), attributes.ToAttr());
             var f = new Formlet<FSharpList<string>>(r);
             return f.Select(l => (IEnumerable<string>)l);
         }
 
         public static Formlet<IEnumerable<T>> SelectMulti<T>(IEnumerable<T> selected, IEnumerable<KeyValuePair<T, string>> values, IEnumerable<KeyValuePair<string, string>> attributes = null) {
-            attributes = attributes ?? new Dictionary<string, string>();
-            var r = FormletModule.selectMultiA(selected, values.ToTuples(), attributes.ToTuples().ToFsList());
+            var r = FormletModule.selectMultiA(selected, values.ToTuples(), attributes.ToAttr());
             var f = new Formlet<FSharpList<T>>(r);
             return f.Select(l => (IEnumerable<T>)l);
         }
 
         public static Formlet<string> TextArea(string defaultValue = "", IEnumerable<KeyValuePair<string,string>> attributes = null) {
-            attributes = attributes ?? new Dictionary<string, string>();
-            var r = FormletModule.textarea(defaultValue).Invoke(attributes.ToTuples().ToFsList());
+            var r = FormletModule.textarea(defaultValue).Invoke(attributes.ToAttr());
             return new Formlet<string>(r);
         }
 
         public static Formlet<FSharpOption<HttpPostedFileBase>> File(IEnumerable<KeyValuePair<string, string>> attributes = null) {
-            attributes = attributes ?? new Dictionary<string, string>();
-            var f = FormletModule.file(attributes.ToTuples().ToFsList());
+            var f = FormletModule.file(attributes.ToAttr());
             return new Formlet<FSharpOption<HttpPostedFileBase>>(f);
         }
 
