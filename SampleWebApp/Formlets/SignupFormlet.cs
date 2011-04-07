@@ -18,7 +18,7 @@ namespace SampleWebApp.Formlets
 
         public static IEnumerable<XNode> BrError(string err, List<XNode> xml)
         {
-            return xml.Append(X.E("br")).Append(X.E("span", X.A("class", "error"), err));
+            return xml.Append(X.E("br"), X.E("span", X.A("class", "error"), err));
         }
 
         public static Formlet<T> SatisfiesBr<T>(this Formlet<T> f, Func<T, bool> pred, string error)
