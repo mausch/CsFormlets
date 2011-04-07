@@ -135,6 +135,10 @@ namespace Formlets.CSharp {
             return Satisfies(pred, (v, n) => n.Append("Invalid value"), v => new[] {"Invalid value"});
         }
 
+        public Formlet<R> Join<I, K, R>(Formlet<I> inner, Func<T, K> outerKeySelector, Func<I, K> innerKeySelector, Func<T, I, R> resultSelector) {
+            return Formlet.Tuple2<T, I>().Ap(this).Ap(inner).Select(t => resultSelector(t.Item1, t.Item2));
+        }
+
         public Formlet<T> Satisfies(Func<T,bool> pred, Func<T, List<XNode>, IEnumerable<XNode>> error, Func<T, IEnumerable<string>> errorMsg) {
             var validator = new Validator<T>(pred, error, errorMsg);
             var fsValidator = validator.ToFsValidator();

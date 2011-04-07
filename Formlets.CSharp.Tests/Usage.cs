@@ -137,5 +137,36 @@ namespace Formlets.CSharp.Tests {
             var errorForm = result.ErrorForm.Render();
             Assert.Contains("errorinput", errorForm);
         }
+
+        [Fact]
+        public void LINQ_formlet_with_validation_error() {
+            var e = new FormElements();
+            var f = from name in e.Text()
+                    join age in e.Int() on 1 equals 1
+                    where age == 42
+                    select new { name, age };
+            var r = f.Run(new Dictionary<string,string> {
+                {"f0", "John"},
+                {"f1", "44"},
+            });
+            Assert.False(r.Value.HasValue());
+            Assert.Equal(1, r.Errors.Count);
+        }
+
+        [Fact]
+        public void LINQ_formlet() {
+            var e = new FormElements();
+            var f = from name in e.Text()
+                    join age in e.Int() on 1 equals 1
+                    where age == 42
+                    select new { name, age };
+            var r = f.Run(new Dictionary<string, string> {
+                {"f0", "John"},
+                {"f1", "42"},
+            });
+            Assert.True(r.Value.HasValue());
+            Assert.Equal("John", r.Value.Value.name);
+            Assert.Equal(42, r.Value.Value.age);
+        }
     }
 }
