@@ -59,18 +59,18 @@ namespace Formlets.CSharp {
             return new Formlet<T>(r);
         }
 
-        public static Formlet<ICollection<string>> Select(IEnumerable<string> selected, IEnumerable<KeyValuePair<string,string>> values, IEnumerable<KeyValuePair<string, string>> attributes = null) {
+        public static Formlet<IEnumerable<string>> SelectMulti(IEnumerable<string> selected, IEnumerable<KeyValuePair<string,string>> values, IEnumerable<KeyValuePair<string, string>> attributes = null) {
             attributes = attributes ?? new Dictionary<string, string>();
             var r = FormletModule.selectMulti(selected, values.ToTuples(), attributes.ToTuples().ToFsList());
             var f = new Formlet<FSharpList<string>>(r);
-            return f.Select(l => (ICollection<string>)l.ToList());
+            return f.Select(l => (IEnumerable<string>)l);
         }
 
-        public static Formlet<ICollection<T>> Select<T>(IEnumerable<T> selected, IEnumerable<KeyValuePair<T, string>> values, IEnumerable<KeyValuePair<string, string>> attributes = null) {
+        public static Formlet<IEnumerable<T>> SelectMulti<T>(IEnumerable<T> selected, IEnumerable<KeyValuePair<T, string>> values, IEnumerable<KeyValuePair<string, string>> attributes = null) {
             attributes = attributes ?? new Dictionary<string, string>();
             var r = FormletModule.selectMultiA(selected, values.ToTuples(), attributes.ToTuples().ToFsList());
             var f = new Formlet<FSharpList<T>>(r);
-            return f.Select(l => (ICollection<T>)l.ToList());
+            return f.Select(l => (IEnumerable<T>)l);
         }
 
         public static Formlet<string> TextArea(string defaultValue = "", IEnumerable<KeyValuePair<string,string>> attributes = null) {
