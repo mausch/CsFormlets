@@ -86,6 +86,20 @@ namespace SampleWebApp.Formlets
                 .WrapWith(X.E("fieldset"));
         }
 
+        /// <summary>
+        /// Same as <see cref="Billing"/>, but defined using LINQ
+        /// </summary>
+        /// <returns></returns>
+        private static Formlet<BillingInfo> BillingLINQ()
+        {
+            var f = from cardNumber in e.Text(required: true).Transform(brValidationFunctions.CreditCard).WithLabel("Credit card number")
+                    join exp in CardExpiration() on 1 equals 1
+                    join cvv in e.Text(required: true).WithLabel("Security code") on 1 equals 1
+                    join zip in e.Text(required: true).WithLabelRaw("Billing ZIP <em>(postal code if outside the USA)</em>") on 1 equals 1
+                    select new BillingInfo(cardNumber, exp, cvv, zip);
+            return f.WrapWith(X.E("fieldset"));
+        }
+
         public static Formlet<RegistrationInfo> IndexFormlet()
         {
             return Formlet.Tuple2<User, BillingInfo>()
