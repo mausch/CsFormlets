@@ -28,11 +28,8 @@ namespace SampleWebApp.Formlets
                 _ => new[] { error });
         }
 
-        private static readonly IValidatorBuilder validatorBuilder =
-            new ValidatorBuilder(BrError);
-
         private static readonly IValidationFunctions brValidationFunctions =
-            new Validate(validatorBuilder);
+            new Validate(new ValidatorBuilder(BrError));
 
         private static readonly FormElements e = new FormElements();
 
