@@ -51,6 +51,8 @@
     <Compile Include="FsList.cs" />
     <Compile Include="FFunc.cs" />
     <Compile Include="FuncInference.cs" />
+    <Compile Include="IFormlet.cs" />
+    <Compile Include="IFormletResult.cs" />
     <Compile Include="IValidator.cs" />
     <Compile Include="ListExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

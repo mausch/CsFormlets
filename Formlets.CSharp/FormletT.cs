@@ -8,7 +8,7 @@ using System.Collections.Specialized;
 using System.Web;
 
 namespace Formlets.CSharp {
-    public class Formlet<T> {
+    public class Formlet<T>: IFormlet {
         // real formlet, wrapped
         private readonly FSharpFunc<int, Tuple<Tuple<FSharpList<XNode>, FSharpFunc<FSharpList<Tuple<string, InputValue>>, Tuple<FSharpList<XNode>, Tuple<FSharpList<string>, FSharpOption<T>>>>>, int>> f;
 
@@ -83,6 +83,10 @@ namespace Formlets.CSharp {
             return Run(tuples.ToFsList());
         }
 
+        IFormletResult IFormlet.Run(IEnumerable<KeyValuePair<string, string>> env) {
+            return Run(env);
+        }
+
         public FormletResult<T> Run(IEnumerable<KeyValuePair<string, InputValue>> env) {
             return Run(env.ToTuples().ToFsList());
         }
@@ -106,6 +110,10 @@ namespace Formlets.CSharp {
         public FormletResult<T> Run(NameValueCollection nv) {
             var list = EnvDictModule.fromNV(nv);
             return Run(list);
+        }
+
+        IFormletResult IFormlet.Run(NameValueCollection nv) {
+            return Run(nv);
         }
 
         public FormletResult<T> RunPost(HttpRequestBase request) {

@@ -7,7 +7,7 @@ namespace Formlets.CSharp {
     /// Formlet result
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class FormletResult<T> {
+    public class FormletResult<T>: IFormletResult {
         private readonly IEnumerable<XNode> errorForm;
         private readonly FSharpOption<T> value;
         private readonly ICollection<string> errors;
@@ -36,6 +36,10 @@ namespace Formlets.CSharp {
         /// Formlet result value. If None, there was an error.
         /// </summary>
         public FSharpOption<T> Value {
+            get { return value; }
+        }
+
+        object IFormletResult.Value {
             get { return value; }
         }
     }

@@ -71,19 +71,19 @@ namespace SampleWebApp {
             var method = type.GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance);
             if (method == null)
                 throw new Exception(string.Format("Formlet method '{0}' not found in '{1}'", methodName, type));
-            dynamic formlet = method.Invoke(filterContext.Controller, null);
-            dynamic result = formlet.Run(GetCollectionBySource(filterContext.HttpContext.Request));
+            var formlet = (IFormlet) method.Invoke(filterContext.Controller, null);
+            var result = formlet.Run(GetCollectionBySource(filterContext.HttpContext.Request));
             if (result.Value == null) {
-                IEnumerable<XNode> errorNodes = result.ErrorForm;
+                var errorNodes = result.ErrorForm;
                 string errorForm = errorNodes.Render();
                 filterContext.Result = new ViewResult {
                     ViewName = ViewName,
                     ViewData = new ViewDataDictionary(errorForm)
                 };
             } else {
-                var value = result.Value.Value;
-                object option = result.Value;
-                var valueType = option.GetType().GetGenericArguments()[0];
+                var valueType = result.Value.GetType().GetGenericArguments()[0];
+                var getValue = result.Value.GetType().GetProperty("Value");
+                var value = getValue.GetValue(result.Value, null);
                 var actionParams = filterContext.ActionDescriptor.GetParameters();
                 var boundParam = actionParams.FirstOrDefault(d => d.IsDefined(typeof(FormletParameterAttribute), true));
                 if (boundParam == null)
