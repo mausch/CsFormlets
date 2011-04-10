@@ -9,5 +9,6 @@ namespace Formlets.CSharp {
         IEnumerable<XNode> ErrorForm { get; }
         ICollection<string> Errors { get; }
         object Value { get; }
+        Type ValueType { get; }
     }
 }

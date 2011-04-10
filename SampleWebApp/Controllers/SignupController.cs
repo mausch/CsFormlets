@@ -15,7 +15,7 @@ namespace SampleWebApp.Controllers {
 
         [HttpPost]
         [FormletBind(typeof(SignupFormlet))]
-        public ActionResult Index(RegistrationInfo registration) {
+        public ActionResult Indexa(RegistrationInfo registration) {
             return RedirectToAction("ThankYou", new {name = registration.User.FirstName + " " + registration.User.LastName});
         }
 
@@ -24,11 +24,20 @@ namespace SampleWebApp.Controllers {
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult Register() {
+        public ActionResult Index2() {
             var result = SignupFormlet.IndexFormlet().RunPost(Request);
             if (!result.Value.HasValue())
                 return View("Index", model: result.ErrorForm.Render());
             var value = result.Value.Value;
+            return RedirectToAction("ThankYou", new { name = value.User.FirstName + " " + value.User.LastName });
+        }
+
+        [HttpPost]
+        [FormletBind(typeof(SignupFormlet))]
+        public ActionResult Index(FormletResult<RegistrationInfo> registration) {
+            if (!registration.Value.HasValue())
+                return View("Index", model: registration.ErrorForm.Render());
+            var value = registration.Value.Value;
             return RedirectToAction("ThankYou", new { name = value.User.FirstName + " " + value.User.LastName });
         }
 

@@ -7,6 +7,7 @@ using System.Xml.Linq;
 using Formlets.CSharp;
 using System.Collections.Specialized;
 using System.Web;
+using Microsoft.FSharp.Core;
 
 namespace SampleWebApp {
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
@@ -73,6 +74,15 @@ namespace SampleWebApp {
                 throw new Exception(string.Format("Formlet method '{0}' not found in '{1}'", methodName, type));
             var formlet = (IFormlet) method.Invoke(filterContext.Controller, null);
             var result = formlet.Run(GetCollectionBySource(filterContext.HttpContext.Request));
+            var valueType = result.ValueType;
+            var getValue = typeof(FSharpOption<>).MakeGenericType(valueType).GetProperty("Value");
+            var actionParams = filterContext.ActionDescriptor.GetParameters();
+            var resultType = typeof(FormletResult<>).MakeGenericType(valueType);
+            var boundParam = actionParams.FirstOrDefault(p => p.ParameterType == resultType);
+            if (boundParam != null) {
+                filterContext.ActionParameters[boundParam.ParameterName] = result;
+                return;
+            }
             if (result.Value == null) {
                 var errorNodes = result.ErrorForm;
                 string errorForm = errorNodes.Render();
@@ -81,11 +91,8 @@ namespace SampleWebApp {
                     ViewData = new ViewDataDictionary(errorForm)
                 };
             } else {
-                var valueType = result.Value.GetType().GetGenericArguments()[0];
-                var getValue = result.Value.GetType().GetProperty("Value");
                 var value = getValue.GetValue(result.Value, null);
-                var actionParams = filterContext.ActionDescriptor.GetParameters();
-                var boundParam = actionParams.FirstOrDefault(d => d.IsDefined(typeof(FormletParameterAttribute), true));
+                boundParam = actionParams.FirstOrDefault(d => d.IsDefined(typeof(FormletParameterAttribute), true));
                 if (boundParam == null)
                     boundParam = actionParams.FirstOrDefault(d => d.ParameterType == valueType);
                 if (boundParam == null)

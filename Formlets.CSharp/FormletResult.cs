@@ -1,6 +1,7 @@
 using Microsoft.FSharp.Core;
 using System.Xml.Linq;
 using System.Collections.Generic;
+using System;
 
 namespace Formlets.CSharp {
     /// <summary>
@@ -11,6 +12,8 @@ namespace Formlets.CSharp {
         private readonly IEnumerable<XNode> errorForm;
         private readonly FSharpOption<T> value;
         private readonly ICollection<string> errors;
+
+        public FormletResult() { }
 
         public FormletResult(IEnumerable<XNode> errorForm, ICollection<string> errors, FSharpOption<T> value) {
             this.errorForm = errorForm;
@@ -41,6 +44,10 @@ namespace Formlets.CSharp {
 
         object IFormletResult.Value {
             get { return value; }
+        }
+
+        Type IFormletResult.ValueType {
+            get { return typeof(T); }
         }
     }
 }
