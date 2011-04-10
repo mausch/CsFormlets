@@ -66,14 +66,18 @@ namespace SampleWebApp {
             return request.Params;
         }
 
-        public override void OnActionExecuting(ActionExecutingContext filterContext) {
+        public IFormletResult GetFormletResult(ActionExecutingContext filterContext) {
             var type = formletType ?? filterContext.Controller.GetType();
             var methodName = formletMethodName ?? (filterContext.ActionDescriptor.ActionName + "Formlet");
             var method = type.GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance);
             if (method == null)
                 throw new Exception(string.Format("Formlet method '{0}' not found in '{1}'", methodName, type));
-            var formlet = (IFormlet) method.Invoke(filterContext.Controller, null);
-            var result = formlet.Run(GetCollectionBySource(filterContext.HttpContext.Request));
+            var formlet = (IFormlet)method.Invoke(filterContext.Controller, null);
+            return formlet.Run(GetCollectionBySource(filterContext.HttpContext.Request));
+        }
+
+        public override void OnActionExecuting(ActionExecutingContext filterContext) {
+            var result = GetFormletResult(filterContext);
             var valueType = result.ValueType;
             var getValue = typeof(FSharpOption<>).MakeGenericType(valueType).GetProperty("Value");
             var actionParams = filterContext.ActionDescriptor.GetParameters();
@@ -96,7 +100,7 @@ namespace SampleWebApp {
                 if (boundParam == null)
                     boundParam = actionParams.FirstOrDefault(d => d.ParameterType == valueType);
                 if (boundParam == null)
-                    throw new Exception(string.Format("Could not find any action parameter to bind formlet '{0}.{1}'. No action parameter of type '{2}' found and no action parameter was marked with [FormletParameter]", type, methodName, valueType));
+                    throw new Exception(string.Format("Could not find any action parameter to bind formlet. No action parameter of type '{0}' or FormletResult<{0}> found and no action parameter was marked with [FormletParameter]", valueType));
 
                 filterContext.ActionParameters[boundParam.ParameterName] = value;
             }
