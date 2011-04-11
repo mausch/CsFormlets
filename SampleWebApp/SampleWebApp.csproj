@@ -60,6 +60,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\SignupController.cs" />
+    <Compile Include="FormletBindAttribute.cs" />
+    <Compile Include="FormletBinder.cs" />
     <Compile Include="FormletParameterAttribute.cs" />
     <Compile Include="FormletFilterAttribute.cs" />
     <Compile Include="Formlets\SignupFormlet.cs" />

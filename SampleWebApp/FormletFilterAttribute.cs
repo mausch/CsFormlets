@@ -58,26 +58,9 @@ namespace SampleWebApp {
         /// </summary>
         public Source Source { get; set; }
 
-        public NameValueCollection GetCollectionBySource(HttpRequestBase request) {
-            if (Source == Source.QueryString)
-                return request.QueryString;
-            if (Source == Source.Form)
-                return request.Form;
-            return request.Params;
-        }
-
-        public IFormletResult GetFormletResult(ActionExecutingContext filterContext) {
-            var type = formletType ?? filterContext.Controller.GetType();
-            var methodName = formletMethodName ?? (filterContext.ActionDescriptor.ActionName + "Formlet");
-            var method = type.GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance);
-            if (method == null)
-                throw new Exception(string.Format("Formlet method '{0}' not found in '{1}'", methodName, type));
-            var formlet = (IFormlet)method.Invoke(filterContext.Controller, null);
-            return formlet.Run(GetCollectionBySource(filterContext.HttpContext.Request));
-        }
-
         public override void OnActionExecuting(ActionExecutingContext filterContext) {
-            var result = GetFormletResult(filterContext);
+            var binder = new FormletBinder(formletType, formletMethodName) { Source = Source };
+            var result = binder.GetFormletResult(filterContext.Controller, filterContext.ActionDescriptor.ActionName, filterContext.HttpContext.Request);
             var valueType = result.ValueType;
             var getValue = typeof(FSharpOption<>).MakeGenericType(valueType).GetProperty("Value");
             var actionParams = filterContext.ActionDescriptor.GetParameters();
