@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 using Xunit;
+using Microsoft.FSharp.Core;
 
 namespace Formlets.CSharp.Tests {
     public class Usage {
@@ -169,5 +170,6 @@ namespace Formlets.CSharp.Tests {
             Assert.Equal("John", r.Value.Value.name);
             Assert.Equal(42, r.Value.Value.age);
         }
+
     }
 }
