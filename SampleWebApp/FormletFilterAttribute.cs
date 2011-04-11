@@ -11,7 +11,7 @@ using Microsoft.FSharp.Core;
 
 namespace SampleWebApp {
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
-    public class FormletBindAttribute : ActionFilterAttribute {
+    public class FormletFilterAttribute : ActionFilterAttribute {
         private readonly string formletMethodName;
         private readonly Type formletType;
 
@@ -20,7 +20,7 @@ namespace SampleWebApp {
         /// </summary>
         /// <param name="formletType"></param>
         /// <param name="formletMethodName"></param>
-        public FormletBindAttribute(Type formletType, string formletMethodName) {
+        public FormletFilterAttribute(Type formletType, string formletMethodName) {
             this.formletType = formletType;
             this.formletMethodName = formletMethodName;
         }
@@ -29,7 +29,7 @@ namespace SampleWebApp {
         /// Uses method [action]Formlet of type <paramref name="formletType"/> to get the formlet to be used
         /// </summary>
         /// <param name="formletType"></param>
-        public FormletBindAttribute(Type formletType) {
+        public FormletFilterAttribute(Type formletType) {
             this.formletType = formletType;
         }
 
@@ -37,14 +37,14 @@ namespace SampleWebApp {
         /// Uses method <paramref name="formletMethodName"/> of current controller to get the formlet to be used
         /// </summary>
         /// <param name="formletMethodName"></param>
-        public FormletBindAttribute(string formletMethodName) {
+        public FormletFilterAttribute(string formletMethodName) {
             this.formletMethodName = formletMethodName;
         }
 
         /// <summary>
         /// Uses method [action]Formlet of current controller to get the formlet to be used
         /// </summary>
-        public FormletBindAttribute() {}
+        public FormletFilterAttribute() {}
 
         /// <summary>
         /// View to show in case there's a binding error. 

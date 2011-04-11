@@ -14,7 +14,7 @@ namespace SampleWebApp.Controllers {
         }
 
         [HttpPost]
-        [FormletBind(typeof(SignupFormlet))]
+        [FormletFilter(typeof(SignupFormlet))]
         public ActionResult Indexa(RegistrationInfo registration) {
             return RedirectToAction("ThankYou", new {name = registration.User.FirstName + " " + registration.User.LastName});
         }
@@ -33,7 +33,7 @@ namespace SampleWebApp.Controllers {
         }
 
         [HttpPost]
-        [FormletBind(typeof(SignupFormlet))]
+        [FormletFilter(typeof(SignupFormlet))]
         public ActionResult Index(FormletResult<RegistrationInfo> registration) {
             if (!registration.Value.HasValue())
                 return View("Index", model: registration.ErrorForm.Render());
