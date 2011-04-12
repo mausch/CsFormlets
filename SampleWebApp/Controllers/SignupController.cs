@@ -19,10 +19,6 @@ namespace SampleWebApp.Controllers {
             return RedirectToAction("ThankYou", new {name = registration.User.FirstName + " " + registration.User.LastName});
         }
 
-        /// <summary>
-        /// Alternative to action above. Explicitly calls formlet and handles its result.
-        /// </summary>
-        /// <returns></returns>
         [HttpPost]
         public ActionResult Index2() {
             var result = SignupFormlet.IndexFormlet().RunPost(Request);
@@ -33,8 +29,26 @@ namespace SampleWebApp.Controllers {
         }
 
         [HttpPost]
+        public ActionResult Index3() {
+            var result = SignupFormlet.IndexFormlet().RunPost(Request);
+            return Signup(result);
+        }
+
+        [NonAction]
+        public ActionResult Signup(FormletResult<RegistrationInfo> registration) {
+            if (!registration.Value.HasValue())
+                return View("Index", model: registration.ErrorForm.Render());
+            return Signup(registration.Value.Value);
+        }
+
+        [NonAction]
+        public ActionResult Signup(RegistrationInfo registration) {
+            return RedirectToAction("ThankYou", new { name = registration.User.FirstName + " " + registration.User.LastName });
+        }
+
+        [HttpPost]
         [FormletFilter(typeof(SignupFormlet))]
-        public ActionResult Index3(FormletResult<RegistrationInfo> registration) {
+        public ActionResult Index4(FormletResult<RegistrationInfo> registration) {
             if (!registration.Value.HasValue())
                 return View("Index", model: registration.ErrorForm.Render());
             var value = registration.Value.Value;
