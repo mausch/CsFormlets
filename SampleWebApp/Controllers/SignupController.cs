@@ -23,7 +23,7 @@ namespace SampleWebApp.Controllers {
         public ActionResult Index2() {
             var result = SignupFormlet.IndexFormlet().RunPost(Request);
             if (!result.Value.HasValue())
-                return View("Index", model: result.ErrorForm.Render());
+                return View(model: result.ErrorForm.Render());
             var value = result.Value.Value;
             return RedirectToAction("ThankYou", new { name = value.User.FirstName + " " + value.User.LastName });
         }
@@ -32,7 +32,7 @@ namespace SampleWebApp.Controllers {
         public ActionResult Index(FormCollection form) {
             var result = SignupFormlet.IndexFormlet().Run(form);
             if (!result.Value.HasValue())
-                return View("Index", model: result.ErrorForm.Render());
+                return View(model: result.ErrorForm.Render());
             var value = result.Value.Value;
             return RedirectToAction("ThankYou", new { name = value.User.FirstName + " " + value.User.LastName });
         }
@@ -46,7 +46,7 @@ namespace SampleWebApp.Controllers {
         [NonAction]
         public ActionResult Signup(FormletResult<RegistrationInfo> registration) {
             if (!registration.Value.HasValue())
-                return View("Index", model: registration.ErrorForm.Render());
+                return View(model: registration.ErrorForm.Render());
             return Signup(registration.Value.Value);
         }
 
@@ -59,7 +59,7 @@ namespace SampleWebApp.Controllers {
         [FormletFilter(typeof(SignupFormlet))]
         public ActionResult Index5(FormletResult<RegistrationInfo> registration) {
             if (!registration.Value.HasValue())
-                return View("Index", model: registration.ErrorForm.Render());
+                return View(model: registration.ErrorForm.Render());
             var value = registration.Value.Value;
             return RedirectToAction("ThankYou", new { name = value.User.FirstName + " " + value.User.LastName });
         }
@@ -67,7 +67,7 @@ namespace SampleWebApp.Controllers {
         [HttpPost]
         public ActionResult Index6([FormletBind(FormletType = typeof(SignupFormlet))] FormletResult<RegistrationInfo> registration) {
             if (!registration.Value.HasValue())
-                return View("Index", model: registration.ErrorForm.Render());
+                return View(model: registration.ErrorForm.Render());
             var value = registration.Value.Value;
             return RedirectToAction("ThankYou", new { name = value.User.FirstName + " " + value.User.LastName });
         }
