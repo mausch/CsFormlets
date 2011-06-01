@@ -88,6 +88,11 @@ namespace Formlets.CSharp {
             return ip => new Formlet<Unit>(FormletModule.reCaptcha(settings, ip));
         }
 
+        public static Formlet<T> Pickle<T>(T value) {
+            var f = FormletModule.pickler(value);
+            return new Formlet<T>(f);
+        }
+
         /// <summary>
         /// Lifts text into formlet
         /// </summary>
