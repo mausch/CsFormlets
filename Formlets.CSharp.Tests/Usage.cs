@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 using Xunit;
-using Microsoft.FSharp.Core;
 
 namespace Formlets.CSharp.Tests {
     public class Usage {
@@ -39,7 +37,7 @@ namespace Formlets.CSharp.Tests {
         public void PureApply() {
             var input = Formlet.Input("a value", new Dictionary<string, string> {{"size", "10"}});
             var inputInt = Formlet.Input().Select(int.Parse);
-            var formlet = Formlet.Yield(L.F((string a) => L.F((int b) => Tuple.Create(a, b))))
+            var formlet = Formlet.Tuple2<string,int>()
                 .Ap(input)
                 .Ap("Hello world!")
                 .Ap(X.E("span", X.A("class","bla"), "a message"))
@@ -98,7 +96,7 @@ namespace Formlets.CSharp.Tests {
                 {1, "First"},
                 {2, "Second"},
             });
-            var formlet = Formlet.Yield(L.F((string a) => L.F((int b) => Tuple.Create(a, b))))
+            var formlet = Formlet.Tuple2<string,int>()
                 .Ap(radio1)
                 .Ap(radio2);
             var result = formlet.Run(new Dictionary<string, string> {
