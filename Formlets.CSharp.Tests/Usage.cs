@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Web;
 using Xunit;
+using FSharp.Core.CS;
 
 namespace Formlets.CSharp.Tests {
     public class Usage {

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FSharp.Core.CS;
 using Microsoft.FSharp.Collections;
 using Microsoft.FSharp.Core;
 using System.Xml.Linq;
@@ -56,7 +57,7 @@ namespace Formlets.CSharp {
         }
 
         public Formlet<T> WrapWith(XElement xml) {
-            var l = FsList.New(xml);
+            var l = FSharpList.New(xml);
             var r = FormletModule.tag(xml.Name.LocalName, XmlHelpers.getAttr(xml), f);
             return new Formlet<T>(r);
         }

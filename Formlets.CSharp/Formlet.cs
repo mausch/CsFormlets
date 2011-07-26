@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Microsoft.FSharp.Collections;
 using Microsoft.FSharp.Core;
 using System.Xml.Linq;
 using System.Web;
+using FSharp.Core.CS;
 
 namespace Formlets.CSharp {
     public static class Formlet {

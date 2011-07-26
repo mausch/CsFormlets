@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using Microsoft.FSharp.Collections;
+using FSharp.Core.CS;
 
 namespace Formlets.CSharp {
     /// <summary>

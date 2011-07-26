@@ -114,6 +114,10 @@
       <Project>{D628A18C-7C64-48CD-BC52-ADD7A88A8770}</Project>
       <Name>Formlets</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FSharp.Core.CS\FSharp.Core.CS\FSharp.Core.CS.fsproj">
+      <Project>{CDFDD597-0EF6-4682-995A-9C73BE122419}</Project>
+      <Name>FSharp.Core.CS</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Signup\Index.cshtml" />

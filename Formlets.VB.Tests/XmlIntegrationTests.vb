@@ -1,6 +1,7 @@
 ﻿Imports System.Text.RegularExpressions
 Imports Formlets.CSharp
 Imports Xunit
+Imports FSharp.Core.CS.Opt
 
 Public Class XmlIntegrationTests
 
@@ -42,7 +43,7 @@ Public Class XmlIntegrationTests
                                {"f0", "something"},
                                {"f1", "else"}
                            })
-        Assert.False(FSharpOption.HasValue(result.Value))
+        Assert.False(result.Value.HasValue)
         Console.WriteLine()
         Console.WriteLine("Error form:")
         Console.WriteLine(result.ErrorForm.Render())

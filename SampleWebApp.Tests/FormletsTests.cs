@@ -5,6 +5,7 @@ using System.Linq;
 using Xunit;
 using SampleWebApp.Formlets;
 using Formlets.CSharp;
+using FSharp.Core.CS;
 
 namespace SampleWebApp.Tests
 {

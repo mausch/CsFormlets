@@ -6,6 +6,7 @@ using Microsoft.FSharp.Collections;
 using System.Web;
 using System.Linq;
 using System.Drawing;
+using FSharp.Core.CS;
 
 namespace Formlets.CSharp {
     /// <summary>
@@ -29,51 +30,51 @@ namespace Formlets.CSharp {
 
         private FSharpOption<FSharpList<Tuple<string,string>>> ToAttr(KV attr) {
             attr = attr ?? new Dictionary<string, string>();
-            return attr.ToTuples().ToFsList().ToOption();
+            return attr.ToTuples().ToFsList().Some();
         }
 
         public Formlet<bool> Checkbox(bool value, bool required = false, KV attributes = null) {
-            var f = e.Checkbox(value, required.ToOption(), ToAttr(attributes));
+            var f = e.Checkbox(value, required.Some(), ToAttr(attributes));
             return new Formlet<bool>(f);
         }
 
         public Formlet<string> Textarea(string value = "", KV attributes = null) {
-            var f = e.Textarea(value.ToOption(), ToAttr(attributes));
+            var f = e.Textarea(value.Some(), ToAttr(attributes));
             return new Formlet<string>(f);
         }
 
         public Formlet<string> Text(string value = "", bool required = false, int? maxlength = null, string pattern = null, KV attributes = null) {
-            var f = e.Text(value.ToOption(), ToAttr(attributes), required.ToOption(), maxlength.ToOption(), pattern.ToOption());
+            var f = e.Text(value.Some(), ToAttr(attributes), required.Some(), maxlength.ToOption(), pattern.Some());
             return new Formlet<string>(f);
         }
 
         public Formlet<double> Double(double? value = null, bool required = false, int? maxlength = null, double? min = null, double? max = null, KV attributes = null) {
-            var f = e.Float(value.ToOption(), ToAttr(attributes), required.ToOption(), maxlength.ToOption(), min.ToOption(), max.ToOption());
+            var f = e.Float(value.ToOption(), ToAttr(attributes), required.Some(), maxlength.ToOption(), min.ToOption(), max.ToOption());
             return new Formlet<double>(f);
         }
 
         public Formlet<int> Int(int? value = null, bool required = false, int? maxlength = null, int? min = null, int? max = null, KV attributes = null) {
-            var f = e.Int(value.ToOption(), ToAttr(attributes), required.ToOption(), maxlength.ToOption(), min.ToOption(), max.ToOption());
+            var f = e.Int(value.ToOption(), ToAttr(attributes), required.Some(), maxlength.ToOption(), min.ToOption(), max.ToOption());
             return new Formlet<int>(f);
         }
 
         public Formlet<double> DoubleRange(double min, double max, double? value = null, bool required = false, KV attributes = null) {
-            var f = e.FloatRange(min, max, value.ToOption(), ToAttr(attributes), required.ToOption());
+            var f = e.FloatRange(min, max, value.ToOption(), ToAttr(attributes), required.Some());
             return new Formlet<double>(f);
         }
 
         public Formlet<int> IntRange(int min, int max, int? value = null, bool required = false, KV attributes = null) {
-            var f = e.IntRange(min, max, value.ToOption(), ToAttr(attributes), required.ToOption());
+            var f = e.IntRange(min, max, value.ToOption(), ToAttr(attributes), required.Some());
             return new Formlet<int>(f);
         }
 
         public Formlet<string> Url(string value = null, bool required = false, KV attributes = null) {
-            var f = e.Url(value.ToOption(), ToAttr(attributes), required.ToOption());
+            var f = e.Url(value.Some(), ToAttr(attributes), required.Some());
             return new Formlet<string>(f);
         }
 
         public Formlet<string> Email(string value = null, bool required = false, KV attributes = null) {
-            var f = e.Email(value.ToOption(), ToAttr(attributes), required.ToOption());
+            var f = e.Email(value.Some(), ToAttr(attributes), required.Some());
             return new Formlet<string>(f);
         }
 
@@ -120,57 +121,57 @@ namespace Formlets.CSharp {
         }
 
         public Formlet<string> Hidden(string value = null) {
-            var f = e.Hidden(value.ToOption());
+            var f = e.Hidden(value.Some());
             return new Formlet<string>(f);
         }
 
         public Formlet<string> Password(bool required = false) {
-            var f = e.Password(required.ToOption());
+            var f = e.Password(required.Some());
             return new Formlet<string>(f);
         }
 
         public Formlet<string> Search(string value = null, bool required = false, int? maxlength = null, string pattern = null, KV attributes = null) {
-            var f = e.Search(value.ToOption(), ToAttr(attributes), required.ToOption(), maxlength.ToOption(), pattern.ToOption());
+            var f = e.Search(value.Some(), ToAttr(attributes), required.Some(), maxlength.ToOption(), pattern.Some());
             return new Formlet<string>(f);
         }
 
         public Formlet<string> Tel(string value = null, bool required = false, int? maxlength = null, string pattern = null, KV attributes = null) {
-            var f = e.Tel(value.ToOption(), ToAttr(attributes), required.ToOption(), maxlength.ToOption(), pattern.ToOption());
+            var f = e.Tel(value.Some(), ToAttr(attributes), required.Some(), maxlength.ToOption(), pattern.Some());
             return new Formlet<string>(f);
         }
 
         public Formlet<DateTimeOffset> DateTime(DateTimeOffset? value = null, bool required = false, DateTimeOffset? min = null, DateTimeOffset? max = null, KV attributes = null) {
-            var f = e.DateTime(value.ToOption(), ToAttr(attributes), required.ToOption(), min.ToOption(), max.ToOption());
+            var f = e.DateTime(value.ToOption(), ToAttr(attributes), required.Some(), min.ToOption(), max.ToOption());
             return new Formlet<DateTimeOffset>(f);
         }
 
         public Formlet<DateTime> DateTimeLocal(DateTime? value = null, bool required = false, DateTime? min = null, DateTime? max = null, KV attributes = null) {
-            var f = e.DateTimeLocal(value.ToOption(), ToAttr(attributes), required.ToOption(), min.ToOption(), max.ToOption());
+            var f = e.DateTimeLocal(value.ToOption(), ToAttr(attributes), required.Some(), min.ToOption(), max.ToOption());
             return new Formlet<DateTime>(f);
         }
 
         public Formlet<DateTime> Date(DateTime? value = null, bool required = false, DateTime? min = null, DateTime? max = null, KV attributes = null) {
-            var f = e.Date(value.ToOption(), ToAttr(attributes), required.ToOption(), min.ToOption(), max.ToOption());
+            var f = e.Date(value.ToOption(), ToAttr(attributes), required.Some(), min.ToOption(), max.ToOption());
             return new Formlet<DateTime>(f);
         }
 
         public Formlet<DateTime> Month(DateTime? value = null, bool required = false, DateTime? min = null, DateTime? max = null, KV attributes = null) {
-            var f = e.Month(value.ToOption(), ToAttr(attributes), required.ToOption(), min.ToOption(), max.ToOption());
+            var f = e.Month(value.ToOption(), ToAttr(attributes), required.Some(), min.ToOption(), max.ToOption());
             return new Formlet<DateTime>(f);
         }
 
         public Formlet<DateTime> Week(DateTime? value = null, bool required = false, DateTime? min = null, DateTime? max = null, KV attributes = null) {
-            var f = e.Week(value.ToOption(), ToAttr(attributes), required.ToOption(), min.ToOption(), max.ToOption());
+            var f = e.Week(value.ToOption(), ToAttr(attributes), required.Some(), min.ToOption(), max.ToOption());
             return new Formlet<DateTime>(f);
         }
 
         public Formlet<DateTime> Time(DateTime? value = null, bool required = false, DateTime? min = null, DateTime? max = null, KV attributes = null) {
-            var f = e.Time(value.ToOption(), ToAttr(attributes), required.ToOption(), min.ToOption(), max.ToOption());
+            var f = e.Time(value.ToOption(), ToAttr(attributes), required.Some(), min.ToOption(), max.ToOption());
             return new Formlet<DateTime>(f);
         }
 
         public Formlet<string> Submit(string value = null, KV attributes = null) {
-            var f = e.Submit(value.ToOption(), ToAttr(attributes));
+            var f = e.Submit(value.Some(), ToAttr(attributes));
             var of = new Formlet<FSharpOption<string>>(f);
             return of.Select(s => s.HasValue() ? s.Value : null);
         }

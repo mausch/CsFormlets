@@ -4,6 +4,7 @@ using System;
 using SampleWebApp.Models;
 using System.Linq;
 using SampleWebApp.Formlets;
+using FSharp.Core.CS;
 
 namespace SampleWebApp.Controllers {
     public class SignupController : Controller {
