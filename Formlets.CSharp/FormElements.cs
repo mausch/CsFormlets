@@ -44,7 +44,7 @@ namespace Formlets.CSharp {
         }
 
         public Formlet<string> Text(string value = "", bool required = false, int? maxlength = null, string pattern = null, KV attributes = null) {
-            var f = e.Text(value.Some(), ToAttr(attributes), required.Some(), maxlength.ToOption(), pattern.Some());
+            var f = e.Text(value.Some(), ToAttr(attributes), required.Some(), maxlength.ToOption(), pattern.ToOption());
             return new Formlet<string>(f);
         }
 
@@ -69,12 +69,12 @@ namespace Formlets.CSharp {
         }
 
         public Formlet<string> Url(string value = null, bool required = false, KV attributes = null) {
-            var f = e.Url(value.Some(), ToAttr(attributes), required.Some());
+            var f = e.Url(value.ToOption(), ToAttr(attributes), required.Some());
             return new Formlet<string>(f);
         }
 
         public Formlet<string> Email(string value = null, bool required = false, KV attributes = null) {
-            var f = e.Email(value.Some(), ToAttr(attributes), required.Some());
+            var f = e.Email(value.ToOption(), ToAttr(attributes), required.Some());
             return new Formlet<string>(f);
         }
 
@@ -121,7 +121,7 @@ namespace Formlets.CSharp {
         }
 
         public Formlet<string> Hidden(string value = null) {
-            var f = e.Hidden(value.Some());
+            var f = e.Hidden(value.ToOption());
             return new Formlet<string>(f);
         }
 
@@ -131,12 +131,12 @@ namespace Formlets.CSharp {
         }
 
         public Formlet<string> Search(string value = null, bool required = false, int? maxlength = null, string pattern = null, KV attributes = null) {
-            var f = e.Search(value.Some(), ToAttr(attributes), required.Some(), maxlength.ToOption(), pattern.Some());
+            var f = e.Search(value.ToOption(), ToAttr(attributes), required.Some(), maxlength.ToOption(), pattern.ToOption());
             return new Formlet<string>(f);
         }
 
         public Formlet<string> Tel(string value = null, bool required = false, int? maxlength = null, string pattern = null, KV attributes = null) {
-            var f = e.Tel(value.Some(), ToAttr(attributes), required.Some(), maxlength.ToOption(), pattern.Some());
+            var f = e.Tel(value.ToOption(), ToAttr(attributes), required.Some(), maxlength.ToOption(), pattern.ToOption());
             return new Formlet<string>(f);
         }
 
@@ -171,7 +171,7 @@ namespace Formlets.CSharp {
         }
 
         public Formlet<string> Submit(string value = null, KV attributes = null) {
-            var f = e.Submit(value.Some(), ToAttr(attributes));
+            var f = e.Submit(value.ToOption(), ToAttr(attributes));
             var of = new Formlet<FSharpOption<string>>(f);
             return of.Select(s => s.HasValue() ? s.Value : null);
         }
