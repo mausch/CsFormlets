@@ -6,7 +6,6 @@ using Microsoft.FSharp.Collections;
 using System.Web;
 using System.Linq;
 using System.Drawing;
-using FSharp.Core.CS;
 
 namespace Formlets.CSharp {
     /// <summary>

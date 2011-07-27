@@ -1,10 +1,9 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using Formlets.CSharp;
-using System;
 using SampleWebApp.Models;
-using System.Linq;
 using SampleWebApp.Formlets;
-using FSharp.Core.CS;
+using Microsoft.FSharp.Core;
 
 namespace SampleWebApp.Controllers {
     public class SignupController : Controller {
