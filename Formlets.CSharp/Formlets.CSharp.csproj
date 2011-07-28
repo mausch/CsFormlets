@@ -47,7 +47,6 @@
     <Compile Include="Formlet.cs" />
     <Compile Include="FormletResult.cs" />
     <Compile Include="FormletT.cs" />
-    <Compile Include="FFunc.cs" />
     <Compile Include="FuncInference.cs" />
     <Compile Include="IFormlet.cs" />
     <Compile Include="IFormletResult.cs" />

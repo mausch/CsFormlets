@@ -35,7 +35,7 @@ namespace Formlets.CSharp {
         /// <param name="a"></param>
         /// <returns></returns>
         public Formlet<B> Ap<B>(Formlet<Func<T, B>> a) {
-            var ff = a.Select(FFunc.FromFunc);
+            var ff = a.Select(FSharpFunc.FromFunc);
             var r = FormletModule.ap(ff.f, f);
             return new Formlet<B>(r);
         }
@@ -68,7 +68,7 @@ namespace Formlets.CSharp {
         /// <param name="a"></param>
         /// <returns></returns>
         public Formlet<B> Select<B>(Func<T, B> a) {
-            var ff = FFunc.FromFunc(a);
+            var ff = FSharpFunc.FromFunc(a);
             var r = FormletModule.map(ff, f);
             return new Formlet<B>(r);
         }

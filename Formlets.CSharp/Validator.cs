@@ -54,11 +54,9 @@ namespace Formlets.CSharp {
         /// </summary>
         /// <returns></returns>
         public Formlets.Validator<T> ToFsValidator() {
-            var f1 = FFunc.FromFunc1((T x) =>
-                        FFunc.FromFunc1((FSharpList<XNode> y) =>
-                            errorXml(x, y.ToList()).ToFsList()));
-            var fpred = FFunc.FromFunc(isValid);
-            var fmsg = FFunc.FromFunc<T, FSharpList<string>>(x => errorMsg(x).ToFsList());
+            var f1 = FSharpFunc.FromFunc((T x, FSharpList<XNode> y) => errorXml(x, y.ToList()).ToFsList());
+            var fpred = FSharpFunc.FromFunc(isValid);
+            var fmsg = FSharpFunc.FromFunc((T x) => errorMsg(x).ToFsList());
             return new Formlets.Validator<T>(fpred,f1,fmsg);
         }
     }
