@@ -13,7 +13,7 @@ namespace Formlets.CSharp {
 
         private static FSharpList<Tuple<string, string>> ToAttr(this IEnumerable<KeyValuePair<string, string>> attributes) {
             attributes = attributes ?? new Dictionary<string, string>();
-            return attributes.ToTuples().ToFsList();
+            return attributes.ToTuples().ToFSharpList();
         }
 
         /// <summary>

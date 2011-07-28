@@ -33,7 +33,7 @@ namespace Formlets.CSharp {
         /// <param name="validator"></param>
         public Validator(Formlets.Validator<T> validator) {
             this.isValid = validator.IsValid.Invoke;
-            this.errorXml = (a, b) => validator.ErrorForm.Invoke(a).Invoke(b.ToFsList());
+            this.errorXml = (a, b) => validator.ErrorForm.Invoke(a).Invoke(b.ToFSharpList());
             this.errorMsg = validator.ErrorList.Invoke;
         }
 
@@ -54,9 +54,9 @@ namespace Formlets.CSharp {
         /// </summary>
         /// <returns></returns>
         public Formlets.Validator<T> ToFsValidator() {
-            var f1 = FSharpFunc.FromFunc((T x, FSharpList<XNode> y) => errorXml(x, y.ToList()).ToFsList());
+            var f1 = FSharpFunc.FromFunc((T x, FSharpList<XNode> y) => errorXml(x, y.ToList()).ToFSharpList());
             var fpred = FSharpFunc.FromFunc(isValid);
-            var fmsg = FSharpFunc.FromFunc((T x) => errorMsg(x).ToFsList());
+            var fmsg = FSharpFunc.FromFunc((T x) => errorMsg(x).ToFSharpList());
             return new Formlets.Validator<T>(fpred,f1,fmsg);
         }
     }

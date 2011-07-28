@@ -29,7 +29,7 @@ namespace Formlets.CSharp {
 
         private FSharpOption<FSharpList<Tuple<string,string>>> ToAttr(KV attr) {
             attr = attr ?? new Dictionary<string, string>();
-            return attr.ToTuples().ToFsList().Some();
+            return attr.ToTuples().ToFSharpList().Some();
         }
 
         public Formlet<bool> Checkbox(bool value, bool required = false, KV attributes = null) {

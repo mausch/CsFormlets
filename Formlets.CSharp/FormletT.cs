@@ -80,7 +80,7 @@ namespace Formlets.CSharp {
         /// <returns></returns>
         public FormletResult<T> Run(IEnumerable<KeyValuePair<string, string>> env) {
             var tuples = env.Select(kv => Tuple.Create(kv.Key, InputValue.NewValue(kv.Value)));
-            return Run(tuples.ToFsList());
+            return Run(tuples.ToFSharpList());
         }
 
         IFormletResult IFormlet.Run(IEnumerable<KeyValuePair<string, string>> env) {
@@ -88,7 +88,7 @@ namespace Formlets.CSharp {
         }
 
         public FormletResult<T> Run(IEnumerable<KeyValuePair<string, InputValue>> env) {
-            return Run(env.ToTuples().ToFsList());
+            return Run(env.ToTuples().ToFSharpList());
         }
 
         /// <summary>
