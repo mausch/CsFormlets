@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using FSharpx;
 using Microsoft.FSharp.Collections;
 using Microsoft.FSharp.Core;
 using System.Xml.Linq;

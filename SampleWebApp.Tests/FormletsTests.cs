@@ -6,6 +6,7 @@ using Xunit;
 using SampleWebApp.Formlets;
 using Formlets.CSharp;
 using Microsoft.FSharp.Core;
+using FSharpx;
 
 namespace SampleWebApp.Tests
 {

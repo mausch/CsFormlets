@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using System.Xml.Linq;
+using FSharpx;
 using Microsoft.FSharp.Collections;
 using Microsoft.FSharp.Core;
 

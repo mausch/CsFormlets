@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
+using FSharpx;
 using Formlets.CSharp;
 using SampleWebApp.Models;
 using SampleWebApp.Formlets;

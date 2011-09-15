@@ -51,6 +51,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FSharp.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="FSharpx">
+      <HintPath>..\FsFormlets\lib\FSharpx.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -119,10 +122,6 @@
     <ProjectReference Include="..\Formlets.CSharp\Formlets.CSharp.csproj">
       <Project>{CDCC8D9C-8B9E-42EC-AD00-34B1AB2BFD3D}</Project>
       <Name>Formlets.CSharp</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FSharp.Core.CS\FSharp.Core.CS\FSharp.Core.CS.fsproj">
-      <Project>{CDFDD597-0EF6-4682-995A-9C73BE122419}</Project>
-      <Name>FSharp.Core.CS</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

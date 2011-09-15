@@ -35,6 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FSharp.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="FSharpx, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="log4net">
       <HintPath>..\..\mausch\ARATMSample\lib\log4net.dll</HintPath>
     </Reference>
@@ -113,10 +114,6 @@
     <ProjectReference Include="..\FsFormlets\Formlets\Formlets.fsproj">
       <Project>{D628A18C-7C64-48CD-BC52-ADD7A88A8770}</Project>
       <Name>Formlets</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FSharp.Core.CS\FSharp.Core.CS\FSharp.Core.CS.fsproj">
-      <Project>{CDFDD597-0EF6-4682-995A-9C73BE122419}</Project>
-      <Name>FSharp.Core.CS</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,3 @@
 [submodule "FsFormlets"]
 	path = FsFormlets
 	url = git://github.com/mausch/FsFormlets.git
-[submodule "FSharp.Core.CS"]
-	path = FSharp.Core.CS
-	url = git://github.com/mausch/FSharp.Core.CS.git

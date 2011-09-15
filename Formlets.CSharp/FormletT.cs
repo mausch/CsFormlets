@@ -6,6 +6,7 @@ using Microsoft.FSharp.Core;
 using System.Xml.Linq;
 using System.Collections.Specialized;
 using System.Web;
+using FSharpx;
 
 namespace Formlets.CSharp {
     public class Formlet<T>: IFormlet {

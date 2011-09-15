@@ -1,7 +1,7 @@
 ﻿Imports System.Text.RegularExpressions
 Imports Formlets.CSharp
 Imports Xunit
-Imports Microsoft.FSharp.Core.Opt
+Imports FSharpx.FSharpOption
 
 Public Class XmlIntegrationTests
 

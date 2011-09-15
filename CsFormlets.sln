@@ -19,10 +19,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleWebApp", "SampleWebAp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleWebApp.Tests", "SampleWebApp.Tests\SampleWebApp.Tests.csproj", "{78C21228-9DB0-4C49-BA35-9A091A0D854D}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FSharp.Core.CS", "FSharp.Core.CS\FSharp.Core.CS\FSharp.Core.CS.fsproj", "{CDFDD597-0EF6-4682-995A-9C73BE122419}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FSharp.Core.CS.Tests", "FSharp.Core.CS\FSharp.Core.CS.Tests\FSharp.Core.CS.Tests.csproj", "{4354A199-6ACF-4DB5-A8FA-BAD638D1D0E3}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,14 +61,6 @@ Global
 		{78C21228-9DB0-4C49-BA35-9A091A0D854D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78C21228-9DB0-4C49-BA35-9A091A0D854D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{78C21228-9DB0-4C49-BA35-9A091A0D854D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CDFDD597-0EF6-4682-995A-9C73BE122419}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CDFDD597-0EF6-4682-995A-9C73BE122419}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CDFDD597-0EF6-4682-995A-9C73BE122419}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CDFDD597-0EF6-4682-995A-9C73BE122419}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4354A199-6ACF-4DB5-A8FA-BAD638D1D0E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4354A199-6ACF-4DB5-A8FA-BAD638D1D0E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4354A199-6ACF-4DB5-A8FA-BAD638D1D0E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4354A199-6ACF-4DB5-A8FA-BAD638D1D0E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
