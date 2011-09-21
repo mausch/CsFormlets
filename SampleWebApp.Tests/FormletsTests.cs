@@ -13,10 +13,9 @@ namespace SampleWebApp.Tests
     public class FormletsTests
     {
         [Fact]
-        public void CardExpiration_validates_past_dates()
-        {
+        public void CardExpiration_validates_past_dates() {
             var twoMonthsAgo = DateTime.Now.AddMonths(-2);
-            var result = SignupFormlet.CardExpiration().Run(new NameValueCollection { 
+            var result = SignupFormlet.CardExpiration(DateTime.Now).Run(new NameValueCollection { 
                 {"f0", twoMonthsAgo.Month.ToString()},
                 {"f1", twoMonthsAgo.Year.ToString()},
             });
@@ -25,11 +24,10 @@ namespace SampleWebApp.Tests
         }
 
         [Fact]
-        public void CardExpiration_collects_correct_expiration_date()
-        {
+        public void CardExpiration_collects_correct_expiration_date() {
             var now = DateTime.Now;
             var twoMonthsFuture = now.AddMonths(2);
-            var result = SignupFormlet.CardExpiration().Run(new NameValueCollection { 
+            var result = SignupFormlet.CardExpiration(now).Run(new NameValueCollection { 
                 {"f0", twoMonthsFuture.Month.ToString()},
                 {"f1", twoMonthsFuture.Year.ToString()},
             });

@@ -63,23 +63,19 @@ namespace SampleWebApp.Formlets
                 .Ap(account)
                 .Select(t => new User(t.Item1, t.Item2, t.Item3, t.Item4, t.Item5));
 
-        public static Formlet<DateTime> CardExpiration()
-        {
-            var now = DateTime.Now;
-            var year = now.Year;
+        public static Formlet<DateTime> CardExpiration(DateTime now) {
             return Formlet.Tuple2<int, int>()
                 .Ap(e.Select(now.Month, Enumerable.Range(1, 12)))
-                .Ap(e.Select(year, Enumerable.Range(year, 10)))
+                .Ap(e.Select(now.Year, Enumerable.Range(now.Year, 10)))
                 .Select(t => new DateTime(t.Item2, t.Item1, 1).AddMonths(1))
                 .Satisfies(t => t > now, t => string.Format("Card expired {0:#} days ago!", (now-t).TotalDays))
                 .WrapWithLabel("Expiration date<br/>");
         }
 
-        private static Formlet<BillingInfo> Billing()
-        {
+        private static Formlet<BillingInfo> Billing(DateTime now) {
             return Formlet.Tuple4<string, DateTime, string, string>()
                 .Ap(e.Text(required: true).Transform(brValidationFunctions.CreditCard).WithLabel("Credit card number"))
-                .Ap(CardExpiration())
+                .Ap(CardExpiration(now))
                 .Ap(e.Text(required: true).WithLabel("Security code"))
                 .Ap(e.Text(required: true).WithLabelRaw("Billing ZIP <em>(postal code if outside the USA)</em>"))
                 .Select(t => new BillingInfo(t.Item1, t.Item2, t.Item3, t.Item4))
@@ -90,25 +86,26 @@ namespace SampleWebApp.Formlets
         /// Same as <see cref="Billing"/>, but defined using LINQ
         /// </summary>
         /// <returns></returns>
-        private static Formlet<BillingInfo> BillingLINQ()
-        {
+        private static Formlet<BillingInfo> BillingLINQ(DateTime now) {
             var f = from cardNumber in e.Text(required: true).Transform(brValidationFunctions.CreditCard).WithLabel("Credit card number")
-                    join exp in CardExpiration() on 1 equals 1
+                    join exp in CardExpiration(now) on 1 equals 1
                     join cvv in e.Text(required: true).WithLabel("Security code") on 1 equals 1
                     join zip in e.Text(required: true).WithLabelRaw("Billing ZIP <em>(postal code if outside the USA)</em>") on 1 equals 1
                     select new BillingInfo(cardNumber, exp, cvv, zip);
             return f.WrapWith(X.E("fieldset"));
         }
 
-        public static Formlet<RegistrationInfo> IndexFormlet()
-        {
+        public static Formlet<RegistrationInfo> IndexFormlet(DateTime now) {
             return Formlet.Tuple2<User, BillingInfo>()
                 .Ap(X.E("h3", "Enter your details"))
                 .Ap(user)
                 .Ap(X.E("h3", "Billing information"))
-                .Ap(Billing())
+                .Ap(Billing(now))
                 .Select(t => new RegistrationInfo(t.Item1, t.Item2));
         }
 
+        public static Formlet<RegistrationInfo> IndexFormlet() {
+            return IndexFormlet(DateTime.Now);
+        }
     }
 }
