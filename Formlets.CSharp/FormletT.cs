@@ -92,6 +92,10 @@ namespace Formlets.CSharp {
             return Run(env.ToTuples().ToFSharpList());
         }
 
+        public FormletResult<T> Run(IEnumerable<string> values) {
+            return Run(EnvDictModule.fromStrings(values));
+        }
+
         /// <summary>
         /// Runs a formlet against an environment
         /// </summary>

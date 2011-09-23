@@ -15,9 +15,9 @@ namespace SampleWebApp.Tests
         [Fact]
         public void CardExpiration_validates_past_dates() {
             var twoMonthsAgo = DateTime.Now.AddMonths(-2);
-            var result = SignupFormlet.CardExpiration(DateTime.Now).Run(new NameValueCollection { 
-                {"f0", twoMonthsAgo.Month.ToString()},
-                {"f1", twoMonthsAgo.Year.ToString()},
+            var result = SignupFormlet.CardExpiration(DateTime.Now).Run(new[] {
+                twoMonthsAgo.Month.ToString(),
+                twoMonthsAgo.Year.ToString(),
             });
             Assert.False(result.Value.HasValue());
             Assert.True(result.Errors.Any(e => e.Contains("Card expired")));
@@ -27,9 +27,9 @@ namespace SampleWebApp.Tests
         public void CardExpiration_collects_correct_expiration_date() {
             var now = DateTime.Now;
             var twoMonthsFuture = now.AddMonths(2);
-            var result = SignupFormlet.CardExpiration(now).Run(new NameValueCollection { 
-                {"f0", twoMonthsFuture.Month.ToString()},
-                {"f1", twoMonthsFuture.Year.ToString()},
+            var result = SignupFormlet.CardExpiration(now).Run(new[] {
+                twoMonthsFuture.Month.ToString(),
+                twoMonthsFuture.Year.ToString(),
             });
             Assert.True(result.Value.HasValue());
             Assert.Equal(0, result.Errors.Count);
