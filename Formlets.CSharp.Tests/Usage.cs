@@ -170,5 +170,22 @@ namespace Formlets.CSharp.Tests {
             Assert.Equal(42, r.Value.Value.age);
         }
 
+        [Fact]
+        public void LINQ_SelectMany() {
+            var e = new FormElements();
+            var f = from name in e.Text()
+                    from _ in Formlet.Raw(X.E("br"))
+                    from age in e.Int()
+                    where age == 42
+                    select new { name, age };
+            var r = f.Run(new Dictionary<string, string> {
+                {"f0", "John"},
+                {"f1", "42"},
+            });
+            Assert.True(r.Value.HasValue());
+            Assert.Equal("John", r.Value.Value.name);
+            Assert.Equal(42, r.Value.Value.age);
+        }
+
     }
 }

@@ -149,7 +149,18 @@ namespace Formlets.CSharp {
         }
 
         public Formlet<R> Join<I, K, R>(Formlet<I> inner, Func<T, K> outerKeySelector, Func<I, K> innerKeySelector, Func<T, I, R> resultSelector) {
-            return Formlet.Tuple2<T, I>().Ap(this).Ap(inner).Select(t => resultSelector(t.Item1, t.Item2));
+            return Formlet.Tuple2<T, I>()
+                .Ap(this)
+                .Ap(inner)
+                .Select(t => resultSelector(t.Item1, t.Item2));
+        }
+
+        public Formlet<R> SelectMany<R>(Func<Formlet<T>, Formlet<R>> collector) {
+            return collector(this);
+        }
+
+        public Formlet<R> SelectMany<U, R>(Func<Formlet<T>, Formlet<U>> collector, Func<T, U, R> selector) {
+            return this.Join<U,object,R>(collector(this), x => x, x => x, selector);
         }
 
         public Formlet<T> Satisfies(Func<T,bool> pred, Func<T, List<XNode>, IEnumerable<XNode>> error, Func<T, IEnumerable<string>> errorMsg) {
