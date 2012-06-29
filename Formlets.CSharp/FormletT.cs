@@ -37,12 +37,12 @@ namespace Formlets.CSharp {
         /// <returns></returns>
         public Formlet<B> Ap<B>(Formlet<Func<T, B>> a) {
             var ff = a.Select(FSharpFunc.FromFunc);
-            var r = FormletModule.ap(ff.f, f);
+            var r = FormletModule.ap(f, ff.f);
             return new Formlet<B>(r);
         }
 
         public Formlet<T> Ap(string text) {
-            return this.ApIgnore(Formlet.Text(text));
+            return ApIgnore(Formlet.Text(text));
         }
 
         /// <summary>

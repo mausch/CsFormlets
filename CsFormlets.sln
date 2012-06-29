@@ -13,8 +13,6 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Formlets.VB.Tests", "Formle
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "WingBeats.Formlets", "FsFormlets\WingBeats.Formlets\WingBeats.Formlets.fsproj", "{C920FCB6-BF44-4884-A744-1409AC0A21C4}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "WingBeats.Formlets.Tests", "FsFormlets\WingBeats.Formlets.Tests\WingBeats.Formlets.Tests.fsproj", "{7134FE07-DEDF-4077-9CC4-E75DDAF71100}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleWebApp", "SampleWebApp\SampleWebApp.csproj", "{0C5AF4F3-2D51-4771-98FC-7471A3D574BE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleWebApp.Tests", "SampleWebApp.Tests\SampleWebApp.Tests.csproj", "{78C21228-9DB0-4C49-BA35-9A091A0D854D}"
@@ -49,10 +47,6 @@ Global
 		{C920FCB6-BF44-4884-A744-1409AC0A21C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C920FCB6-BF44-4884-A744-1409AC0A21C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C920FCB6-BF44-4884-A744-1409AC0A21C4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7134FE07-DEDF-4077-9CC4-E75DDAF71100}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7134FE07-DEDF-4077-9CC4-E75DDAF71100}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7134FE07-DEDF-4077-9CC4-E75DDAF71100}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7134FE07-DEDF-4077-9CC4-E75DDAF71100}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0C5AF4F3-2D51-4771-98FC-7471A3D574BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0C5AF4F3-2D51-4771-98FC-7471A3D574BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C5AF4F3-2D51-4771-98FC-7471A3D574BE}.Release|Any CPU.ActiveCfg = Release|Any CPU

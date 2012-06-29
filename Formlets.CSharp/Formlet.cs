@@ -186,7 +186,7 @@ namespace Formlets.CSharp {
         /// <returns></returns>
         public static Formlet<C> Lift2<A,B,C>(Func<A,B,C> f, Formlet<A> a, Formlet<B> b) {
             var ff = FSharpFunc.FromFunc(f);
-            var r = FormletModule.map2(ff, a, b);
+            var r = FormletModule.lift2(ff, a, b);
             return new Formlet<C>(r);
         }
 
