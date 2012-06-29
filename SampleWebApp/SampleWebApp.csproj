@@ -152,4 +152,5 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="../.nuget/BuildMagic.targets" />
 </Project>
