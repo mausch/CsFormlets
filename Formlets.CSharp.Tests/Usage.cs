@@ -130,7 +130,7 @@ namespace Formlets.CSharp.Tests {
         public void FormElements() {
             var e = new FormElements();
             var f = e.Int(required: true);
-            Assert.Equal("<input required=\"required\" name=\"f0\" value=\"\" />", f.ToString());
+            Assert.Equal("<input required=\"required\" name=\"f0\" value=\"\" type=\"number\" />", f.ToString());
             var result = f.Run(new Dictionary<string, string> {
                 {"f0", ""},
             });
