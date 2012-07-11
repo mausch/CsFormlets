@@ -49,10 +49,7 @@
   <ItemGroup>
     <Compile Include="FormElements.cs" />
     <Compile Include="Formlet.cs" />
-    <Compile Include="FormletResult.cs" />
     <Compile Include="FormletT.cs" />
-    <Compile Include="IFormlet.cs" />
-    <Compile Include="IFormletResult.cs" />
     <Compile Include="IValidator.cs" />
     <Compile Include="ListExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

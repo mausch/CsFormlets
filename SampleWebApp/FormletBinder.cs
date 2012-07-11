@@ -31,14 +31,14 @@ namespace SampleWebApp {
             return request.Params;
         }
 
-        public IFormletResult GetFormletResult(ControllerBase controller, string actionName, HttpRequestBase request) {
+        public object GetFormletResult(ControllerBase controller, string actionName, HttpRequestBase request) {
             var type = formletType ?? controller.GetType();
             var methodName = formletMethodName ?? (actionName + "Formlet");
             var method = type.GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance);
             if (method == null)
                 throw new Exception(string.Format("Formlet method '{0}' not found in '{1}'", methodName, type));
-            var formlet = (IFormlet)method.Invoke(controller, null);
-            return formlet.Run(GetCollectionBySource(request));
+            var formlet = method.Invoke(controller, null);
+            return formlet.GetType().GetMethod("Run").Invoke(formlet, new[] { GetCollectionBySource(request) });
         }
 
         public object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext) {

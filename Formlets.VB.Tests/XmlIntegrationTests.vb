@@ -7,7 +7,7 @@ Public Class XmlIntegrationTests
 
     <Fact()> _
     Public Sub Test()
-        Dim e = New FormElements()
+        Dim e = New Formlets.CSharp.FormElements()
         Dim inputDate =
             Function()
                 Dim isDate = Function(m As Integer, d As Integer, y As Integer)
@@ -46,6 +46,6 @@ Public Class XmlIntegrationTests
         Assert.False(result.Value.HasValue)
         Console.WriteLine()
         Console.WriteLine("Error form:")
-        Console.WriteLine(result.ErrorForm.Render())
+        Console.WriteLine(result.Form.Render())
     End Sub
 End Class

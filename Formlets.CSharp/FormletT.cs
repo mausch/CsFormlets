@@ -9,7 +9,7 @@ using System.Web;
 using FSharpx;
 
 namespace Formlets.CSharp {
-    public class Formlet<T>: IFormlet {
+    public class Formlet<T> {
         // real formlet, wrapped
         private readonly FSharpFunc<int, Tuple<Tuple<FSharpList<XNode>, FSharpFunc<FSharpList<Tuple<string, InputValue>>, Tuple<FSharpList<XNode>, Tuple<FSharpList<string>, FSharpOption<T>>>>>, int>> f;
 
@@ -83,10 +83,6 @@ namespace Formlets.CSharp {
             return Run(tuples.ToFSharpList());
         }
 
-        IFormletResult IFormlet.Run(IEnumerable<KeyValuePair<string, string>> env) {
-            return Run(env);
-        }
-
         public FormletResult<T> Run(IEnumerable<KeyValuePair<string, InputValue>> env) {
             return Run(env.ToTuples().ToFSharpList());
         }
@@ -101,9 +97,7 @@ namespace Formlets.CSharp {
         /// <param name="list"></param>
         /// <returns></returns>
         private FormletResult<T> Run(FSharpList<Tuple<string,InputValue>> list) {
-            var ff = FormletModule.run(f);
-            var r = ff.Invoke(list);
-            return new FormletResult<T>(r.Item1, r.Item2.ToList(), r.Item3);
+            return FormletModule.run(f, list);
         }
 
         /// <summary>
@@ -114,10 +108,6 @@ namespace Formlets.CSharp {
         public FormletResult<T> Run(NameValueCollection nv) {
             var list = EnvDictModule.fromNV(nv);
             return Run(list);
-        }
-
-        IFormletResult IFormlet.Run(NameValueCollection nv) {
-            return Run(nv);
         }
 
         public FormletResult<T> RunPost(HttpRequestBase request) {

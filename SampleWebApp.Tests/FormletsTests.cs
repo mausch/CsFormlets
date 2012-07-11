@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Linq;
 using Xunit;
 using SampleWebApp.Formlets;
-using Formlets.CSharp;
 using Microsoft.FSharp.Core;
 using FSharpx;
 
@@ -19,6 +16,7 @@ namespace SampleWebApp.Tests
                 twoMonthsAgo.Month.ToString(),
                 twoMonthsAgo.Year.ToString(),
             });
+
             Assert.False(result.Value.HasValue());
             Assert.True(result.Errors.Any(e => e.Contains("Card expired")));
         }
@@ -32,7 +30,7 @@ namespace SampleWebApp.Tests
                 twoMonthsFuture.Year.ToString(),
             });
             Assert.True(result.Value.HasValue());
-            Assert.Equal(0, result.Errors.Count);
+            Assert.Equal(0, result.Errors.Length);
             var threeMonthsFuture = now.AddMonths(3);
             Assert.Equal(new DateTime(threeMonthsFuture.Year, threeMonthsFuture.Month, 1), result.Value.Value);
         }

@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
-using System.Reflection;
-using System.Collections.Generic;
 using System.Xml.Linq;
+using Formlets;
 using Formlets.CSharp;
-using System.Collections.Specialized;
-using System.Web;
+using Microsoft.FSharp.Collections;
 using Microsoft.FSharp.Core;
 
 namespace SampleWebApp {
@@ -61,24 +59,27 @@ namespace SampleWebApp {
         public override void OnActionExecuting(ActionExecutingContext filterContext) {
             var binder = new FormletBinder(formletType, formletMethodName) { Source = Source };
             var result = binder.GetFormletResult(filterContext.Controller, filterContext.ActionDescriptor.ActionName, filterContext.HttpContext.Request);
-            var valueType = result.ValueType;
-            var getValue = typeof(FSharpOption<>).MakeGenericType(valueType).GetProperty("Value");
+            var valueType = formletType.GetGenericArguments()[0];
+            var optionValue = typeof(FSharpOption<>).MakeGenericType(valueType).GetProperty("Value");
             var actionParams = filterContext.ActionDescriptor.GetParameters();
             var resultType = typeof(FormletResult<>).MakeGenericType(valueType);
+            var getFormletValue = resultType.GetProperty("Value");
             var boundParam = actionParams.FirstOrDefault(p => p.ParameterType == resultType);
             if (boundParam != null) {
                 filterContext.ActionParameters[boundParam.ParameterName] = result;
                 return;
             }
-            if (result.Value == null) {
-                var errorNodes = result.ErrorForm;
+            var collectedValue = getFormletValue.GetValue(result, null);
+            if (collectedValue == null) {
+                var getFormletForm = resultType.GetProperty("Form");
+                var errorNodes = (FSharpList<XNode>) getFormletForm.GetValue(result, null);
                 string errorForm = errorNodes.Render();
                 filterContext.Result = new ViewResult {
                     ViewName = ViewName,
                     ViewData = new ViewDataDictionary(errorForm)
                 };
             } else {
-                var value = getValue.GetValue(result.Value, null);
+                var value = optionValue.GetValue(collectedValue, null);
                 boundParam = actionParams.FirstOrDefault(d => d.IsDefined(typeof(FormletParameterAttribute), true));
                 if (boundParam == null)
                     boundParam = actionParams.FirstOrDefault(d => d.ParameterType == valueType);

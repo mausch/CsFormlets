@@ -13,8 +13,8 @@ namespace Formlets.CSharp.Tests {
             var result = input.Run(new Dictionary<string, string> {{"f0", "something"}});
             Assert.True(result.Value.HasValue());
             Assert.Equal("something", result.Value.Value);
-            Console.WriteLine(result.ErrorForm);
-            Assert.Equal("<input name=\"f0\" value=\"something\" />", result.ErrorForm.Render());
+            Console.WriteLine(result.Form);
+            Assert.Equal("<input name=\"f0\" value=\"something\" />", result.Form.Render());
         }
 
         [Fact]
@@ -67,8 +67,8 @@ namespace Formlets.CSharp.Tests {
             var result = inputInt.Run(new Dictionary<string, string> {
                 {"f0", "bla"}
             });
-            Console.WriteLine(result.ErrorForm);
-            Assert.Contains("<input name=\"f0\" value=\"bla\" />'bla' is not a valid number", result.ErrorForm.Render());
+            Console.WriteLine(result.Form);
+            Assert.Contains("<input name=\"f0\" value=\"bla\" />'bla' is not a valid number", result.Form.Render());
             Assert.False(result.Value.HasValue());
         }
 
@@ -81,9 +81,9 @@ namespace Formlets.CSharp.Tests {
             var result = inputInt.Run(new Dictionary<string, string> {
                 {"f0", "bla"}
             });
-            Console.WriteLine(result.ErrorForm);
-            Assert.Contains("<input name=\"f0\" value=\"bla\" />", result.ErrorForm.Render());
-            Assert.Contains("<span class=\"error\">'bla' is not a valid number</span>", result.ErrorForm.Render());
+            Console.WriteLine(result.Form);
+            Assert.Contains("<input name=\"f0\" value=\"bla\" />", result.Form.Render());
+            Assert.Contains("<span class=\"error\">'bla' is not a valid number</span>", result.Form.Render());
             Assert.False(result.Value.HasValue());
         }
 
@@ -134,7 +134,7 @@ namespace Formlets.CSharp.Tests {
             var result = f.Run(new Dictionary<string, string> {
                 {"f0", ""},
             });
-            var errorForm = result.ErrorForm.Render();
+            var errorForm = result.Form.Render();
             Assert.Contains("errorinput", errorForm);
         }
 
@@ -150,7 +150,7 @@ namespace Formlets.CSharp.Tests {
                 {"f1", "44"},
             });
             Assert.False(r.Value.HasValue());
-            Assert.Equal(1, r.Errors.Count);
+            Assert.Equal(1, r.Errors.Length);
         }
 
         [Fact]
