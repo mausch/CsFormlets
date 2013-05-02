@@ -6,7 +6,7 @@ namespace Formlets.CSharp {
     /// Encapsulates validation
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface IValidator<T> {
+    public interface IValidator<in T> {
         /// <summary>
         /// Returns true if <paramref name="value"/> is valid, otherwise false
         /// </summary>

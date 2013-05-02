@@ -5,19 +5,21 @@ Imports FSharpx.FSharpOption
 
 Public Class XmlIntegrationTests
 
+    Private Shared Function IsValidDate(month As Integer, day As Integer, year As Integer) As Boolean
+        ' Sadly, DateTime.TryCreate is internal
+        Try
+            Dim k = New DateTime(year, month, day)
+            Return True
+        Catch ex As Exception
+            Return False
+        End Try
+    End Function
+
     <Fact()> _
     Public Sub Test()
         Dim e = New Formlets.CSharp.FormElements()
         Dim inputDate =
             Function()
-                Dim isDate = Function(m As Integer, d As Integer, y As Integer)
-                                 Try
-                                     Dim k = New DateTime(y, m, d)
-                                     Return True
-                                 Catch ex As Exception
-                                     Return False
-                                 End Try
-                             End Function
                 Dim values =
                     Formlet.Tuple3(Of Integer, Integer, Integer)().
                         Ap(e.Int().WithLabel("Month: ")).
@@ -25,7 +27,7 @@ Public Class XmlIntegrationTests
                         Ap(e.Int().WithLabel("Year: "))
 
                 Return From v In values
-                        Where isDate(v.Item1, v.Item2, v.Item3)
+                        Where IsValidDate(month:=v.Item1, day:=v.Item2, year:=v.Item3)
                         Select New DateTime(v.Item3, v.Item1, v.Item2)
             End Function
 
